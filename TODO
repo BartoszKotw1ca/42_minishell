@@ -13,4 +13,4 @@ getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft); 
-6. 
+6. Watch tutorial about branches(local, remote, merge, how to get date from another branch).
