@@ -14,3 +14,12 @@ tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft); 
 6. 
+
+1. I added to main Makefile two makfiles:
+	-Janek 
+	-Bartek
+	We have to chose which one is better
+4. We imported pipex, but its not a libray so it
+ should be compiling normally, not like a libray.
+ 5. I did Makefile, but like i said and there was a problem
+  with read_file.c.

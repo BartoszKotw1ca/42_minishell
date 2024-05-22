@@ -1,0 +1,5 @@
+Obj
+minishell
+.vscode
+pipex/libft/*.o
+pipex/libft/*.a
