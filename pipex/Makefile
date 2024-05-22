@@ -1,6 +1,5 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-# CFLAGS = -g
 NAME = pipex
 
 SRC_FILES = pipex.c utils.c

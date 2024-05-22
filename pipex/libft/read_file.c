@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 13:13:15 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/11 18:21:28 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:13:31 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	read_file(char *path, char **dest)
 	if (fd < 0)
 		exit_error(path);
 	result = "";
+	temp = "a";
 	while (temp)
 	{
 		temp = get_next_line(fd);
