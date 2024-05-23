@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 16:24:44 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:40:24 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	process_data(char **tmp, t_data *data, int j)
 	if (tmp[data->end][j - 1] == '>')
 		tmp[data->end][j - 1] = '\0';
 	line = ft_listjoin(data->start, data->end, tmp);
+	printf("%s", line);
 	data->commends = ft_split(line, '|');
 	free(line);
 }

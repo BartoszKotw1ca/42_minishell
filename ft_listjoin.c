@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:33:45 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 14:57:38 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:43:51 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	char_in_list(int start, int end, char **lista, int i)
 		i = 0;
 		while (lista[start][i])
 			i ++;
-		len += i;
+		len += i + 1;
 		start ++;
 	}
 	return (len);
@@ -47,6 +47,7 @@ char	*ft_listjoin(int start, int end, char **lista)
 		i = 0;
 		while (lista[start][i])
 			joined[len ++] = lista[start][i ++];
+		joined[len ++] = ' ';
 		start ++;
 	}
 	joined[len] = '\0';
