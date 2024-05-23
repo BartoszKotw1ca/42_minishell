@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/22 10:06:36 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 09:40:49 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,21 @@
 
 // #include "mylibft/mylibft.h"
 # include "pipex/libft/libft.h"
+
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+
+# include <stdlib.h>
+
+# include <sys/types.h>
+# include <sys/time.h>
+# include <sys/resource.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+
+# include <signal.h>
+
+# include <unistd.h>
 
 #endif
