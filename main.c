@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 09:29:30 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:02:32 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main() {
 	sigma.sa_flags = SA_SIGINFO;
 	sigma.sa_sigaction = signal_handler;
 	sigaction(SIGINT, &sigma, NULL);
-	while (1)
+	while (42)
 	{
 		line = readline("$> ");
 		printf("%s\n", line);
