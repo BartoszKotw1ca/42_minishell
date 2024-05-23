@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 09:40:49 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:15:53 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,20 @@
 # include <signal.h>
 
 # include <unistd.h>
+
+typedef struct s_data
+{
+	char	*infile;
+	char	*outfile;
+	char	**commends;
+	int		start;
+	int		end;
+}			t_data;
+
+// export_data_to_pipex.c
+t_data	export_data_to_pipex(char *argv);
+
+// ft_listajoin.c
+char	*ft_listjoin(int start, int end, char **lista);
 
 #endif

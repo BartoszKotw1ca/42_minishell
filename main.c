@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 10:02:32 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:05:12 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	signal_handler(int sig, siginfo_t *info, void *uncontent)
 {
-	printf("Signal numer: %d, %d, Co tu sie wlasnie stalo???", sig, info->si_signo);
+	printf("Signal numer: %d, %d, Co tu sie wlasnie stalo???\n", sig, info->si_signo);
 	(void) uncontent;
 	exit(0);
 }
@@ -30,16 +30,16 @@ int main() {
 	sigemptyset(&sigma.sa_mask);
 	sigma.sa_flags = SA_SIGINFO;
 	sigma.sa_sigaction = signal_handler;
-	sigaction(SIGINT, &sigma, NULL);
-	while (42)
+	while (i < 1)
 	{
 		line = readline("$> ");
-		printf("%s\n", line);
+		export_data_to_pipex(line);
 		add_history(line);
 		            for (j = 0; j < counter; j++) {
                 // Simulate history display (can't directly access past commands)
                 rl_redisplay(); // "Replay" the user's input
             }
+		sigaction(SIGINT, &sigma, NULL);
 		// rl_redisplay();
 		free(line);
 		i ++;

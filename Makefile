@@ -1,7 +1,7 @@
 FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
-SRC = main.c
+SRC = main.c export_data_to_pipex.c ft_listjoin.c
 OBJDIR = Obj/
 OBJ := $(SRC:%.c=$(OBJDIR)%.o)
 
