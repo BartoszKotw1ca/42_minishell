@@ -17,3 +17,12 @@ git push -u origin <name-of-branch>
 
 git branch -v - show data connected with branchs
 git branch -d <branch-name> - delete a branch
+
+git merge <name-of-th-branch> - to merge the branches but in two different line
+git rebase <name-of-the-branch> - to merge the branches but in straight line 
+
+// locally
+git log <name-of-branch>..<name-of-branch> - comparing branches l
+
+//remotly
+git log origin/<name-of-branch>..<name-of-branch> - coamparing
