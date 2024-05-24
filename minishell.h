@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 16:15:53 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:54:56 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_data
 	char	**commends;
 	int		start;
 	int		end;
+	int		num_of_com;
 }			t_data;
 
 // export_data_to_pipex.c

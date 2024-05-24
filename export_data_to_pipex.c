@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/24 08:56:16 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:00:10 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,16 @@ void	process_data(char **tmp, t_data *data, int j)
 	free(line);
 }
 
+void	count_commnads(t_data *data)
+{
+	int	res;
+
+	res = 0;
+	while (data->commends[res])
+		res++;
+	data->num_of_com = res;
+}
+
 t_data	export_data_to_pipex(char *argv)
 {
 	t_data	data;
@@ -126,6 +136,7 @@ t_data	export_data_to_pipex(char *argv)
 	write_to_infile(tmp, &data);
 	write_to_outfile(tmp, &data, 0, 0);
 	process_data(tmp, &data, 0);
+	count_commnads(&data);
 	while (tmp[i])
 		free(tmp[i ++]);
 	free(tmp);
@@ -138,8 +149,9 @@ int	main(void)
 	int		i;
 
 	i = 0;
-	data = export_data_to_pipex("< janek.txt cat | grep kot | awk '{print}' | cmd4 > end.txt asdf");
+	data = export_data_to_pipex("< janek.txt cat | cmd4 > end.txt");
 	printf("start: %d\nend: %d\n", data.start, data.end);
+	printf("Num of comm: %d\n", data.num_of_com);
 	printf("data.infile = %s\ndata.outfile = %s\n",
 		data.infile, data.outfile);
 	while (data.commends[i])

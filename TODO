@@ -11,9 +11,9 @@ strerror, perror, isatty, ttyname, ttyslot, ioctl,
 getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
-5. Make Makefile(pipex, libft); 
-6. 
+5. Make Makefile(pipex, libft);
 
+PRZECZYAJ!!!
 Kiedy cos takiego wpiszemy w program:
 < janek.txt cat | grep kot | awk '{print}' | cmd4 > end.txt asdf
 output jest taki: (niepoprawna komenda oraz outfile)
