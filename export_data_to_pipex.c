@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/23 16:40:24 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:56:16 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	main(void)
 	int		i;
 
 	i = 0;
-	data = export_data_to_pipex("      < janek.txt cat | grep kot | awk '{print }' | cmd4 > end.txt");
+	data = export_data_to_pipex("< janek.txt cat | grep kot | awk '{print}' | cmd4 > end.txt asdf");
 	printf("start: %d\nend: %d\n", data.start, data.end);
 	printf("data.infile = %s\ndata.outfile = %s\n",
 		data.infile, data.outfile);

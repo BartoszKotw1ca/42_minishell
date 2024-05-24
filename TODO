@@ -1,4 +1,3 @@
-1. Add libft to the project.
 2. Learn how branches works.
 3. Read about functions:
 readline, rl_clear_history, rl_on_new_line,
@@ -15,13 +14,12 @@ tgetnum, tgetstr, tgoto, tputs
 5. Make Makefile(pipex, libft); 
 6. 
 
-1. I added to main Makefile two makfiles:
-	-Janek 
-	-Bartek
-	We have to chose which one is better
-4. We imported pipex, but its not a libray so it
- should be compiling normally, not like a libray.
- 5. I did Makefile, but like i said and there was a problem
-  with read_file.c.
-stworzyc structa i co tam ma byc, zciagnac liste komend z tego 
-co uzytkownik pisal
+Kiedy cos takiego wpiszemy w program:
+< janek.txt cat | grep kot | awk '{print}' | cmd4 > end.txt asdf
+output jest taki: (niepoprawna komenda oraz outfile)
+data.infile = janek.txt
+data.outfile = (null)
+com: cat  
+com:  grep kot  
+com:  awk '{print}'  
+com:  cmd4 > end.txt asdf
