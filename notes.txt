@@ -1,0 +1,28 @@
+Git Branches
+
+git branch <new-branch> - creat new branch
+git branch <new-branch> <number-of-comm> - creat new branch in that point
+
+git checkout <other-branch> - change the branch(we can use that command in many fields)
+git switch <other-brnach> - change the branch(only for that)
+
+// local
+git branch -m <new-name> - change the name for the branch we are on
+git branch -m <old-name-branch> <new-name-branch> - change the name for the branch
+
+git branch - to see all branches
+
+// remotly - we can not create a new one but we can upload our local one
+git push -u origin <name-of-branch>
+
+git branch -v - show data connected with branchs
+git branch -d <branch-name> - delete a branch
+
+git merge <name-of-th-branch> - to merge the branches but in two different line
+git rebase <name-of-the-branch> - to merge the branches but in straight line 
+
+// locally
+git log <name-of-branch>..<name-of-branch> - comparing branches l
+
+//remotly
+git log origin/<name-of-branch>..<name-of-branch> - coamparing

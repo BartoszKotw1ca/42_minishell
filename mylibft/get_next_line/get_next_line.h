@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:53:48 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/04/04 07:46:08 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:54:09 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
 
 typedef struct s_gnl_list
 {
-	char			*str_buf;
+	char				*str_buf;
 	struct s_gnl_list	*next;
-}					g_list;
+}						t_lis;
 
-g_list	*find_last_node(g_list *list);
-int		is_newline(g_list *list);
-int		len_to_newline(g_list *list);
-void	dealloc(g_list **list, g_list *clean_node, char *buffer);
-void	polish_list(g_list **list);
-void	copy_str(g_list *list, char *str);
-void	append(g_list **list, char *buffer);
-void	create_list(g_list **list, int fd);
-char	*get_line(g_list *list);
+t_lis	*find_last_node(t_lis *list);
+int		is_newline(t_lis *list);
+int		len_to_newline(t_lis *list);
+void	dealloc(t_lis **list, t_lis *clean_node, char *buffer);
+void	polish_list(t_lis **list);
+void	copy_str(t_lis *list, char *str);
+void	append(t_lis **list, char *buffer);
+void	create_list(t_lis **list, int fd);
+char	*get_line(t_lis *list);
 char	*get_next_line(int fd);
 
 #endif

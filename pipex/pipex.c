@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:21:29 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/20 22:09:15 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:07:05 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	execute_p1(t_vars *vars)
 {
 	if (vars->in_file < 0)
-		return;
+		return ;
 	else
 	{
 		close(vars->p_fd[0]);

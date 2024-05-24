@@ -6,13 +6,13 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:53:04 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/04/03 17:00:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:53:12 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(g_list *list)
+char	*get_line(t_lis *list)
 {
 	int		str_len;
 	char	*next_str;
@@ -27,7 +27,7 @@ char	*get_line(g_list *list)
 	return (next_str);
 }
 
-int	is_newline(g_list *list)
+int	is_newline(t_lis *list)
 {
 	int	i;
 
@@ -47,13 +47,13 @@ int	is_newline(g_list *list)
 	return (0);
 }
 
-void	append(g_list **list, char *buffer)
+void	append(t_lis **list, char *buffer)
 {
-	g_list	*new_node;
-	g_list	*last_node;
+	t_lis	*new_node;
+	t_lis	*last_node;
 
 	last_node = find_last_node(*list);
-	new_node = malloc(sizeof(g_list));
+	new_node = malloc(sizeof(t_lis));
 	if (new_node == NULL)
 		return ;
 	if (last_node == NULL)
@@ -64,7 +64,7 @@ void	append(g_list **list, char *buffer)
 	new_node->next = NULL;
 }
 
-void	create_list(g_list **list, int fd)
+void	create_list(t_lis **list, int fd)
 {
 	int		read_num;
 	char	*buffer;
@@ -87,7 +87,7 @@ void	create_list(g_list **list, int fd)
 
 char	*get_next_line(int fd)
 {
-	static g_list	*list = NULL;
+	static t_lis	*list = NULL;
 	char			*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)

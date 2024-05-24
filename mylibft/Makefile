@@ -10,15 +10,15 @@ $(NAME):
 	ar rcs $(NAME) libft/*.o ft_printf/*.o get_next_line/*.o
 
 clean:
-	make clean -C libft
-	make clean -C ft_printf
-	make clean -C get_next_line
+	@make clean -C libft
+	@make clean -C ft_printf
+	@make clean -C get_next_line
 
 fclean: clean
-	make fclean -C libft
-	make fclean -C ft_printf
-	make fclean -C get_next_line
-	rm -f $(NAME)
+	@make fclean -C libft
+	@make fclean -C ft_printf
+	@make fclean -C get_next_line
+	@rm -f $(NAME)
 
 re: fclean all
 
