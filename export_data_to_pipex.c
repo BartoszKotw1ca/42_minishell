@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/24 10:00:10 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:15:18 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	count_commnads(t_data *data)
 	data->num_of_com = res;
 }
 
-t_data	export_data_to_pipex(char *argv)
+t_data	export_data_to_pipex(char *argv, char **envp)
 {
 	t_data	data;
 	char	**tmp;
@@ -137,25 +137,31 @@ t_data	export_data_to_pipex(char *argv)
 	write_to_outfile(tmp, &data, 0, 0);
 	process_data(tmp, &data, 0);
 	count_commnads(&data);
+	get_paths(&data, envp);
 	while (tmp[i])
 		free(tmp[i ++]);
 	free(tmp);
 	return (data);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	int		i;
+	int		pid;
 
 	i = 0;
-	data = export_data_to_pipex("< janek.txt cat | cmd4 > end.txt");
+	data = export_data_to_pipex(argv[1], envp);
 	printf("start: %d\nend: %d\n", data.start, data.end);
 	printf("Num of comm: %d\n", data.num_of_com);
 	printf("data.infile = %s\ndata.outfile = %s\n",
 		data.infile, data.outfile);
 	while (data.commends[i])
 		printf("com: %s \n", data.commends[i ++]);
+
+	printf("\n---- mini pipex starts here ----\n");
+	printf("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n\n");
+	mini_pipex(&data);
 	// that is the part which free all the memory
 	i = 0;
 	free(data.infile);
@@ -163,4 +169,8 @@ int	main(void)
 	while (data.commends[i])
 		free(data.commends[i ++]);
 	free(data.commends);
+	i = 0;
+	while (data.paths[i])
+		free(data.paths[i ++]);
+	free(data.paths);
 }
