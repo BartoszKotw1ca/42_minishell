@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 08:55:50 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:53:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,13 @@ void	write_to_outfile(char **tmp, t_data *data, int i, int j)
 	while (tmp[i])
 		i ++;
 	i --;
-	while (tmp[i - 1][j])
+	if (i == 0)
+	{
+		data->outfile = NULL;
+		data->end = 0;
+		return ;
+	}
+	while (i != 0 && tmp[i - 1][j])
 		j ++;
 	if (tmp[i - 1][0] == '>' && tmp[i - 1][1] == '\0')
 	{
@@ -125,42 +131,74 @@ void	count_commnads(t_data *data)
 	data->num_of_com = res;
 }
 
-t_data	export_data_to_pipex(char *argv)
+t_data	export_data_to_pipex(char *argv, char **envp)
 {
 	t_data	data;
 	char	**tmp;
 	int		i;
 
 	i = 0;
-	tmp = ft_split(argv, ' '); // freee it
+	tmp = ft_split(argv, ' ');
+	if (!tmp)
+	{
+		data.infile = NULL;
+		data.outfile = NULL;
+		data.start = 0;
+		data.end = 0;
+		data.commends = NULL;
+		data.num_of_com = 0;
+		data.paths = NULL;
+		return (data);
+	}
 	write_to_infile(tmp, &data);
 	write_to_outfile(tmp, &data, 0, 0);
 	process_data(tmp, &data, 0);
 	count_commnads(&data);
+	get_paths(&data, envp);
 	while (tmp[i])
 		free(tmp[i ++]);
 	free(tmp);
 	return (data);
 }
 
-// int	main(void)
-// {
-// 	t_data	data;
-// 	int		i;
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	data;
+	int		i;
+	int		pid;
 
-// 	i = 0;
-// 	data = export_data_to_pipex("< janek.txt cat | takni | cmd4 > end.txt");
-// 	printf("start: %d\nend: %d\n", data.start, data.end);
-// 	printf("Num of comm: %d\n", data.num_of_com);
-// 	printf("data.infile = %s\ndata.outfile = %s\n",
-// 		data.infile, data.outfile);
-// 	while (data.commends[i])
-// 		printf("com: %s \n", data.commends[i ++]);
-// 	// that is the part which free all the memory
-// 	i = 0;
-// 	free(data.infile);
-// 	free(data.outfile);
-// 	while (data.commends[i])
-// 		free(data.commends[i ++]);
-// 	free(data.commends);
-// }
+	i = 0;
+	data = export_data_to_pipex(argv[1], envp);
+	printf("start: %d\nend: %d\n", data.start, data.end);
+	printf("Num of comm: %d\n", data.num_of_com);
+	printf("data.infile = %s\ndata.outfile = %s\n",
+		data.infile, data.outfile);
+	if (data.commends != NULL)
+	{
+		while (data.commends[i])
+			printf("com: %s \n", data.commends[i ++]);
+	}
+	printf("\n---- mini pipex starts here ----\n");
+	printf("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n\n");
+	mini_pipex(&data);
+	// that is the part which free all the memory
+	i = 0;
+	free(data.infile);
+	free(data.outfile);
+	if (data.commends)
+	{
+		while (data.commends[i])
+			free(data.commends[i ++]);
+		// free(data.commends);
+	}
+	// while (data.commends[i])
+	// 	free(data.commends[i ++]);
+	free(data.commends);
+	i = 0;
+	if (data.commends)
+	{
+		while (data.paths[i])
+			free(data.paths[i ++]);
+	}
+	free(data.paths);
+}

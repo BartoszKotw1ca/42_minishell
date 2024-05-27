@@ -1,0 +1,5 @@
+// leaks & errors
+➜  42_minishell git:(Janek) ✗ valgrind ./a.out "ls -l | takfdas"
+
+// errors
+➜  42_minishell git:(Janek) ✗ valgrind ./a.out

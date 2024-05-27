@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 08:56:45 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:05:12 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main() {
 	while (i < 1)
 	{
 		line = readline("$> ");
-		// export_data_to_pipex(line);
+		export_data_to_pipex(line);
 		add_history(line);
 		            for (j = 0; j < counter; j++) {
                 // Simulate history display (can't directly access past commands)
