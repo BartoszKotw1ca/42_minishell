@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 12:08:56 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:11:54 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_process
 }	t_process;
 
 // export_data_to_pipex.c
-t_data	export_data_to_pipex(char *argv, char **envp);
+void	export_data_to_pipex(char *argv, char *path);
 
 // ft_listajoin.c
 char	*ft_listjoin(int start, int end, char **lista);

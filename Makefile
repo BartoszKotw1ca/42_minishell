@@ -3,7 +3,7 @@ FLAGS = -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
 # SRC = main.c export_data_to_pipex.c ft_listjoin.c
-SRC = export_data_to_pipex.c ft_listjoin.c mini_pipex.c mp_utils.c
+SRC = export_data_to_pipex.c ft_listjoin.c mini_pipex.c mp_utils.c main.c
 OBJDIR = Obj/
 OBJ := $(SRC:%.c=$(OBJDIR)%.o)
 
