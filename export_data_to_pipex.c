@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/24 10:00:10 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/27 08:55:50 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,24 +143,24 @@ t_data	export_data_to_pipex(char *argv)
 	return (data);
 }
 
-int	main(void)
-{
-	t_data	data;
-	int		i;
+// int	main(void)
+// {
+// 	t_data	data;
+// 	int		i;
 
-	i = 0;
-	data = export_data_to_pipex("< janek.txt cat | cmd4 > end.txt");
-	printf("start: %d\nend: %d\n", data.start, data.end);
-	printf("Num of comm: %d\n", data.num_of_com);
-	printf("data.infile = %s\ndata.outfile = %s\n",
-		data.infile, data.outfile);
-	while (data.commends[i])
-		printf("com: %s \n", data.commends[i ++]);
-	// that is the part which free all the memory
-	i = 0;
-	free(data.infile);
-	free(data.outfile);
-	while (data.commends[i])
-		free(data.commends[i ++]);
-	free(data.commends);
-}
+// 	i = 0;
+// 	data = export_data_to_pipex("< janek.txt cat | takni | cmd4 > end.txt");
+// 	printf("start: %d\nend: %d\n", data.start, data.end);
+// 	printf("Num of comm: %d\n", data.num_of_com);
+// 	printf("data.infile = %s\ndata.outfile = %s\n",
+// 		data.infile, data.outfile);
+// 	while (data.commends[i])
+// 		printf("com: %s \n", data.commends[i ++]);
+// 	// that is the part which free all the memory
+// 	i = 0;
+// 	free(data.infile);
+// 	free(data.outfile);
+// 	while (data.commends[i])
+// 		free(data.commends[i ++]);
+// 	free(data.commends);
+// }
