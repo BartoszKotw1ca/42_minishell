@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 09:07:07 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:19:14 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,10 @@ char	*ft_listjoin(int start, int end, char **lista);
 
 void	mini_pipex(t_data *data);
 void	get_paths(t_data *data, char **envp);
+char	*find_path(char *command, t_data *data);
+void	free_split(char **res);
+void	check_commands(t_process *p, t_data *data);
+void	print_error(char *mes1, char *mes2);
+
 
 #endif
