@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:26:21 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 12:37:34 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:56:48 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	print_history(t_list *lista)
 
 void	del_node(void *content)
 {
-	return ;
+	free(content);
 }
