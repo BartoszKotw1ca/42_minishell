@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 09:12:37 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:41:42 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ void	export_data_to_pipex(char *argv, char *path)
 		process_data(tmp, &data, 0);
 		count_commnads(&data);
 	}
+	printf("%s\n", data.outfile);
+	printf("%s\n", data.commends[0]);
 	data.paths = ft_split(path, ':');
 	mini_pipex(&data);
 	free_dataa(&data, tmp);
