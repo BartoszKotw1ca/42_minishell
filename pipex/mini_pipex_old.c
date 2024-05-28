@@ -3,56 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/28 18:17:46 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:17:45 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	free_split(char **res)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (res[i])
-// 	{
-// 		free(res[i]);
-// 		i++;
-// 	}
-// 	free(res);
-// }
-
-// static char	*find_path(char *command, t_data *data)
-// {
-// 	int		i;
-// 	char	*curr_path;
-// 	char	*prog_path;
-
-// 	if (!command)
-// 		return (NULL);
-// 	prog_path = ft_strjoin("/", command);
-// 	if (!prog_path)
-// 		return (NULL);
-// 	i = 0;
-// 	while (data->paths[i])
-// 	{
-// 		curr_path = ft_strjoin(data->paths[i], prog_path);
-// 		if (!curr_path)
-// 			return (NULL);
-// 		if (access(curr_path, F_OK) == 0)
-// 		{
-// 			free(prog_path);
-// 			return (curr_path);
-// 		}
-// 		free(curr_path);
-// 		i++;
-// 	}
-// 	free(prog_path);
-// 	return (ft_strjoin("", "no_prog"));
-// }
 
 static void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 {
@@ -87,6 +45,13 @@ static void	close_pipes(t_process *p, int i)
 	close(p->pipes[i - 1][1]);
 }
 
+static void	print_error(char *mes1, char *mes2)
+{
+	write(2, mes1, ft_strlen(mes1));
+	write(2, ": ", 3);
+	write(2, mes2, ft_strlen(mes2));
+}
+
 static void	run_commands(t_data *data, t_process *p, int i)
 {
 	while (i < data->num_of_com)
@@ -96,11 +61,11 @@ static void	run_commands(t_data *data, t_process *p, int i)
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
-			check_commands(p, data);
 			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
+			// check_commands(p, data);
 			if (i != 0)
 				waitpid(p->pid[i - 1], NULL, 0);
-			if (execve(p->path, p->args, NULL) != 0)
+			else if (execve(p->path, p->args, NULL) != 0)
 				perror("");
 			return ;
 		}
@@ -126,7 +91,7 @@ void	mini_pipex(t_data *data)
 	{
 		i = 0;
 		while (i < data->num_of_com - 1)
-			pipe(p.pipes[i++]);
+		pipe(p.pipes[i++]);
 		run_commands(data, &p, 0);
 	}
 	waitpid(main_pid, NULL, 0);

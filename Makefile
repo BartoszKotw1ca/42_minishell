@@ -8,6 +8,8 @@ SRC = pipex/export_data_to_pipex.c \
 		pipex/mini_pipex.c \
 		pipex/mp_utils.c \
 		history/history.c \
+		pipex/check_commands.c \
+		pipex/ft_split_except.c \
 		main.c
 
 OBJDIR = Obj/

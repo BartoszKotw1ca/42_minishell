@@ -12,13 +12,7 @@ tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft);
 
-PRZECZYAJ!!!
-Kiedy cos takiego wpiszemy w program:
-< janek.txt cat | grep kot | awk '{print}' | cmd4 > end.txt asdf
-output jest taki: (niepoprawna komenda oraz outfile)
-data.infile = janek.txt
-data.outfile = (null)
-com: cat  
-com:  grep kot  
-com:  awk '{print}'  
-com:  cmd4 > end.txt asdf
+!!! absolute path - Janek
+!!! single ' - Janek
+!!! handle << x  grep co
+!!! handle $ ' "
