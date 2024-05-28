@@ -1,4 +1,3 @@
-
 3. Read about functions:
 readline, rl_clear_history, rl_on_new_line,
 rl_replace_line, rl_redisplay, add_history,
@@ -12,3 +11,8 @@ getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft);
+
+!!! absolute path - Janek
+!!! single ' - Janek
+!!! handle << x  grep co
+!!! handle $ ' "
