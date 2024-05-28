@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 17:51:12 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 10:35:34 by bkotwica         ###   ########.fr       */
+/*   Created: 2024/05/28 09:26:21 by bkotwica          #+#    #+#             */
+/*   Updated: 2024/05/28 13:56:48 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	my_add_history(t_list **lista, char *str)
 {
-	t_list	*last;
+	ft_lstadd_back(lista, ft_lstnew(str));
+}
 
-	if (!*lst)
+void	print_history(t_list *lista)
+{
+	int	i;
+
+	i = 1;
+	while (lista)
 	{
-		*lst = new;
-		return ;
+		printf("%d  %s\n", i, (char *)lista->content);
+		lista = lista->next;
+		i ++;
 	}
-	last = ft_lstlast(*lst);
-	last -> next = new;
+}
+
+void	del_node(void *content)
+{
+	free(content);
 }
