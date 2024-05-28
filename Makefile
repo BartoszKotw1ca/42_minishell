@@ -3,7 +3,12 @@ FLAGS = -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
 # SRC = main.c export_data_to_pipex.c ft_listjoin.c
-SRC = export_data_to_pipex.c ft_listjoin.c mini_pipex.c mp_utils.c main.c
+SRC = pipex/export_data_to_pipex.c \
+		pipex/ft_listjoin.c \
+		pipex/mini_pipex.c \
+		pipex/mp_utils.c \
+		main.c
+
 OBJDIR = Obj/
 OBJ := $(SRC:%.c=$(OBJDIR)%.o)
 
@@ -36,34 +41,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all, clean, fclean, re
-
-# there was a problem with
-# read_file and i add this 	temp = "a";
-# we should change it
-# CC = cc
-# CFLAGS = -Wall -Wextra -Werror -g
-# NAME = minishell
-# LIBFT = pipex/libft/libft.a
-# SRC_FILES = main.c
-# OBJ_FILES = $(SRC_FILES:.c=.o)
-
-# all: $(NAME)
-
-# $(NAME): $(LIBFT) $(OBJ_FILES)
-# 	$(CC) $(CFLAGS) -lreadline -o $(NAME) $(SRC_FILES) -Lpipex/libft -lft
-
-# $(LIBFT):
-# 	make -C pipex/libft
-
-# %.o: %.c
-# 	$(CC) $(CFLAGS) -c $< -o $@
-
-# clean: 
-# 	make clean -C pipex/libft
-# 	rm -f $(OBJ_FILES)
-
-# fclean: clean
-# 	rm -f $(NAME)
-# 	make fclean -C pipex/libft
-
-# re: fclean all

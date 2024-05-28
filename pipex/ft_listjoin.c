@@ -6,11 +6,11 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:33:45 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/24 08:49:43 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:12:42 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 size_t	char_in_list(int start, int end, char **lista, int i)
 {

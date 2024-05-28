@@ -6,15 +6,14 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 14:11:54 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:07:07 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// #include "mylibft/mylibft.h"
-# include "pipex/libft/libft.h"
+# include "mylibft/mylibft.h"
 
 # include <readline/readline.h>
 # include <readline/history.h>

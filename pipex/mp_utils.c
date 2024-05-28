@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   mp_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 10:52:30 by jponieck          #+#    #+#             */
-/*   Updated: 2024/03/12 10:52:32 by jponieck         ###   ########.fr       */
+/*   Created: 2024/05/24 23:15:53 by jponieck          #+#    #+#             */
+/*   Updated: 2024/05/28 09:12:49 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	get_paths(t_data *data, char **envp)
 {
-	if (lst && new)
+	int	i;
+
+	i = 0;
+	while (envp[i])
 	{
-		(*new).next = *lst;
-		*lst = new;
+		if (ft_strnstr(envp[i], "PATH", 5))
+			data->paths = ft_split(envp[i], ':');
+		i++;
 	}
 }
