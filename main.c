@@ -6,14 +6,14 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 14:15:14 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:14:29 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // without readline leaks
-// valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+// valgrind --leak-check=full --show-leak-kinds=all --suppressions=TMP_TODO/readline.supp ./minishell
 
 int main() {
 	char *line;
