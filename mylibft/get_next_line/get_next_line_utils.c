@@ -6,13 +6,13 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 08:18:18 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/04/03 17:00:30 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:53:23 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-g_list	*find_last_node(g_list *list)
+t_lis	*find_last_node(t_lis *list)
 {
 	if (list == NULL)
 		return (NULL);
@@ -21,9 +21,9 @@ g_list	*find_last_node(g_list *list)
 	return (list);
 }
 
-void	dealloc(g_list **list, g_list *clean_node, char *buffer)
+void	dealloc(t_lis **list, t_lis *clean_node, char *buffer)
 {
-	g_list	*ex;
+	t_lis	*ex;
 
 	if (*list == NULL)
 		return ;
@@ -44,10 +44,10 @@ void	dealloc(g_list **list, g_list *clean_node, char *buffer)
 	}
 }
 
-void	polish_list(g_list **list)
+void	polish_list(t_lis **list)
 {
-	g_list	*last_node;
-	g_list	*clean_node;
+	t_lis	*last_node;
+	t_lis	*clean_node;
 	int		i;
 	int		j;
 	char	*buffer;
@@ -55,7 +55,7 @@ void	polish_list(g_list **list)
 	i = 0;
 	j = 0;
 	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	clean_node = malloc(sizeof(g_list));
+	clean_node = malloc(sizeof(t_lis));
 	if (buffer == NULL || clean_node == NULL)
 		return ;
 	last_node = find_last_node(*list);
@@ -69,7 +69,7 @@ void	polish_list(g_list **list)
 	dealloc(list, clean_node, buffer);
 }
 
-void	copy_str(g_list *list, char *str)
+void	copy_str(t_lis *list, char *str)
 {
 	int	i;
 	int	j;
@@ -95,7 +95,7 @@ void	copy_str(g_list *list, char *str)
 	str[j] = '\0';
 }
 
-int	len_to_newline(g_list *list)
+int	len_to_newline(t_lis *list)
 {
 	int	i;
 	int	j;
