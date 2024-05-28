@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 19:16:48 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:24:00 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int main() {
 		tmp = readline("$> ");
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
+		printf("line = %s\n", line);
 		if ((int)line[0] != 0 && same(history, line) == 0)
 		{
 			my_add_history(&history, ft_strdup(line));
@@ -71,8 +72,8 @@ int main() {
 			break;
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
-		else
-			export_data_to_pipex(line, path);
+		// else
+			// export_data_to_pipex(line, path);
 		free(line);
 	}
 	ft_lstclear(&history, del_node);
