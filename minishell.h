@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 09:07:07 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:30:22 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ typedef struct s_process
 	int		(*pipes)[2];
 }	t_process;
 
+typedef struct s_history
+{
+	void			*content;
+	struct s_list	*next;
+	int				num;
+}					t_history;
+
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, char *path);
 
@@ -58,5 +65,10 @@ char	*ft_listjoin(int start, int end, char **lista);
 
 void	mini_pipex(t_data *data);
 void	get_paths(t_data *data, char **envp);
+
+// history.c
+void	my_add_history();
+void	del_node(void *content);
+void	print_history(t_list *lista);
 
 #endif
