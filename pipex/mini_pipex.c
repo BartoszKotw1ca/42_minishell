@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/28 13:33:22 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:00:58 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ static void	close_pipes(t_process *p, int i)
 	close(p->pipes[i - 1][1]);
 }
 
-static void	print_error(char *mes1, char *mes2)
-{
-	write(2, mes1, ft_strlen(mes1));
-	write(2, ": ", 3);
-	write(2, mes2, ft_strlen(mes2));
-}
+// static void	print_error(char *mes1, char *mes2)
+// {
+// 	write(2, mes1, ft_strlen(mes1));
+// 	write(2, ": ", 3);
+// 	write(2, mes2, ft_strlen(mes2));
+// }
 
 static void	run_commands(t_data *data, t_process *p, int i)
 {
@@ -133,7 +133,7 @@ void	mini_pipex(t_data *data)
 	{
 		i = 0;
 		while (i < data->num_of_com - 1)
-		pipe(p.pipes[i++]);
+			pipe(p.pipes[i++]);
 		run_commands(data, &p, 0);
 	}
 	waitpid(main_pid, NULL, 0);

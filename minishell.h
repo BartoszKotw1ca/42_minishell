@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 15:47:32 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:20:17 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ char	*find_path(char *command, t_data *data);
 void	free_split(char **res);
 void	check_commands(t_process *p, t_data *data);
 void	print_error(char *mes1, char *mes2);
+char	**ft_split_except(char const *s, char c, char e);
 
 #endif
