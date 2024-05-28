@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/27 14:13:03 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:04:03 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	in_the_middle(char	**tmp, t_data *data, int i, int j)
 int	check_if_zero(int *i, t_data *data, int j, char **tmp)
 {
 	(*i) --;
-	if (i == 0)
+	if (*i == 0)
 	{
 		data->outfile = NULL;
 		data->end = 0;
