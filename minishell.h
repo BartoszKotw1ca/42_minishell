@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 11:30:22 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:39:58 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,6 @@ typedef struct s_process
 	int		*pid;
 	int		(*pipes)[2];
 }	t_process;
-
-typedef struct s_history
-{
-	void			*content;
-	struct s_list	*next;
-	int				num;
-}					t_history;
 
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, char *path);
