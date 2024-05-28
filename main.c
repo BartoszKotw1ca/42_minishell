@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 19:16:48 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:56:33 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,42 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
+void	create_term_file(char val)
+{
+	int fd = open("term", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	write(fd, &val, 1);
+	close(fd);
+}
+
+int	check_term()
+{
+	char res;
+
+	int fd = open("term", O_RDONLY);
+	read(fd, &res, 1);
+	close(fd);
+	return (res);
+}
+
 int main() {
 	char	*line;
 	char	*path;
 	char	*tmp;
 	int		i = 0;
 	t_list	*history;
+	int		terminate;
 	// struct sigaction sa;
 
 	// sa.sa_handler = ctr_c_sig_handler;
 	// sa.sa_flags = SA_RESTART;
 	// sigaction(2, &sa, NULL);
+	create_term_file('0');
 	history = NULL;
 	path = getenv("PATH");
 	while (1)
 	{
+		if (check_term() == '1')
+			break;
 		tmp = readline("$> ");
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
@@ -68,7 +89,7 @@ int main() {
 			add_history(line);
 		}
 		if (ft_strncmp(line, "exit", 4) == 0)
-			break;
+			create_term_file('1');
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
 		else

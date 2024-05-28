@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 17:20:17 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:13:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "mylibft/mylibft.h"
 
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "readline/readline.h"
+# include "readline/history.h"
 # include <stdio.h>
 
 # include <stdlib.h>

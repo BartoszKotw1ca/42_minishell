@@ -19,14 +19,14 @@ all: $(NAME)
 	@echo "Compilation completed."
 
 $(NAME): mylibft/mylibft.a $(OBJ)
-	@cc $(FLAGS) -lreadline $^ -o $@ $(LIB)
+	@cc $(FLAGS) -L/readline -I/readline  $^ -o $@ $(LIB) -lreadline
 
 $(OBJDIR)%.o: %.c
 	@mkdir -p $(@D)
-	@cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c -L/readline -I/readline -lreadline $< -o $@
 
 %.o: %.c
-	@cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c -L/readline -I/readline -lreadline $< -o $@
 
 mylibft/mylibft.a:
 	@make -s -C mylibft
