@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 12:27:51 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:03:40 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	ctr_c_sig_handler(int sig)
 {
 	// printf("%d\n", sig);
 	(void)sig;
-	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	write(1, "\n", 1);
 	rl_redisplay();
 	
 }
@@ -70,16 +70,18 @@ int main() {
 	int		i = 0;
 	t_list	*history;
 	int		terminate;
-	// struct sigaction sa;
+	struct sigaction sa;
 
-	// sa.sa_handler = ctr_c_sig_handler;
-	// sa.sa_flags = SA_RESTART;
-	// sigaction(2, &sa, NULL);
+	sa.sa_handler = ctr_c_sig_handler;
+	sa.sa_flags = SA_RESTART;
 	create_term_file('0');
 	history = NULL;
 	path = getenv("PATH");
+	sigaction(2, &sa, NULL);
 	while (1)
 	{
+		int	pid = getpid();
+		printf("pid: %d\n", pid);
 		if (check_term() == '1')
 			break;
 		tmp = readline("$> ");
@@ -97,6 +99,7 @@ int main() {
 		else
 			split_jobs(line, path);
 		free(line);
+		rl_on_new_line();
 	}
 	ft_lstclear(&history, del_node);
 	rl_clear_history();
