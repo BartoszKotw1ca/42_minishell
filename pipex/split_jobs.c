@@ -6,24 +6,30 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 10:05:13 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:49:25 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+// in this file we are checking if the line is equal to "<<" and if it is we are writing to file
+// if not we are exporting data to pipex
+// so we can say that we are spliting the jobs
+
+//that function check if the line after << is empty
 int	check_if_ok(char *line, int i)
 {
 	while (line[i] && line[i] == ' ')
 		i++;
 	if (line[i] == '\0')
 	{
-		printf("%s", "parse error near \'\\n\'");
+		printf("%s", "parse error near \'\\n\'\n");
 		return (1);
 	}
 	return (0);
 }
 
+// free the list where is all line
 void	free_list(char **splited_line, int fd, int i)
 {
 	while (splited_line[i])
@@ -32,6 +38,7 @@ void	free_list(char **splited_line, int fd, int i)
 	close(fd);
 }
 
+// change the line to "< heredoc.txt" insted of << "something"
 char	*change_the_line(char **splited_line, int i)
 {
 	char *line;
@@ -52,6 +59,7 @@ char	*change_the_line(char **splited_line, int i)
 	return (line);
 }
 
+// check if the line is equal what is after << "something"
 int	check_if_line_equal(int	fd, char **splited_line, char *tmp)
 {
 	tmp = readline("heredoc>");
@@ -69,6 +77,7 @@ int	check_if_line_equal(int	fd, char **splited_line, char *tmp)
 	return (0);
 }
 
+// write to file the lines after << "something"
 char	*write_to_file(char *line)
 {
 	char	**splited_line;
@@ -88,6 +97,7 @@ char	*write_to_file(char *line)
 	return (linee);
 }
 
+// split the job and export data to pipex
 int	split_jobs(char *line, char *path)
 {
 	char *res;

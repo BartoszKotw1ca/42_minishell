@@ -14,5 +14,5 @@ tgetnum, tgetstr, tgoto, tputs
 
 !!! absolute path - Janek
 !!! single ' - Janek
-!!! handle << x  grep co
+!!! handle << x  grep co -- It SHOULD work
 !!! handle $ ' "

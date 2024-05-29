@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 13:32:50 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:51:18 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// that file contains the functions that should write data from line
+// to our t_data structure
 
 char	*write_to(char *str, int len)
 {

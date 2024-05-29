@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 09:58:01 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:27:51 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 // without readline leaks
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=TMP_TODO/readline.supp ./minishell
+// powoduje leaky zwiazane z forkami(child)
+// valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=TMP_TODO/readline.supp ./minishell
 
 void	ctr_c_sig_handler(int sig)
 {
 	// printf("%d\n", sig);
 	(void)sig;
 	write(1, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 	
 }
 
@@ -83,7 +85,6 @@ int main() {
 		tmp = readline("$> ");
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
-		printf("line = %s\n", line);
 		if ((int)line[0] != 0 && same(history, line) == 0)
 		{
 			my_add_history(&history, ft_strdup(line));
@@ -99,5 +100,6 @@ int main() {
 	}
 	ft_lstclear(&history, del_node);
 	rl_clear_history();
+	// unlink("term");
 	return 0;
 }
