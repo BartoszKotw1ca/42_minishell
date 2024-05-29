@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 08:34:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:58:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int main() {
 			create_term_file('1');
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
-		// else
-			// export_data_to_pipex(line, path);
+		else
+			split_jobs(line, path);
 		free(line);
 	}
 	ft_lstclear(&history, del_node);

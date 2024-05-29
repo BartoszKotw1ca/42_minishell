@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:33:45 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 09:12:42 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:40:02 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*ft_listjoin(int start, int end, char **lista)
 	i = 0;
 	len = char_in_list(start, end, lista, 0);
 	joined = malloc(sizeof(char) * (len + 1));
+	if (!joined)
+		return (NULL);
 	if (!joined)
 		return (NULL);
 	len = 0;
