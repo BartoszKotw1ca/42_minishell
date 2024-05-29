@@ -3,56 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/28 18:17:46 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:19:15 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	free_split(char **res)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (res[i])
-// 	{
-// 		free(res[i]);
-// 		i++;
-// 	}
-// 	free(res);
-// }
-
-// static char	*find_path(char *command, t_data *data)
-// {
-// 	int		i;
-// 	char	*curr_path;
-// 	char	*prog_path;
-
-// 	if (!command)
-// 		return (NULL);
-// 	prog_path = ft_strjoin("/", command);
-// 	if (!prog_path)
-// 		return (NULL);
-// 	i = 0;
-// 	while (data->paths[i])
-// 	{
-// 		curr_path = ft_strjoin(data->paths[i], prog_path);
-// 		if (!curr_path)
-// 			return (NULL);
-// 		if (access(curr_path, F_OK) == 0)
-// 		{
-// 			free(prog_path);
-// 			return (curr_path);
-// 		}
-// 		free(curr_path);
-// 		i++;
-// 	}
-// 	free(prog_path);
-// 	return (ft_strjoin("", "no_prog"));
-// }
 
 static void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 {
@@ -121,15 +79,9 @@ void	mini_pipex(t_data *data)
 
 	p.pipes = malloc((data->num_of_com - 1) * sizeof(int[2]));
 	p.pid = malloc(data->num_of_com * sizeof(int));
-	main_pid = fork();
-	if (main_pid == 0)
-	{
-		i = 0;
-		while (i < data->num_of_com - 1)
-			pipe(p.pipes[i++]);
-		run_commands(data, &p, 0);
-	}
-	waitpid(main_pid, NULL, 0);
+	while (i < data->num_of_com - 1)
+		pipe(p.pipes[i++]);
+	run_commands(data, &p, 0);
 	free (p.pipes);
 	free (p.pid);
 }

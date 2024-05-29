@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 14:03:40 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:22:35 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int main() {
 	char	*tmp;
 	int		i = 0;
 	t_list	*history;
-	int		terminate;
+	// int		terminate;
 	struct sigaction sa;
 
 	sa.sa_handler = ctr_c_sig_handler;
 	sa.sa_flags = SA_RESTART;
-	create_term_file('0');
+	// create_term_file('0');
 	history = NULL;
 	path = getenv("PATH");
 	sigaction(2, &sa, NULL);
@@ -82,8 +82,8 @@ int main() {
 	{
 		int	pid = getpid();
 		printf("pid: %d\n", pid);
-		if (check_term() == '1')
-			break;
+		// if (check_term() == '1')
+			// break;
 		tmp = readline("$> ");
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
@@ -93,7 +93,8 @@ int main() {
 			add_history(line);
 		}
 		if (ft_strncmp(line, "exit", 4) == 0)
-			create_term_file('1');
+			break ;
+			// create_term_file('1');
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
 		else
