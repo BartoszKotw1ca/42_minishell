@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 11:44:36 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/30 14:39:49 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:04:07 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,21 @@ void	**back_to_original(char **splited, int i, int j)
 	}
 }
 
-char	**ft_split_except(char *src, char c, char e)
+char	**ft_split_except(char *src, char c, char e, char f)
 {
-	char	*src_new;
+	char	*src_new1;
+	char	*src_new2;
 	char	**splited;
 
-	src_new = prepare_string(src, c, e);
-	splited = ft_split(src_new, c);
+	src_new1 = prepare_string(src, c, e);
+	if (f != 0)
+		src_new2 = prepare_string(src_new1, c, f);
+	else
+		src_new2 = ft_strjoin("", src_new1);
+	splited = ft_split(src_new2, c);
 	back_to_original(splited, 0, 0);
-	free(src_new);
+	free(src_new1);
+	free(src_new2);
 	return (splited);
 }
 

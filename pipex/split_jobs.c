@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_jobs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 13:53:31 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:35:32 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*write_to_file(char *line)
 	char	*tmp;
 	char	*linee;
 
-	splited_line = ft_split_except(line, ' ', 39);
+	splited_line = ft_split_except(line, ' ', 39, 34);
 	if (!splited_line)
 		return (NULL);
 	fd = open("heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
