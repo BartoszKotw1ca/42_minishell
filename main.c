@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 19:22:35 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:38:29 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int main() {
 	while (1)
 	{
 		int	pid = getpid();
-		printf("pid: %d\n", pid);
+		// printf("pid: %d\n", pid);
 		// if (check_term() == '1')
 			// break;
 		tmp = readline("$> ");

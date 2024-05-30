@@ -12,7 +12,10 @@ tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft);
 
-!!! absolute path - Janek
-!!! single ' - Janek
+👍 !!! absolute path - Janek
+👍 !!! single ' - Janek
+👍 !!! insert ENV VARS to commands - Janek
 !!! handle << x  grep co -- It SHOULD work
 !!! handle $ ' "
+
+!!! use split except while spliting | ( | inside single quotes will be ignored)
