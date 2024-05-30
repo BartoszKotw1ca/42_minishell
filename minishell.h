@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 09:59:49 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:11:19 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	get_paths(t_data *data, char **envp);
 void	my_add_history();
 void	del_node(void *content);
 void	print_history(t_list *lista);
-char	*find_path(char *command, t_data *data);
+char	*find_path(char *command, t_data *data, int i);
 void	free_split(char **res);
 void	check_commands(t_process *p, t_data *data);
 void	print_error(char *mes1, char *mes2);
-char	**ft_split_except(char const *s, char c, char e);
+char	**ft_split_except(char *s, char c, char e);
 int		split_jobs(char *line, char *path);
 
 #endif

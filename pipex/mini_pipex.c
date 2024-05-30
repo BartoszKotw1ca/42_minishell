@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/29 19:19:15 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:04:13 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	run_commands(t_data *data, t_process *p, int i)
 {
 	while (i < data->num_of_com)
 	{
-		p->args = ft_split(data->commends[i], ' ');
-		p->path = find_path(p->args[0], data);
+		p->args = ft_split_except(data->commends[i], ' ', 39);
+		p->path = find_path(p->args[0], data, 0);
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
