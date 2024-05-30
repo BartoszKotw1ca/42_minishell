@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/30 20:09:08 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:42:40 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,50 +64,45 @@ static char	*read_var_name(char *src)
 	return (var_name);
 }
 
-static void	update_arg(t_process *p, int i, char *var_value)
+static void	update_arg(t_data *d, int i, char *var_value)
 {
 	char	*dollar;
 	char	*var_end;
 	char	*temp1;
 	char	*temp2;
 
-	dollar = ft_strchr(p->args[i], '$');
+	dollar = ft_strchr(d->commends[i], '$');
 	var_end = ft_strchr(dollar, ' ');
 	if (!var_end)
 		var_end = dollar + ft_strlen(dollar);
 	*dollar = 0;
-	temp1 = ft_strjoin(p->args[i], var_value);
+	temp1 = ft_strjoin(d->commends[i], var_value);
 	temp2 = ft_strjoin(temp1, var_end);
-	free(p->args[i]);
-	p->args[i] = temp2;
+	free(d->commends[i]);
+	d->commends[i] = temp2;
 	free(temp1);
 }
 
-static void	check_args(t_process *p, int i, int j)
+static void	check_args(t_data *d, int i, int j)
 {
 	char	*var_name;
 	char	*var_value;
 	int		in_sngl;
 
-	while (p->args[i])
+	in_sngl = -1;
+	while (d->commends[i][j])
 	{
-		in_sngl = -1;
-		while (p->args[i][j])
+		if (d->commends[i][j] == 39)
+			in_sngl *= -1;
+		if (d->commends[i][j] == '$' && in_sngl == -1)
 		{
-			if (p->args[i][j] == 39)
-				in_sngl *= -1;
-			if (p->args[i][j] == '$' && in_sngl == -1)
-			{
-				var_name = read_var_name(&p->args[i][j] + 1);
-				var_value = getenv(var_name);
-				if (var_value)
-					update_arg(p, i, var_value);
-				free(var_name);
-			}
-			j++;
+			var_name = read_var_name(&d->commends[i][j] + 1);
+			var_value = getenv(var_name);
+			if (var_value)
+				update_arg(d, i, var_value);
+			free(var_name);
 		}
-		j = 0;
-		i++;
+		j++;
 	}
 }
 
@@ -115,8 +110,8 @@ static void	run_commands(t_data *data, t_process *p, int i)
 {
 	while (i < data->num_of_com)
 	{
+		check_args(data, i, 0);
 		p->args = ft_split_except(data->commends[i], ' ', 39);
-		check_args(p, 0, 0);
 		p->path = find_path(p->args[0], data, 0);
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
