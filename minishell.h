@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/30 20:52:48 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:16:31 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ typedef struct s_process
 	int		*pid;
 	int		(*pipes)[2];
 }	t_process;
+
+typedef struct s_split_data
+{
+	char	*src;
+	char	*new;
+	char	c;
+	char	e;
+	char	f;
+	int		in_ef;
+}	t_split_data;
 
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, char *path);

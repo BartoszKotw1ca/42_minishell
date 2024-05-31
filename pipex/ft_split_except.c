@@ -6,37 +6,35 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 11:44:36 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/30 21:04:07 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:13 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*prepare_string(char *src, char c, char e)
+void	*prepare_string(t_split_data *sd, int i)
 {
-	char	*new;
-	int		i;
-	int		in_e;
-
-	i = 0;
-	in_e = -1;
-	new = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	while (*src)
+	while (*sd->src)
 	{
-		if (*src == e)
+		if (*sd->src == sd->in_ef)
 		{
-			in_e *= -1;
-			src++;
+			sd->in_ef = 0;
+			sd->src++;
+			continue;
+		}
+		if ((*sd->src == sd->e || *sd->src == sd->f) && sd->in_ef == 0)
+		{
+			sd->in_ef = *sd->src;
+			sd->src++;
 			continue ;
 		}
-		if (*src == c && in_e == 1)
-			new[i] = -5;
+		if (*sd->src == sd->c && sd->in_ef != 0)
+			sd->new[i] = -5;
 		else
-			new[i] = *src;
-		src++;
+			sd->new[i] = *sd->src;
+		sd->src++;
 		i++;
 	}
-	return (new);
 }
 
 void	**back_to_original(char **splited, int i, int j)
@@ -56,19 +54,20 @@ void	**back_to_original(char **splited, int i, int j)
 
 char	**ft_split_except(char *src, char c, char e, char f)
 {
-	char	*src_new1;
-	char	*src_new2;
-	char	**splited;
+	char			*src_new;
+	char			**splited;
+	t_split_data	sd;
 
-	src_new1 = prepare_string(src, c, e);
-	if (f != 0)
-		src_new2 = prepare_string(src_new1, c, f);
-	else
-		src_new2 = ft_strjoin("", src_new1);
-	splited = ft_split(src_new2, c);
+	sd.src = src;
+	sd.new = ft_calloc(ft_strlen(src) + 1, sizeof(char));
+	sd.c = c;
+	sd.e = e;
+	sd.f = f;
+	sd.in_ef = 0;
+	prepare_string(&sd, 0);
+	splited = ft_split(sd.new, c);
 	back_to_original(splited, 0, 0);
-	free(src_new1);
-	free(src_new2);
+	free(sd.new);
 	return (splited);
 }
 

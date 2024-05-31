@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/30 20:51:59 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:25:15 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*read_var_name(char *src)
 	if (!end)
 		end = src + ft_strlen(src);
 	var_name = calloc(end - src + 1, sizeof(char));
-	while (&src[i] != end)
+	while (&src[i] != end && src[i] != 34)
 	{
 		var_name[i] = src[i];
 		i++;
@@ -87,14 +87,16 @@ static void	check_args(t_data *d, int i, int j)
 {
 	char	*var_name;
 	char	*var_value;
-	int		in_sngl;
+	int		in_quotes;
 
-	in_sngl = -1;
+	in_quotes = 0;
 	while (d->commends[i][j])
 	{
-		if (d->commends[i][j] == 39)
-			in_sngl *= -1;
-		if (d->commends[i][j] == '$' && in_sngl == -1)
+		if ((d->commends[i][j] == 39 || d->commends[i][j] == 34) && in_quotes == 0)
+			in_quotes = d->commends[i][j];
+		else if (d->commends[i][j] == in_quotes)
+			in_quotes = 0;
+		if (d->commends[i][j] == '$' && in_quotes != 39)
 		{
 			var_name = read_var_name(&d->commends[i][j] + 1);
 			var_value = getenv(var_name);
