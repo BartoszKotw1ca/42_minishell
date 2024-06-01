@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/31 22:25:15 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:44:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ static void	check_args(t_data *d, int i, int j)
 		if (d->commends[i][j] == '$' && in_quotes != 39)
 		{
 			var_name = read_var_name(&d->commends[i][j] + 1);
-			var_value = getenv(var_name);
+			if (var_name[0] == '?')
+				var_value = read_file("status");
+			else
+				var_value = getenv(var_name);
 			if (var_value)
 				update_arg(d, i, var_value);
 			free(var_name);
@@ -122,9 +125,9 @@ static void	run_commands(t_data *data, t_process *p, int i)
 			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
 			if (i != 0)
 				waitpid(p->pid[i - 1], NULL, 0);
-			if (execve(p->path, p->args, NULL) != 0)
-				perror("");
-			return ;
+			execve(p->path, p->args, NULL);
+			update_file("status", '1');
+			exit (1);
 		}
 		if (i > 0)
 			close_pipes(p, i);

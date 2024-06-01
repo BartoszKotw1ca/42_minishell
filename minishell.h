@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/31 22:16:31 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:11:49 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void	check_commands(t_process *p, t_data *data);
 void	print_error(char *mes1, char *mes2);
 char	**ft_split_except(char *s, char c, char e, char f);
 int		split_jobs(char *line, char *path);
+void	update_file(char *name, char content);
+char	*read_file(char *name);
 
 #endif

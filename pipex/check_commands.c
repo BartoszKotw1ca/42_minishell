@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/30 15:24:44 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:31:47 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ void	check_commands(t_process *p, t_data *data)
 	if (ft_strncmp("no_prog", p->path, 7) == 0)
 	{
 		print_error(p->args[0], "command not found\n");
-		free_split(p->args);
+		// free_split(p->args);
 		free(p->path);
-		p->args = ft_split("echo -n", ' ');
-		p->path = find_path("echo", data, 0);
+		// p->args = ft_split("echo -n", ' ');
+		// p->path = find_path("echo", data, 0);
+		p->path = ft_strjoin("/usr/bin/", p->args[0]);
 	}
 }

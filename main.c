@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/30 18:38:29 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:31:02 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,21 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
-void	create_term_file(char val)
+void	update_file(char *name, char content)
 {
-	int fd = open("term", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	write(fd, &val, 1);
+	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	write(fd, &content, sizeof(char));
 	close(fd);
 }
 
-int	check_term()
+char	*read_file(char *name)
 {
-	char res;
+	char	*res;
+	int		fd;
 
-	int fd = open("term", O_RDONLY);
-	read(fd, &res, 1);
+	res = calloc(2, sizeof(char));
+	fd = open(name, O_RDONLY);
+	read(fd, &res[0], sizeof(char));
 	close(fd);
 	return (res);
 }
@@ -72,9 +74,9 @@ int main() {
 	// int		terminate;
 	struct sigaction sa;
 
+	update_file("status", '0');
 	sa.sa_handler = ctr_c_sig_handler;
 	sa.sa_flags = SA_RESTART;
-	// create_term_file('0');
 	history = NULL;
 	path = getenv("PATH");
 	sigaction(2, &sa, NULL);
