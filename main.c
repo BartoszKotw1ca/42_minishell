@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/01 19:31:02 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:49:25 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
-void	update_file(char *name, char content)
+void	update_file(char *name, char *content)
 {
 	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	write(fd, &content, sizeof(char));
+	write(fd, content, ft_strlen(content));
 	close(fd);
 }
 
@@ -58,9 +58,9 @@ char	*read_file(char *name)
 	char	*res;
 	int		fd;
 
-	res = calloc(2, sizeof(char));
+	res = calloc(4, sizeof(char));
 	fd = open(name, O_RDONLY);
-	read(fd, &res[0], sizeof(char));
+	read(fd, res, 3);
 	close(fd);
 	return (res);
 }
@@ -74,7 +74,6 @@ int main() {
 	// int		terminate;
 	struct sigaction sa;
 
-	update_file("status", '0');
 	sa.sa_handler = ctr_c_sig_handler;
 	sa.sa_flags = SA_RESTART;
 	history = NULL;

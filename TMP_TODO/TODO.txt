@@ -22,7 +22,7 @@ tgetnum, tgetstr, tgoto, tputs
 
 3.6.24
 
-1. read $ var until non alphanumeric 	JP
+1. read $ var until non alphanumeric 	JP 👍
 2. <<x not working, << x works		BK
 3. print output after finishing heredoc	BK
 4. outfile mode				BK -> JP
@@ -33,3 +33,4 @@ tgetnum, tgetstr, tgoto, tputs
 9. change env command to echo				BK
 10. export... use execve with args and env array	JP
 11. unset...						JP
+12. nonexisting infile
