@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void	*prepare_string(t_split_data *sd, int i)
+void	prepare_string(t_split_data *sd, int i)
 {
 	while (*sd->src)
 	{
@@ -37,7 +37,7 @@ void	*prepare_string(t_split_data *sd, int i)
 	}
 }
 
-void	**back_to_original(char **splited, int i, int j)
+void	back_to_original(char **splited, int i, int j)
 {
 	while(splited[i])
 	{

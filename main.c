@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/01 19:31:02 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:33:51 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main() {
 	sa.sa_flags = SA_RESTART;
 	history = NULL;
 	path = getenv("PATH");
-	sigaction(2, &sa, NULL);
+	// sigaction(2, &sa, NULL);
 	while (1)
 	{
 		int	pid = getpid();
@@ -95,7 +95,10 @@ int main() {
 			add_history(line);
 		}
 		if (ft_strncmp(line, "exit", 4) == 0)
+		{
+			free(line);
 			break ;
+		}
 			// create_term_file('1');
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
@@ -109,3 +112,27 @@ int main() {
 	// unlink("term");
 	return 0;
 }
+
+// int main(void)
+// {
+// 	split_jobs("<<tak", getenv("PATH"));
+// }
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int main()
+// {
+//     int fd;
+//     char *line;
+// 	char *argv = "heredoc.txt";
+
+//     fd = open(argv, O_RDONLY);
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s\n", line);
+//         free(line);
+//     }
+
+//     close(fd);
+//     return 0;
+// }

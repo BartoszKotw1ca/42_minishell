@@ -33,3 +33,4 @@ tgetnum, tgetstr, tgoto, tputs
 9. change env command to echo				BK
 10. export... use execve with args and env array	JP
 11. unset...						JP
+12. clean up struct t_data
