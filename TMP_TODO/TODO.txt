@@ -12,7 +12,25 @@ tgetnum, tgetstr, tgoto, tputs
 4. Import pipex. 
 5. Make Makefile(pipex, libft);
 
-!!! absolute path - Janek
-!!! single ' - Janek
-!!! handle << x  grep co
+👍 !!! absolute path - Janek
+👍 !!! single ' - Janek
+👍 !!! insert ENV VARS to commands - Janek
+!!! handle << x  grep co -- It SHOULD work
 !!! handle $ ' "
+
+!!! use split except while spliting | ( | inside single quotes will be ignored)
+
+3.6.24
+
+1. read $ var until non alphanumeric 	JP
+2. <<x not working, << x works		BK
+3. print output after finishing heredoc	BK
+4. outfile mode				BK -> JP
+5. make $? work				JP
+6. hande echo -n			JP
+7. if cd is the only one or the last arg run chdir 	BK
+8. if cd is between pipes do nothing			JP		
+9. change env command to echo				BK
+10. export... use execve with args and env array	JP
+11. unset...						JP
+12. clean up struct t_data

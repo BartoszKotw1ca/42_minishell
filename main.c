@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/29 08:34:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:33:51 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 // without readline leaks
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=TMP_TODO/readline.supp ./minishell
+// powoduje leaky zwiazane z forkami(child)
+// valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --suppressions=TMP_TODO/readline.supp ./minishell
 
 void	ctr_c_sig_handler(int sig)
 {
 	// printf("%d\n", sig);
 	(void)sig;
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	write(1, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
+	rl_redisplay();
 	
 }
 
@@ -44,19 +46,21 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
-void	create_term_file(char val)
+void	update_file(char *name, char content)
 {
-	int fd = open("term", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	write(fd, &val, 1);
+	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	write(fd, &content, sizeof(char));
 	close(fd);
 }
 
-int	check_term()
+char	*read_file(char *name)
 {
-	char res;
+	char	*res;
+	int		fd;
 
-	int fd = open("term", O_RDONLY);
-	read(fd, &res, 1);
+	res = calloc(2, sizeof(char));
+	fd = open(name, O_RDONLY);
+	read(fd, &res[0], sizeof(char));
 	close(fd);
 	return (res);
 }
@@ -67,37 +71,68 @@ int main() {
 	char	*tmp;
 	int		i = 0;
 	t_list	*history;
-	int		terminate;
-	// struct sigaction sa;
+	// int		terminate;
+	struct sigaction sa;
 
-	// sa.sa_handler = ctr_c_sig_handler;
-	// sa.sa_flags = SA_RESTART;
-	// sigaction(2, &sa, NULL);
-	create_term_file('0');
+	update_file("status", '0');
+	sa.sa_handler = ctr_c_sig_handler;
+	sa.sa_flags = SA_RESTART;
 	history = NULL;
 	path = getenv("PATH");
+	// sigaction(2, &sa, NULL);
 	while (1)
 	{
-		if (check_term() == '1')
-			break;
+		int	pid = getpid();
+		// printf("pid: %d\n", pid);
+		// if (check_term() == '1')
+			// break;
 		tmp = readline("$> ");
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
-		printf("line = %s\n", line);
 		if ((int)line[0] != 0 && same(history, line) == 0)
 		{
 			my_add_history(&history, ft_strdup(line));
 			add_history(line);
 		}
 		if (ft_strncmp(line, "exit", 4) == 0)
-			create_term_file('1');
+		{
+			free(line);
+			break ;
+		}
+			// create_term_file('1');
 		else if (ft_strncmp(line, "history", 7) == 0)
 			print_history(history);
-		// else
-			// export_data_to_pipex(line, path);
+		else
+			split_jobs(line, path);
 		free(line);
+		rl_on_new_line();
 	}
 	ft_lstclear(&history, del_node);
 	rl_clear_history();
+	// unlink("term");
 	return 0;
 }
+
+// int main(void)
+// {
+// 	split_jobs("<<tak", getenv("PATH"));
+// }
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int main()
+// {
+//     int fd;
+//     char *line;
+// 	char *argv = "heredoc.txt";
+
+//     fd = open(argv, O_RDONLY);
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s\n", line);
+//         free(line);
+//     }
+
+//     close(fd);
+//     return 0;
+// }

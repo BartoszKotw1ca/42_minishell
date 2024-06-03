@@ -1,6 +1,7 @@
 Obj
 minishell
 .vscode
+readline
 pipex/libft/*.o
 pipex/libft/*.a
 main.o

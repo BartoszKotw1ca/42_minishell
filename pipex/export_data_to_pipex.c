@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 13:32:50 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:54:31 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// that file contains the functions that should write data from line
+// to our t_data structure
 
 char	*write_to(char *str, int len)
 {
@@ -185,9 +188,14 @@ void	export_data_to_pipex(char *argv, char *path)
 	i = 0;
 	if ((int)argv[0] == 0)
 		return ;
-	tmp = ft_split(argv, ' ');
+	tmp = ft_split_except(argv, ' ', 39, 34);
 	if (!tmp)
 		data = *data_for_null(&data, tmp);
+	if (tmp[0][0] == '<' && tmp[1][0] == '<')
+	{
+			printf("%s", "parse error near \'<\'");
+			return ;
+	}
 	else
 	{
 		write_to_infile(tmp, &data);

@@ -6,130 +6,82 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 11:44:36 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/28 17:21:29 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:13 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static size_t	count_items(char const *s, char c, char e)
+void	prepare_string(t_split_data *sd, int i)
 {
-	int		mode;
-	size_t	count;
-	int		in_e;
-
-	mode = 0;
-	count = 0;
-	in_e = -1;
-	while (*s)
+	while (*sd->src)
 	{
-		if (*s != c && mode == 0 && in_e == -1)
+		if (*sd->src == sd->in_ef)
 		{
-			mode = 1;
-			count++;
+			sd->in_ef = 0;
+			sd->src++;
+			continue;
 		}
-		else if (*s == c && in_e == -1)
-			mode = 0;
-		else if (*s == e)
-			in_e *= -1;
-		s++;
-	}
-	return (count);
-}
-
-static int	malloc_string(size_t i, char **result, size_t len, char const *s)
-{
-	size_t	a;
-
-	s -= len;
-	result[i] = (char *)malloc(len * sizeof(char) + 1);
-	if (!result[i])
-	{
-		a = 0;
-		while (a != i)
+		if ((*sd->src == sd->e || *sd->src == sd->f) && sd->in_ef == 0)
 		{
-			free(result[a]);
-			a++;
+			sd->in_ef = *sd->src;
+			sd->src++;
+			continue ;
 		}
-		return (1);
-	}
-	ft_strlcpy(result[i], s, len + 1);
-	return (0);
-}
-
-static int	add_words(char **result, char const *s, char c, char e)
-{
-	size_t	i;
-	size_t	len;
-	int		in_e;
-
-	i = 0;
-	len = 0;
-	in_e = -1;
-	while (*s && *s == c)
-		s++;
-	while (1)
-	{
-		if (*s == e)
-			in_e *= -1;
-		if ((*s != c && *s) || (in_e == 1 && *s))
-			len++;
-		else if (len != 0)
-		{
-			if (malloc_string(i++, result, len, s) == 1)
-				return (1);
-			len = 0;
-		}
-		if (!*s)
-			return (0);
-		s++;
+		if (*sd->src == sd->c && sd->in_ef != 0)
+			sd->new[i] = -5;
+		else
+			sd->new[i] = *sd->src;
+		sd->src++;
+		i++;
 	}
 }
 
-void	clean_up_res(char **result, char e)
+void	back_to_original(char **splited, int i, int j)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (result[i])
+	while(splited[i])
 	{
-		while (result[i][j])
+		while(splited[i][j])
 		{
-			if (result[i][j] == e && result[i][j + 1] != 0)
-				ft_memmove(result[i], result[i] + 1, ft_strlen(result[i]));
-			else if (result[i][j] == e)
-				result[i][j] = 0;
+			if (splited[i][j] == -5)
+				splited[i][j] = ' ';
 			j++;
 		}
-		i++;
 		j = 0;
+		i++;
 	}
 }
 
-char	**ft_split_except(char const *s, char c, char e)
+char	**ft_split_except(char *src, char c, char e, char f)
 {
-	char	**result;
-	size_t	items;
+	char			*src_new;
+	char			**splited;
+	t_split_data	sd;
 
-	if (!s)
-		return (NULL);
-	items = count_items(s, c, e);
-	result = (char **)malloc((items + 1) * sizeof(char *));
-	if (!result)
-		return (NULL);
-	result[items] = NULL;
-	if (items == 0)
-	{
-		*result = NULL;
-		return (result);
-	}
-	if (add_words(result, s, c, e) == 1)
-	{
-		free(result);
-		return (NULL);
-	}
-	clean_up_res(result, e);
-	return (result);
+	sd.src = src;
+	sd.new = ft_calloc(ft_strlen(src) + 1, sizeof(char));
+	sd.c = c;
+	sd.e = e;
+	sd.f = f;
+	sd.in_ef = 0;
+	prepare_string(&sd, 0);
+	splited = ft_split(sd.new, c);
+	back_to_original(splited, 0, 0);
+	free(sd.new);
+	return (splited);
 }
+
+// int main(int ac, char **av)
+// {
+// 	char	**result;
+
+// 	result = ft_split_except(av[1], ' ', 39);
+// 	int i = 0;
+// 	while (result[i])
+// 	{
+// 		printf("%s\n", result[i]);
+// 		free(result[i]);
+// 		i++;
+// 	}
+// 	free(result);
+// }

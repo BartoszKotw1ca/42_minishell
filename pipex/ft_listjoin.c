@@ -6,12 +6,14 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:33:45 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 09:12:42 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:50:45 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//that file contains the functions that join the list of strings into one string
+// for example ["ls", "-l", "-a"] -> "ls -l -a"
 size_t	char_in_list(int start, int end, char **lista, int i)
 {
 	size_t	len;
@@ -39,6 +41,8 @@ char	*ft_listjoin(int start, int end, char **lista)
 	i = 0;
 	len = char_in_list(start, end, lista, 0);
 	joined = malloc(sizeof(char) * (len + 1));
+	if (!joined)
+		return (NULL);
 	if (!joined)
 		return (NULL);
 	len = 0;

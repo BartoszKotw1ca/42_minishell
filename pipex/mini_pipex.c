@@ -3,56 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/05/28 18:17:46 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:44:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	free_split(char **res)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (res[i])
-// 	{
-// 		free(res[i]);
-// 		i++;
-// 	}
-// 	free(res);
-// }
-
-// static char	*find_path(char *command, t_data *data)
-// {
-// 	int		i;
-// 	char	*curr_path;
-// 	char	*prog_path;
-
-// 	if (!command)
-// 		return (NULL);
-// 	prog_path = ft_strjoin("/", command);
-// 	if (!prog_path)
-// 		return (NULL);
-// 	i = 0;
-// 	while (data->paths[i])
-// 	{
-// 		curr_path = ft_strjoin(data->paths[i], prog_path);
-// 		if (!curr_path)
-// 			return (NULL);
-// 		if (access(curr_path, F_OK) == 0)
-// 		{
-// 			free(prog_path);
-// 			return (curr_path);
-// 		}
-// 		free(curr_path);
-// 		i++;
-// 	}
-// 	free(prog_path);
-// 	return (ft_strjoin("", "no_prog"));
-// }
 
 static void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 {
@@ -87,12 +45,79 @@ static void	close_pipes(t_process *p, int i)
 	close(p->pipes[i - 1][1]);
 }
 
+static char	*read_var_name(char *src)
+{
+	char	*end;
+	char	*var_name;
+	int		i;
+
+	i = 0;
+	end = ft_strchr(src, ' ');
+	if (!end)
+		end = src + ft_strlen(src);
+	var_name = calloc(end - src + 1, sizeof(char));
+	while (&src[i] != end && src[i] != 34)
+	{
+		var_name[i] = src[i];
+		i++;
+	}
+	return (var_name);
+}
+
+static void	update_arg(t_data *d, int i, char *var_value)
+{
+	char	*dollar;
+	char	*var_end;
+	char	*temp1;
+	char	*temp2;
+
+	dollar = ft_strchr(d->commends[i], '$');
+	var_end = ft_strchr(dollar, ' ');
+	if (!var_end)
+		var_end = dollar + ft_strlen(dollar);
+	*dollar = 0;
+	temp1 = ft_strjoin(d->commends[i], var_value);
+	temp2 = ft_strjoin(temp1, var_end);
+	free(d->commends[i]);
+	d->commends[i] = temp2;
+	free(temp1);
+}
+
+static void	check_args(t_data *d, int i, int j)
+{
+	char	*var_name;
+	char	*var_value;
+	int		in_quotes;
+
+	in_quotes = 0;
+	while (d->commends[i][j])
+	{
+		if ((d->commends[i][j] == 39 || d->commends[i][j] == 34) && in_quotes == 0)
+			in_quotes = d->commends[i][j];
+		else if (d->commends[i][j] == in_quotes)
+			in_quotes = 0;
+		if (d->commends[i][j] == '$' && in_quotes != 39)
+		{
+			var_name = read_var_name(&d->commends[i][j] + 1);
+			if (var_name[0] == '?')
+				var_value = read_file("status");
+			else
+				var_value = getenv(var_name);
+			if (var_value)
+				update_arg(d, i, var_value);
+			free(var_name);
+		}
+		j++;
+	}
+}
+
 static void	run_commands(t_data *data, t_process *p, int i)
 {
 	while (i < data->num_of_com)
 	{
-		p->args = ft_split(data->commends[i], ' ');
-		p->path = find_path(p->args[0], data);
+		check_args(data, i, 0);
+		p->args = ft_split_except(data->commends[i], ' ', 39, 34);
+		p->path = find_path(p->args[0], data, 0);
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
@@ -100,9 +125,9 @@ static void	run_commands(t_data *data, t_process *p, int i)
 			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
 			if (i != 0)
 				waitpid(p->pid[i - 1], NULL, 0);
-			if (execve(p->path, p->args, NULL) != 0)
-				perror("");
-			return ;
+			execve(p->path, p->args, NULL);
+			update_file("status", '1');
+			exit (1);
 		}
 		if (i > 0)
 			close_pipes(p, i);
@@ -119,17 +144,12 @@ void	mini_pipex(t_data *data)
 	int			i;
 	int			main_pid;
 
+	i = 0;
 	p.pipes = malloc((data->num_of_com - 1) * sizeof(int[2]));
 	p.pid = malloc(data->num_of_com * sizeof(int));
-	main_pid = fork();
-	if (main_pid == 0)
-	{
-		i = 0;
-		while (i < data->num_of_com - 1)
-			pipe(p.pipes[i++]);
-		run_commands(data, &p, 0);
-	}
-	waitpid(main_pid, NULL, 0);
+	while (i < data->num_of_com - 1)
+		pipe(p.pipes[i++]);
+	run_commands(data, &p, 0);
 	free (p.pipes);
 	free (p.pid);
 }

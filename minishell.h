@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 22:13:21 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:11:49 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ typedef struct s_process
 	int		(*pipes)[2];
 }	t_process;
 
+typedef struct s_split_data
+{
+	char	*src;
+	char	*new;
+	char	c;
+	char	e;
+	char	f;
+	int		in_ef;
+}	t_split_data;
+
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, char *path);
 
@@ -61,10 +71,13 @@ void	get_paths(t_data *data, char **envp);
 void	my_add_history();
 void	del_node(void *content);
 void	print_history(t_list *lista);
-char	*find_path(char *command, t_data *data);
+char	*find_path(char *command, t_data *data, int i);
 void	free_split(char **res);
 void	check_commands(t_process *p, t_data *data);
 void	print_error(char *mes1, char *mes2);
-char	**ft_split_except(char const *s, char c, char e);
+char	**ft_split_except(char *s, char c, char e, char f);
+int		split_jobs(char *line, char *path);
+void	update_file(char *name, char content);
+char	*read_file(char *name);
 
 #endif
