@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/04 09:37:40 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:04:17 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	write_to_outfile(char **tmp, t_data *data, int i, int j)
 	j = check_if_zero(&i, data, 0, tmp);
 	if (j == -1)
 		return ;
-	printf("%d\n", i);
 	if (tmp[i - 1][0] == '>' && tmp[i - 1][1] == '\0')
 	{
 		data->outfile = write_to(tmp[i], ft_strlen(tmp[i]));
@@ -180,6 +179,55 @@ t_data	*data_for_null(t_data *data, char **tmp)
 	return (data);
 }
 
+char	skip_spaces(char *argv, int i)
+{
+	while (argv[i] && argv[i] == ' ')
+		i ++;
+	return (argv[i]);
+}
+
+int	check_the_line(char *argv, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i] == '>' && argv[i + 1] && argv[i + 1] == '>')
+		{
+			data->mode = 1;
+			return (1);
+		}
+		else if (argv[i] == '>' && skip_spaces(&argv[i], i) != '\0')
+		{
+			data->mode = 0;
+			return (2);
+		}
+		else
+			i ++;
+	}
+	return (0);
+}
+
+char	*change_line(t_data *data, char *argv, int check)
+{
+	int		i;
+	char	*line;
+	int		j;
+
+	j = 0;
+	i = -1;
+	line = malloc(sizeof(char) * ft_strlen(argv));
+	line[ft_strlen(argv) - 1] = '\0';
+	while (argv[++ i])
+	{
+		if (argv[i] == '>')
+			i ++;
+		line[j ++] = argv[i];
+	}
+	return (line);
+}
+
 void	export_data_to_pipex(char *argv, char *path)
 {
 	t_data	data;
@@ -189,10 +237,17 @@ void	export_data_to_pipex(char *argv, char *path)
 	i = 0;
 	if ((int)argv[0] == 0)
 		return ;
+	if (check_the_line(argv, &data) == 1)
+	{
+		char	*line;
+		line =  change_line(&data, argv, check_the_line(argv, &data));
+		free(argv);
+		argv = line;
+	}
 	tmp = ft_split_except(argv, ' ', 39, 34);
 	if (!tmp)
 		data = *data_for_null(&data, tmp);
-	if (tmp[0][0] == '<' && tmp[1][0] == '<')
+	else if (tmp[0][0] == '<' && tmp[1][0] == '<')
 	{
 			printf("%s", "parse error near \'<\'");
 			return ;
@@ -204,18 +259,10 @@ void	export_data_to_pipex(char *argv, char *path)
 		process_data(tmp, &data, 0);
 		count_commnads(&data);
 	}
-	printf("infile: %s, outfile: %s\n", data.infile, data.outfile);
-	i = 0;
-	while (tmp[i])
-		printf("tmp: %s\n", tmp[i ++]);
-	i = 0;
-	while (data.commends[i])
-		printf("com: %s \n", data.commends[i ++]);
-	printf("%s %s\n", data.infile, data.outfile);
-	exit(0);
 	data.paths = ft_split(path, ':');
 	mini_pipex(&data);
 	free_dataa(&data, tmp);
+	free(argv);
 }
 
 // int	main(int argc, char **argv, char **envp)

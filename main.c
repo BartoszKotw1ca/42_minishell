@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/04 08:55:20 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:08:28 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,20 @@ int main() {
 			free(line);
 			break ;
 		}
-			// create_term_file('1');
+		else if (ft_strncmp(line, "env", 3) == 0)
+		{
+			printf("%s\n", getenv("PATH"));
+			free(line);
+			exit(0);
+		}
 		else if (ft_strncmp(line, "history", 7) == 0)
+		{
 			print_history(history);
+			free(line);
+		}
 		else
 			split_jobs(line, path);
-		free(line);
+		// free(line);
 		rl_on_new_line();
 	}
 	ft_lstclear(&history, del_node);
