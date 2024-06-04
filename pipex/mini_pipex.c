@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/03 15:35:24 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:13:57 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ static char	*read_var_name(char *src)
 
 	i = 0;
 	end = NULL;	
-	while (src[i])
-	{
-		if (ft_isalnum(src[i]) == 0)
-			end = &src[i];
+	while (ft_isalnum(src[i]) != 0)
 		i++;
-	}
-	if (!end)
-		end = src + ft_strlen(src);
+	end = &src[i];
 	i = 0;
 	var_name = calloc(end - src + 1, sizeof(char));
-	while (&src[i] != end && (ft_isalnum(src[i]) != 0 || src[i] == '?'))
+	while (&src[i] != end)
 	{
 		var_name[i] = src[i];
 		i++;
 	}
+	if (*src == '?')
+		var_name[0] = '?';
 	return (var_name);
 }
 
@@ -80,17 +77,17 @@ static void	update_arg(t_data *d, int i, char *var_value, int j)
 
 	dollar = ft_strchr(d->commends[i], '$');
 	var_end = NULL;
-	while (dollar[j])
+	if (dollar[j] == '?')
+		var_end = &dollar[j + 1];
+	else
 	{
-		if (ft_isalnum(dollar[j]) == 0 && dollar[j] != '?')
-			break;
-		else
+		while (ft_isalnum(dollar[j]) != 0)
 			j++;
+		var_end = &dollar[j];
 	}
-	var_end = &dollar[j];
-	// if (!var_end)
-	// 	var_end = dollar + ft_strlen(dollar);
 	*dollar = 0;
+	if (!var_value)
+		var_value = "";
 	temp1 = ft_strjoin(d->commends[i], var_value);
 	temp2 = ft_strjoin(temp1, var_end);
 	free(d->commends[i]);
@@ -118,8 +115,7 @@ static void	check_args(t_data *d, int i, int j)
 				var_value = read_file("TMP_TODO/status.txt");
 			else
 				var_value = getenv(var_name);
-			if (var_value)
-				update_arg(d, i, var_value, 1);
+			update_arg(d, i, var_value, 1);
 			free(var_name);
 		}
 		j++;
@@ -139,9 +135,9 @@ static void	run_commands(t_data *data, t_process *p, int i)
 			check_commands(p, data);
 			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
 			if (i != 0)
-				waitpid(p->pid[i - 1], NULL, 0);
+				waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			execve(p->path, p->args, NULL);
-			exit (1);
+			exit (errno);
 		}
 		if (i > 0)
 			close_pipes(p, i);
@@ -149,8 +145,8 @@ static void	run_commands(t_data *data, t_process *p, int i)
 		free(p->path);
 		i++;
 	}
-	waitpid(p->pid[i - 1], NULL, 0);
-	// printf("errno is: %d\n", errno);
+	waitpid(p->pid[i - 1], &data->ex_stat, 0);
+	update_file("TMP_TODO/status.txt", data->ex_stat);
 }
 
 void	mini_pipex(t_data *data)

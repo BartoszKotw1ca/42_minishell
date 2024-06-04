@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/03 15:00:32 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:19:30 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,25 @@ void	check_commands(t_process *p, t_data *data)
 	int		i;
 
 	i = 0;
+	if (ft_strncmp("cd", p->args[0], 2) == 0)
+	{
+		while (p->args[i])
+			i++;
+		if (i > 2)
+			print_error(p->args[0], "to many arguments\n");
+		else if (chdir(p->args[1]) != 0)
+			print_error(p->args[1], "no such directory\n");
+		free(p->path);
+		p->path = ft_strjoin("/usr/bin/", "true");
+		free(p->args[0]);
+		p->args[0] = ft_strjoin("true", "");
+		return ;
+	}
+	i = 0;
 	if (ft_strncmp("no_prog", p->path, 7) == 0)
 	{
 		print_error(p->args[0], "command not found\n");
-		update_file("TMP_TODO/status.txt", "127");
 		free(p->path);
 		p->path = ft_strjoin("/usr/bin/", p->args[0]);
 	}
-	else
-		update_file("TMP_TODO/status.txt", "000");
 }

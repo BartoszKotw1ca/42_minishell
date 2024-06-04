@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/03 14:49:25 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/03 21:05:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
-void	update_file(char *name, char *content)
+void	update_file(char *name, int content)
 {
 	int fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	write(fd, content, ft_strlen(content));
+	ft_putnbr_fd(content, fd);
 	close(fd);
 }
 
@@ -58,9 +58,9 @@ char	*read_file(char *name)
 	char	*res;
 	int		fd;
 
-	res = calloc(4, sizeof(char));
+	res = ft_calloc(4, sizeof(char));
 	fd = open(name, O_RDONLY);
-	read(fd, res, 3);
+	read(fd, res, 4);
 	close(fd);
 	return (res);
 }
