@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/03 16:33:51 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/04 08:55:20 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int main() {
 
 // int main(void)
 // {
-// 	split_jobs("<<tak", getenv("PATH"));
+// 	split_jobs("<<", getenv("PATH"));
 // }
 // #include <fcntl.h>
 // #include <stdio.h>

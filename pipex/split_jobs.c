@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/03 16:39:21 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/04 08:51:37 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_list(char **splited_line, int fd, int i, int check)
 	while (splited_line[i])
 		free(splited_line[i++]);
 	free(splited_line);
+	splited_line = NULL;
 	if (check == 0)
 		close(fd);
 }
@@ -137,6 +138,7 @@ char	*write_to_file(char *line)
 		free(get_next);
 		close(fd);
 		unlink("heredoc.txt");
+		free_list(splited_line, fd, 0, 0);
 		return NULL;
 	}
 	linee = change_the_line(splited_line, 0);
@@ -160,6 +162,7 @@ int	split_jobs(char *line, char *path)
 				return (1);
 			export_data_to_pipex(res, path);
 			unlink("heredoc.txt");
+			// free(res);
 		}
 		free(res);
 	}
