@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/03 15:54:31 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:37:40 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	write_to_outfile(char **tmp, t_data *data, int i, int j)
 	j = check_if_zero(&i, data, 0, tmp);
 	if (j == -1)
 		return ;
+	printf("%d\n", i);
 	if (tmp[i - 1][0] == '>' && tmp[i - 1][1] == '\0')
 	{
 		data->outfile = write_to(tmp[i], ft_strlen(tmp[i]));
@@ -203,6 +204,15 @@ void	export_data_to_pipex(char *argv, char *path)
 		process_data(tmp, &data, 0);
 		count_commnads(&data);
 	}
+	printf("infile: %s, outfile: %s\n", data.infile, data.outfile);
+	i = 0;
+	while (tmp[i])
+		printf("tmp: %s\n", tmp[i ++]);
+	i = 0;
+	while (data.commends[i])
+		printf("com: %s \n", data.commends[i ++]);
+	printf("%s %s\n", data.infile, data.outfile);
+	exit(0);
 	data.paths = ft_split(path, ':');
 	mini_pipex(&data);
 	free_dataa(&data, tmp);

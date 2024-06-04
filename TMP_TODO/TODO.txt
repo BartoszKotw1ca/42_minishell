@@ -23,8 +23,8 @@ tgetnum, tgetstr, tgoto, tputs
 3.6.24
 
 1. read $ var until non alphanumeric 	JP
-2. <<x not working, << x works		BK
-3. print output after finishing heredoc	BK
+2. <<x not working, << x works		BK     ✅
+3. print output after finishing heredoc	BK ✅
 4. outfile mode				BK -> JP
 5. make $? work				JP
 6. hande echo -n			JP
