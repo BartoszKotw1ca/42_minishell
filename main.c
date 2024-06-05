@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:06:58 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:09:41 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@
 void	ctr_c_sig_handler(int sig)
 {
 	// printf("%d\n", sig);
-	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_redisplay();
-	
+	if (sig == 2)
+	{
+		rl_on_new_line();// without this there wont be $>
+		rl_replace_line("", 0); // it might not display correctly the prompt
+		write(1, "\n", 1);
+		rl_redisplay();// withou it there wont be a prompt
+	}
+	else if (sig == 3)
+	{
+		rl_on_new_line();
+		rl_replace_line("  ", 0);
+		rl_redisplay();
+	}
 }
 
 int	same(t_list *history, char *line)
@@ -65,6 +72,27 @@ char	*read_file(char *name)
 	return (res);
 }
 
+void	change_directory(char *line)
+{
+	char	**tmp;
+	int		i;
+	int		res;
+
+	i = 0;
+	tmp = ft_split_except(line, ' ', 39, 34);
+	if (ft_strncmp(line, "cd", ft_strlen(line)) == 0)
+		res = chdir(getenv("HOME"));
+	else if (ft_strncmp(tmp[1], "..", ft_strlen(tmp[1])) == 0)
+		res = chdir("..");
+	else
+		res = chdir(tmp[1]);
+	if (res == -1)
+		printf("cd: %s: No such file or directory\n", tmp[1]);
+	while (tmp[i])
+		free(tmp[i ++]);
+	free(tmp);
+}
+
 int main() {
 	char	*line;
 	char	*path;
@@ -74,18 +102,23 @@ int main() {
 	// int		terminate;
 	struct sigaction sa;
 
-	sa.sa_handler = ctr_c_sig_handler;
-	sa.sa_flags = SA_RESTART;
+	update_file("status", '0');
+	ft_memset(&sa, 0, sizeof(struct sigaction)); // Initialize sa to zero
+	sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
+	sigemptyset(&sa.sa_mask); // Initialize the signal set
 	history = NULL;
 	path = getenv("PATH");
-	// sigaction(2, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL); // 2 ctr + c
+	sigaction(SIGQUIT, &sa, NULL); // 3 ctr + "\"
 	while (1)
 	{
 		int	pid = getpid();
-		// printf("pid: %d\n", pid);
-		// if (check_term() == '1')
-			// break;
 		tmp = readline("$> ");
+		if (tmp == NULL)
+		{
+			free(tmp);
+			break ;
+		}
 		line = ft_strtrim(tmp, " ");
 		free(tmp);
 		if ((int)line[0] != 0 && same(history, line) == 0)
@@ -98,12 +131,27 @@ int main() {
 			free(line);
 			break ;
 		}
-			// create_term_file('1');
+		else if (ft_strncmp(line, "env", 3) == 0)
+		{
+			printf("%s\n", getenv("PATH"));
+			free(line);
+			exit(0);
+		}
 		else if (ft_strncmp(line, "history", 7) == 0)
+		{
 			print_history(history);
+			free(line);
+		}
+		else if (ft_strncmp(line, "cd", 2) == 0)
+		{
+			change_directory(line);
+			free(line);
+		}
 		else
 			split_jobs(line, path);
 		free(line);
+		// if (line != NULL)
+		// 	free(line);
 		rl_on_new_line();
 	}
 	ft_lstclear(&history, del_node);
