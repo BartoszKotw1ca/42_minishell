@@ -6,23 +6,27 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/05 18:57:08 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:10:45 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_data *data)
+char	*read_env(t_data *data, char *key)
 {
-	int	i;
+	t_list	*start;
+	char	*value;
 
-
-	i = 0;
+	start = data->envr;
+	value = NULL;
 	while (data->envr)
 	{
-		printf("env --- %s\n", (char *)data->envr->content);
+		if (ft_strnstr(data->envr->content, key, ft_strlen(key)))
+			value = ft_strchr(data->envr->content, '=') + 1;
 		data->envr = data->envr->next;
 	}
+	data->envr = start;
+	return (value);
 }
 
 void	set_env(t_data *data, char **envp)
@@ -36,5 +40,4 @@ void	set_env(t_data *data, char **envp)
 		ft_lstadd_back(&data->envr, ft_lstnew(envp[i]));
 		i++;
 	}
-	print_env(data);
 }

@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 18:22:32 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:56:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int		split_jobs(char *line, char *path, char **envp);
 void	update_file(char *name, int content);
 char	*read_file(char *name);
 void	set_env(t_data *data, char **envp);
+char	*read_env(t_data *data, char *key);
 
 #endif

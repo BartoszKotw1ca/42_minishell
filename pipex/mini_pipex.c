@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/05 16:26:22 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:26:20 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void	check_args(t_data *d, int i, int j)
 			if (var_name[0] == '?')
 				var_value = read_file("TMP_TODO/status.txt");
 			else
-				var_value = getenv(var_name);
+				var_value = read_env(d, var_name);
 			update_arg(d, i, var_value, 1);
 			free(var_name);
 		}
