@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:09:41 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:14:33 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	change_directory(char *line)
 	free(tmp);
 }
 
-int main() {
+int main(int ac, char **av, char **envp) {
 	char	*line;
 	char	*path;
 	char	*tmp;
@@ -102,6 +102,11 @@ int main() {
 	// int		terminate;
 	struct sigaction sa;
 
+	(void) ac;
+	(void) av;
+	int j = 0;
+	while (envp[j])
+		printf("%s\n", envp[j ++]);
 	update_file("status", '0');
 	ft_memset(&sa, 0, sizeof(struct sigaction)); // Initialize sa to zero
 	sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
@@ -131,22 +136,19 @@ int main() {
 			free(line);
 			break ;
 		}
-		else if (ft_strncmp(line, "env", 3) == 0)
-		{
-			printf("%s\n", getenv("PATH"));
-			free(line);
-			exit(0);
-		}
+		// else if (ft_strncmp(line, "env", 3) == 0)
+		// {
+		// 	printf("%s\n", getenv("PATH"));
+		// 	free(line);
+		// 	exit(0);
+		// }
 		else if (ft_strncmp(line, "history", 7) == 0)
 		{
 			print_history(history);
 			free(line);
 		}
 		else if (ft_strncmp(line, "cd", 2) == 0)
-		{
 			change_directory(line);
-			free(line);
-		}
 		else
 			split_jobs(line, path);
 		free(line);
