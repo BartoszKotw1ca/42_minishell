@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:12:02 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:22:32 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_data
 	char	**paths;
 	int		mode;
 	int		ex_stat;
+	int		infile_ok;
+	t_list	*envr;
 }			t_data;
 
 typedef struct s_process
@@ -64,7 +66,7 @@ typedef struct s_split_data
 }	t_split_data;
 
 // export_data_to_pipex.c
-void	export_data_to_pipex(char *argv, char *path);
+void	export_data_to_pipex(char *argv, char *path, char **envp);
 
 // ft_listajoin.c
 char	*ft_listjoin(int start, int end, char **lista);
@@ -79,8 +81,9 @@ void	free_split(char **res);
 void	check_commands(t_process *p, t_data *data);
 void	print_error(char *mes1, char *mes2);
 char	**ft_split_except(char *s, char c, char e, char f);
-int		split_jobs(char *line, char *path);
+int		split_jobs(char *line, char *path, char **envp);
 void	update_file(char *name, int content);
 char	*read_file(char *name);
+void	set_env(t_data *data, char **envp);
 
 #endif

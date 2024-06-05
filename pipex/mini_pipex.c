@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/04 22:13:57 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:26:22 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 	int	ifd;
 	int	ofd;
 
-	if (i == -1 && data->infile)
+	if (i == -1 && data->infile && data->infile_ok == 0)
 	{
 		ifd = open(data->infile, O_RDONLY);
 		dup2(ifd, 0);

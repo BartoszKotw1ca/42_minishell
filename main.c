@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 15:14:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:13:39 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,6 @@ int main(int ac, char **av, char **envp) {
 
 	(void) ac;
 	(void) av;
-	int j = 0;
-	while (envp[j])
-		printf("%s\n", envp[j ++]);
 	update_file("status", '0');
 	ft_memset(&sa, 0, sizeof(struct sigaction)); // Initialize sa to zero
 	sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
@@ -150,7 +147,7 @@ int main(int ac, char **av, char **envp) {
 		else if (ft_strncmp(line, "cd", 2) == 0)
 			change_directory(line);
 		else
-			split_jobs(line, path);
+			split_jobs(line, path, envp);
 		free(line);
 		// if (line != NULL)
 		// 	free(line);

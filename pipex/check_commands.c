@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/04 20:19:30 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:23:07 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,17 @@ char	*find_path(char *command, t_data *data, int i)
 	return (ft_strjoin("", "no_prog"));
 }
 
+void	check_files(t_process *p, t_data *data)
+{
+	if (data->infile && data->infile_ok != 0)
+	{
+		free(p->args[0]);
+		p->args[0] = ft_strjoin("true", "");
+		free(p->path);
+		p->path = ft_strjoin("/usr/bin/", "true");
+	}
+}
+
 void	check_commands(t_process *p, t_data *data)
 {
 	int		i;
@@ -74,4 +85,5 @@ void	check_commands(t_process *p, t_data *data)
 		free(p->path);
 		p->path = ft_strjoin("/usr/bin/", p->args[0]);
 	}
+	check_files(p, data);
 }
