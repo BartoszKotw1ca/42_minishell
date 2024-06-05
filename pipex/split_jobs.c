@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/04 09:06:29 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:35:54 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,9 @@ int	split_jobs(char *line, char *path)
 				return (1);
 			export_data_to_pipex(res, path);
 			unlink("heredoc.txt");
-			// free(res);
+			free(res);
 		}
-		free(res);
+		// free(res);
 	}
 	else
 		export_data_to_pipex(line, path);

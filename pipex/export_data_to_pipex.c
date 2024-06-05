@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/04 16:04:17 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:33:56 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	export_data_to_pipex(char *argv, char *path)
 	data.paths = ft_split(path, ':');
 	mini_pipex(&data);
 	free_dataa(&data, tmp);
-	free(argv);
+	// free(argv);
 }
 
 // int	main(int argc, char **argv, char **envp)
