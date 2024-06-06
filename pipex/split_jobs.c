@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 13:35:54 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:30:47 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char	*write_to_file(char *line)
 }
 
 // split the job and export data to pipex
-int	split_jobs(char *line, char *path)
+int	split_jobs(char *line, char *path, t_main_struct *main_data)
 {
 	char *res;
 
@@ -160,13 +160,13 @@ int	split_jobs(char *line, char *path)
 			res = write_to_file(line);
 			if (res == NULL)
 				return (1);
-			export_data_to_pipex(res, path);
+			export_data_to_pipex(res, path, main_data);
 			unlink("heredoc.txt");
 			free(res);
 		}
 		// free(res);
 	}
 	else
-		export_data_to_pipex(line, path);
+		export_data_to_pipex(line, path, main_data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:30:54 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:29:59 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,24 @@ char	*change_line(t_data *data, char *argv, int check)
 	return (line);
 }
 
-void	export_data_to_pipex(char *argv, char *path)
+void	check_infile(t_data *data)
+{
+	if (!data->infile)
+		return ;
+	data->infile_ok = 0;
+	if (access(data->infile, F_OK) != 0)
+	{
+		print_error(data->infile, "no such file\n");
+		data->infile_ok = -1;
+	}
+	else if (access(data->infile, R_OK) != 0)
+	{
+		print_error(data->infile, "permision denied\n");
+		data->infile_ok = -1;
+	}
+}
+
+void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 {
 	t_data	data;
 	char	**tmp;
@@ -260,6 +277,8 @@ void	export_data_to_pipex(char *argv, char *path)
 		count_commnads(&data);
 	}
 	data.paths = ft_split(path, ':');
+	check_infile(&data);
+	set_env(&data, envp);
 	mini_pipex(&data);
 	free_dataa(&data, tmp);
 	// free(argv);

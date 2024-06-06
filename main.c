@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 10:19:54 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:31:36 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int main(int ac, char **av, char **envp)
 		else if (ft_strncmp(main_data.line, "cd", 2) == 0)
 			change_directory(main_data.line);
 		else
-			split_jobs(main_data.line, main_data.path);
+			split_jobs(main_data.line, main_data.path, &main_data);
 		free(main_data.line);
 		// if (line != NULL)
 		// 	free(line);
