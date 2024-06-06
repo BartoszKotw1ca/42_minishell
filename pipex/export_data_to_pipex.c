@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:30:54 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:20:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	export_data_to_pipex(char *argv, char *path)
 		free(argv);
 		argv = line;
 	}
-	tmp = ft_split_except(argv, ' ', 39, 34);
+	tmp = ft_split(argv, ' ');
 	if (!tmp)
 		data = *data_for_null(&data, tmp);
 	else if (tmp[0][0] == '<' && tmp[1][0] == '<')
