@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 14:12:02 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:20:09 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ typedef struct s_split_data
 	char	f;
 	int		in_ef;
 }	t_split_data;
+
+typedef struct s_main_struct
+{
+	char	*line;
+	char	*path;
+	char	*tmp;
+	t_list	*history;
+	struct sigaction sa;
+}				t_main_struct;
 
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, char *path);

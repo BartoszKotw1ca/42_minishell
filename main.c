@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/05 15:14:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:19:54 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,47 +93,39 @@ void	change_directory(char *line)
 	free(tmp);
 }
 
-int main(int ac, char **av, char **envp) {
-	char	*line;
-	char	*path;
-	char	*tmp;
-	int		i = 0;
-	t_list	*history;
-	// int		terminate;
-	struct sigaction sa;
+int main(int ac, char **av, char **envp)
+{
+	t_main_struct	main_data;
 
 	(void) ac;
 	(void) av;
-	int j = 0;
-	while (envp[j])
-		printf("%s\n", envp[j ++]);
 	update_file("status", '0');
-	ft_memset(&sa, 0, sizeof(struct sigaction)); // Initialize sa to zero
-	sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
-	sigemptyset(&sa.sa_mask); // Initialize the signal set
-	history = NULL;
-	path = getenv("PATH");
-	sigaction(SIGINT, &sa, NULL); // 2 ctr + c
-	sigaction(SIGQUIT, &sa, NULL); // 3 ctr + "\"
+	ft_memset(&(main_data.sa), 0, sizeof(struct sigaction)); // Initialize sa to zero
+	main_data.sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
+	sigemptyset(&main_data.sa.sa_mask); // Initialize the signal set
+	main_data.history = NULL;
+	main_data.path = getenv("PATH");
+	sigaction(SIGINT, &main_data.sa, NULL); // 2 ctr + c
+	sigaction(SIGQUIT, &main_data.sa, NULL); // 3 ctr + "\"
 	while (1)
 	{
 		int	pid = getpid();
-		tmp = readline("$> ");
-		if (tmp == NULL)
+		main_data.tmp = readline("$> ");
+		if (main_data.tmp == NULL)
 		{
-			free(tmp);
+			free(main_data.tmp);
 			break ;
 		}
-		line = ft_strtrim(tmp, " ");
-		free(tmp);
-		if ((int)line[0] != 0 && same(history, line) == 0)
+		main_data.line = ft_strtrim(main_data.tmp, " ");
+		free(main_data.tmp);
+		if ((int)main_data.line[0] != 0 && same(main_data.history, main_data.line) == 0)
 		{
-			my_add_history(&history, ft_strdup(line));
-			add_history(line);
+			my_add_history(&main_data.history, ft_strdup(main_data.line));
+			add_history(main_data.line);
 		}
-		if (ft_strncmp(line, "exit", 4) == 0)
+		if (ft_strncmp(main_data.line, "exit", 4) == 0)
 		{
-			free(line);
+			free(main_data.line);
 			break ;
 		}
 		// else if (ft_strncmp(line, "env", 3) == 0)
@@ -142,21 +134,21 @@ int main(int ac, char **av, char **envp) {
 		// 	free(line);
 		// 	exit(0);
 		// }
-		else if (ft_strncmp(line, "history", 7) == 0)
+		else if (ft_strncmp(main_data.line, "history", 7) == 0)
 		{
-			print_history(history);
-			free(line);
+			print_history(main_data.history);
+			free(main_data.line);
 		}
-		else if (ft_strncmp(line, "cd", 2) == 0)
-			change_directory(line);
+		else if (ft_strncmp(main_data.line, "cd", 2) == 0)
+			change_directory(main_data.line);
 		else
-			split_jobs(line, path);
-		free(line);
+			split_jobs(main_data.line, main_data.path);
+		free(main_data.line);
 		// if (line != NULL)
 		// 	free(line);
 		rl_on_new_line();
 	}
-	ft_lstclear(&history, del_node);
+	ft_lstclear(&main_data.history, del_node);
 	rl_clear_history();
 	// unlink("term");
 	return 0;
