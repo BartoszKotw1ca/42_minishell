@@ -1,8 +1,7 @@
 5. make $? work				
 
-12. clean up struct t_data
-9. change env command to echo				BK
-'' seqfoult
+12. clean up struct t_data // it should be good
+9. change env command to echo	BK
 
 4. outfile mode				JP
 10. export... use execve with args and env array	JP

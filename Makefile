@@ -3,15 +3,16 @@ FLAGS = -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
 # SRC = main.c export_data_to_pipex.c ft_listjoin.c
-SRC = pipex/export_data_to_pipex.c \
-		pipex/ft_listjoin.c \
+SRC =	export_data_to_pipex/export_data_to_pipex.c \
+		export_data_to_pipex/split_jobs.c \
+		export_data_to_pipex/split_jobs_utils.c \
 		pipex/mini_pipex.c \
-		pipex/mp_utils.c \
-		history/history.c \
 		pipex/check_commands.c \
-		pipex/ft_split_except.c \
-		pipex/split_jobs.c \
-		handle_env.c \
+		utils/ft_listjoin.c \
+		utils/ft_split_except.c \
+		utils/mp_utils.c \
+		history/history.c \
+		pipex/handle_env.c \
 		main.c
 
 OBJDIR = Obj/

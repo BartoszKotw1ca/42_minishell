@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/06 10:41:23 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:43:31 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ static void	run_commands(t_data *data, t_process *p, int i)
 			if (i != 0)
 				waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			execve(p->path, p->args, NULL);
+			free_dataa(data, data->tmp);
 			exit (errno);
 		}
 		if (i > 0)
