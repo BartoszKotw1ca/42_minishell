@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 10:31:36 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:41:11 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,49 @@ char	*read_file(char *name)
 	return (res);
 }
 
-void	change_directory(char *line)
+int	search_for(char *line, char c)
+{
+	int	i = 0;
+
+	while (line[i])
+	{
+		if (line[i] == c)
+			return (1);
+		i ++;
+	}
+	return (0);
+}
+
+int	look_for_str(const char *big, const char *little, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+	char	*to_find;
+
+	if (!big && !len)
+		return (0);
+	if (!*little)
+		return (0);
+	to_find = (char *)little;
+	str = (char *)big;
+	i = 0;
+	j = 0;
+	if (*to_find == '\0')
+		return (0);
+	while (str[i] != 0 && len-- > 0)
+	{
+		while (str[i + j] == to_find[j] && str[i + j] != 0 && j < len + 1)
+			j++;
+		if (to_find[j] == 0)
+			return (1);
+		i++;
+		j = 0;
+	}
+	return (0);
+}
+
+void	change_directory(char *line, char *path, t_main_struct *main_data)
 {
 	char	**tmp;
 	int		i;
@@ -80,10 +122,15 @@ void	change_directory(char *line)
 
 	i = 0;
 	tmp = ft_split_except(line, ' ', 39, 34);
-	if (ft_strncmp(line, "cd", ft_strlen(line)) == 0)
+	if (ft_strncmp(line, "cd", ft_strlen(line)) == 0 && !tmp[1])
 		res = chdir(getenv("HOME"));
-	else if (ft_strncmp(tmp[1], "..", ft_strlen(tmp[1])) == 0)
+	else if (look_for_str(line, "..", ft_strlen(line)) && !tmp[2])
 		res = chdir("..");
+	else if (search_for(line, '|') == 1)
+	{
+		split_jobs(line, path, main_data);
+		return ;
+	}
 	else
 		res = chdir(tmp[1]);
 	if (res == -1)
@@ -99,6 +146,7 @@ int main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
+	main_data.envp = envp;
 	update_file("status", '0');
 	ft_memset(&(main_data.sa), 0, sizeof(struct sigaction)); // Initialize sa to zero
 	main_data.sa.sa_handler = ctr_c_sig_handler; // Set the signal handler
@@ -137,10 +185,10 @@ int main(int ac, char **av, char **envp)
 		else if (ft_strncmp(main_data.line, "history", 7) == 0)
 		{
 			print_history(main_data.history);
-			free(main_data.line);
+			// free(line);
 		}
 		else if (ft_strncmp(main_data.line, "cd", 2) == 0)
-			change_directory(main_data.line);
+			change_directory(main_data.line, main_data.path, &main_data);
 		else
 			split_jobs(main_data.line, main_data.path, &main_data);
 		free(main_data.line);

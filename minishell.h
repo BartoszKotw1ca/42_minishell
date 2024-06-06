@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 10:29:50 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:45:48 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_data
 	char	**paths;
 	int		mode;
 	int		ex_stat;
+	int		infile_ok;
+	t_list	*envr;
 }			t_data;
 
 typedef struct s_process
@@ -70,8 +72,8 @@ typedef struct s_main_struct
 	char	*tmp;
 	t_list	*history;
 	struct	sigaction sa;
-	int		infile_ok;
 	t_list	*envr;
+	char	**envp;
 }				t_main_struct;
 
 // export_data_to_pipex.c
