@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 13:23:17 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:33:19 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,8 +282,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		return ;
 	data.paths = ft_split(path, ':');
 	check_infile(&data);
-	set_env(&data, main_data->envp);
-	mini_pipex(&data);
+	mini_pipex(&data, main_data);
 	free_dataa(&data, data.tmp);
 	// free(argv);
 }

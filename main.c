@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 11:55:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:15:34 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	main_data.envp = envp;
+	set_env(&main_data, main_data.envp);
 	update_file("status", '0');
 	ft_memset(&(main_data.sa), 0, sizeof(struct sigaction)); // Initialize sa to zero
 	main_data.sa.sa_handler = ctr_c_sig_handler; // Set the signal handler

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 13:42:22 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:11:02 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data);
 // ft_listajoin.c
 char	*ft_listjoin(int start, int end, char **lista);
 
-void	mini_pipex(t_data *data);
+void	mini_pipex(t_data *data, t_main_struct *main_data);
 void	get_paths(t_data *data, char **envp);
 void	my_add_history();
 void	del_node(void *content);
@@ -96,8 +96,8 @@ char	**ft_split_except(char *s, char c, char e, char f);
 int		split_jobs(char *line, char *path, t_main_struct *main_data);
 void	update_file(char *name, int content);
 char	*read_file(char *name);
-void	set_env(t_data *data, char **envp);
-char	*read_env(t_data *data, char *key);
+void	set_env(t_main_struct *main_data, char **envp);
+char	*read_env(t_main_struct *main_data, char *key);
 void	free_dataa(t_data *data, char **tmp);
 
 // split_jobs.c
