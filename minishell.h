@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 19:11:02 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:16:39 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	update_file(char *name, int content);
 char	*read_file(char *name);
 void	set_env(t_main_struct *main_data, char **envp);
 char	*read_env(t_main_struct *main_data, char *key);
+void	export_env(t_main_struct *main_data, char *key_val);
+void	print_env(t_main_struct *main_data);
 void	free_dataa(t_data *data, char **tmp);
 
 // split_jobs.c

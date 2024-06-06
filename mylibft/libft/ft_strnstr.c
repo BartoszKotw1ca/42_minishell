@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:23:14 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/03/10 13:51:53 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:00:40 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		i++;
 		j = 0;
 	}
-	return (0);
+	return (NULL);
 }

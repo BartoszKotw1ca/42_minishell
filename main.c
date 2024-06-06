@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 19:15:34 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:58:31 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,25 @@ int main(int ac, char **av, char **envp)
 		}
 		else if (ft_strncmp(main_data.line, "cd", 2) == 0)
 			change_directory(main_data.line, main_data.path, &main_data);
+
+// TO DOPISAŁEM 
+		else if (ft_strncmp(main_data.line, "export", 6) == 0)
+		{
+			int ii = 0;
+			char **export_data = ft_split(main_data.line, ' ');
+			export_env(&main_data, export_data[1]);
+			while(export_data[ii])
+			{
+				free(export_data[ii]);
+				ii++;
+			}
+			free(export_data);
+		}
+
+		else if (ft_strncmp(main_data.line, "env", 3) == 0)
+			print_env(&main_data);
+// TU SKOŃCZYŁEM 
+
 		else
 			split_jobs(main_data.line, main_data.path, &main_data);
 		free(main_data.line);

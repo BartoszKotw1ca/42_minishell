@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/06 19:02:29 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:31:51 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,44 @@ char	*read_env(t_main_struct *main_data, char *key)
 	return (value);
 }
 
-void	update_env(t_main_struct *main_data, char *key, char *value)
+void	print_env(t_main_struct *main_data)
 {
 	t_list	*start;
-	char	*new_content;
-	char	*temp;
+
+	start = main_data->envr;
+	while(main_data->envr)
+	{
+		printf("%s\n",(char *)main_data->envr->content);
+		main_data->envr = main_data->envr->next;
+	}
+	main_data->envr = start;
+}
+
+void	export_env(t_main_struct *main_data, char *key_val)
+{
+	t_list	*start;
+	int		val_index;
 	int		found;
+	char	*key;
 
 	found = 0;
-	temp = ft_strjoin(key, "=");
-	new_content = ft_strjoin(temp, value);
-	free(temp);
 	start = main_data->envr;
+	val_index = ft_strchr(key_val, '=') - key_val;
+	key = calloc(val_index + 1, sizeof(char));
+	ft_strlcpy(key, key_val, val_index + 1);
 	while (main_data->envr)
 	{
-		if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
+		if (ft_strnstr((char *)main_data->envr->content, key, val_index))
 		{
 			free(main_data->envr->content);
-			main_data->envr->content = new_content;
+			main_data->envr->content = ft_strdup(key_val);
 			found = 1;
 		}
 		main_data->envr = main_data->envr->next;
 	}
-	if (found == 0)
-		ft_lstadd_back(&main_data->envr, ft_lstnew(new_content));
 	main_data->envr = start;
+	if (found == 0)
+		ft_lstadd_back(&main_data->envr, ft_lstnew(ft_strdup(key_val)));
 }
 
 void	set_env(t_main_struct *main_data, char **envp)
@@ -64,7 +77,7 @@ void	set_env(t_main_struct *main_data, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		ft_lstadd_back(&main_data->envr, ft_lstnew(envp[i]));
+		ft_lstadd_back(&main_data->envr, ft_lstnew(ft_strdup(envp[i])));
 		i++;
 	}
 }
