@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/06 23:31:51 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:17:24 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*read_env(t_main_struct *main_data, char *key)
 {
@@ -34,9 +34,9 @@ void	print_env(t_main_struct *main_data)
 	t_list	*start;
 
 	start = main_data->envr;
-	while(main_data->envr)
+	while (main_data->envr)
 	{
-		printf("%s\n",(char *)main_data->envr->content);
+		printf("%s\n", (char *)main_data->envr->content);
 		main_data->envr = main_data->envr->next;
 	}
 	main_data->envr = start;
@@ -67,7 +67,9 @@ void	export_env(t_main_struct *main_data, char *key_val)
 	main_data->envr = start;
 	if (found == 0)
 		ft_lstadd_back(&main_data->envr, ft_lstnew(ft_strdup(key_val)));
+	free(key);
 }
+// BK i dont konw if it is correct, but there is no leak free(key)
 
 void	set_env(t_main_struct *main_data, char **envp)
 {

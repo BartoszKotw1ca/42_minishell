@@ -6,11 +6,11 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:26:21 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/05/28 13:56:48 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:17:40 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	my_add_history(t_list **lista, char *str)
 {

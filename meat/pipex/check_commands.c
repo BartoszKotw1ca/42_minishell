@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/05 17:23:07 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:17:17 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static char	*check_absolute(char *command)
 {

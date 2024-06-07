@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mp_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 23:15:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/01 16:39:07 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:17:07 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	get_paths(t_data *data, char **envp)
 {
@@ -40,7 +40,6 @@ void	free_split(char **res)
 
 void	print_error(char *mes1, char *mes2)
 {
-
 	write(2, "\033[31m", 6);
 	write(2, mes1, ft_strlen(mes1));
 	write(2, ": ", 3);

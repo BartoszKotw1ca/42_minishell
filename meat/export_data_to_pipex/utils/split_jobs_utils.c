@@ -6,13 +6,14 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:38:18 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 13:39:01 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:18:10 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../../minishell.h"
 
-// in this file we are checking if the line is equal to "<<" and if it is we are writing to file
+// in this file we are checking if the line is
+// equal to "<<" and if it is we are writing to file
 // if not we are exporting data to pipex
 // so we can say that we are spliting the jobs
 
@@ -43,7 +44,7 @@ void	free_list(char **splited_line, int fd, int i, int check)
 // change the line to "< heredoc.txt" insted of << "something"
 char	*change_the_line(char **splited_line, int i)
 {
-	char *line;
+	char	*line;
 
 	free(splited_line[0]);
 	splited_line[0] = malloc(2);
@@ -63,7 +64,7 @@ char	*change_the_line(char **splited_line, int i)
 }
 
 // check if the line is equal what is after << "something"
-int	check_if_line_equal(int	fd, char **splited_line)
+int	check_if_line_equal(int fd, char **splited_line)
 {
 	char	*tmp;
 
@@ -82,7 +83,7 @@ int	check_if_line_equal(int	fd, char **splited_line)
 	return (0);
 }
 
-char **without_space(char *line, int i, int j, char **splited_line)
+char	**without_space(char *line, int i, int j, char **splited_line)
 {
 	char	*li;
 	int		len;

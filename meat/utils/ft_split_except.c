@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	prepare_string(t_split_data *sd, int i)
 {
@@ -20,7 +20,7 @@ void	prepare_string(t_split_data *sd, int i)
 		{
 			sd->in_ef = 0;
 			sd->src++;
-			continue;
+			continue ;
 		}
 		if ((*sd->src == sd->e || *sd->src == sd->f) && sd->in_ef == 0)
 		{
@@ -39,9 +39,9 @@ void	prepare_string(t_split_data *sd, int i)
 
 void	back_to_original(char **splited, int i, int j)
 {
-	while(splited[i])
+	while (splited[i])
 	{
-		while(splited[i][j])
+		while (splited[i][j])
 		{
 			if (splited[i][j] == -5)
 				splited[i][j] = ' ';

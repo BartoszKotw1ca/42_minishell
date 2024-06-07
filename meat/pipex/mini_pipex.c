@@ -3,70 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/06 19:39:09 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:17:32 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-static void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
-{
-	int	ifd;
-	int	ofd;
-
-	if (i == -1 && data->infile && data->infile_ok == 0)
-	{
-		ifd = open(data->infile, O_RDONLY);
-		dup2(ifd, 0);
-		close(ifd);
-	}
-	if (i + 2 != noc)
-		dup2(fd[i + 1][1], 1);
-	else if (data->outfile)
-	{
-		ofd = open(data->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		dup2(ofd, 1);
-		close(ofd);
-	}
-	if (i > -1)
-	{
-		close(fd[i][1]);
-		dup2(fd[i][0], 0);
-		close(fd[i][0]);
-	}
-}
-
-static void	close_pipes(t_process *p, int i)
-{
-	close(p->pipes[i - 1][0]);
-	close(p->pipes[i - 1][1]);
-}
-
-static char	*read_var_name(char *src)
-{
-	char	*end;
-	char	*var_name;
-	int		i;
-
-	i = 0;
-	end = NULL;	
-	while (ft_isalnum(src[i]) != 0)
-		i++;
-	end = &src[i];
-	i = 0;
-	var_name = calloc(end - src + 1, sizeof(char));
-	while (&src[i] != end)
-	{
-		var_name[i] = src[i];
-		i++;
-	}
-	if (*src == '?')
-		var_name[0] = '?';
-	return (var_name);
-}
+#include "../../minishell.h"
 
 static void	update_arg(t_data *d, int i, char *var_value, int j)
 {
@@ -104,7 +48,8 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 	in_quotes = 0;
 	while (d->commends[i][j])
 	{
-		if ((d->commends[i][j] == 39 || d->commends[i][j] == 34) && in_quotes == 0)
+		if ((d->commends[i][j] == 39
+			|| d->commends[i][j] == 34) && in_quotes == 0)
 			in_quotes = d->commends[i][j];
 		else if (d->commends[i][j] == in_quotes)
 			in_quotes = 0;
@@ -122,7 +67,8 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 	}
 }
 
-static void	run_commands(t_data *data, t_process *p, int i, t_main_struct *main_data)
+static void	run_commands(t_data *data, t_process *p,
+	int i, t_main_struct *main_data)
 {
 	while (i < data->num_of_com)
 	{
@@ -157,7 +103,7 @@ void	mini_pipex(t_data *data, t_main_struct *main_data)
 	int			main_pid;
 
 	i = 0;
-	p.pipes = malloc((data->num_of_com - 1) * sizeof(int[2]));
+	p.pipes = malloc((data->num_of_com - 1) * 8);
 	p.pid = malloc(data->num_of_com * sizeof(int));
 	while (i < data->num_of_com - 1)
 		pipe(p.pipes[i++]);
@@ -165,3 +111,5 @@ void	mini_pipex(t_data *data, t_main_struct *main_data)
 	free (p.pipes);
 	free (p.pid);
 }
+
+//	p.pipes = malloc((data->num_of_com - 1) * sizeof(int[2]));

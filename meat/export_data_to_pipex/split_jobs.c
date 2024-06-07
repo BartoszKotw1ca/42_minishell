@@ -6,14 +6,16 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/06 13:39:10 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:41:50 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*tmp_fun_write_to_file(int len_list, char **splited_line, int fd, char *get_next)
+char	*tmp_fun_write_to_file(int len_list,
+	char **splited_line, int fd, char *get_next)
 {
+	// (void) len_list;
 	close(fd);
 	fd = open("heredoc.txt", O_RDONLY);
 	get_next = get_next_line(fd);
@@ -27,7 +29,7 @@ char	*tmp_fun_write_to_file(int len_list, char **splited_line, int fd, char *get
 	close(fd);
 	unlink("heredoc.txt");
 	free_list(splited_line, fd, 0, 0);
-	return NULL;
+	return (NULL);
 }
 
 // write to file the lines after << "something"
@@ -40,6 +42,7 @@ char	*write_to_file(char *line)
 	char	*get_next;
 
 	len_list = 0;
+	get_next = NULL;
 	splited_line = ft_split_except(line, ' ', 39, 34);
 	if (!splited_line)
 		return (NULL);
@@ -50,7 +53,7 @@ char	*write_to_file(char *line)
 	fd = open("heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 		if (check_if_line_equal(fd, splited_line) == 1)
-			break;
+			break ;
 	if (len_list == 2)
 		return (tmp_fun_write_to_file(len_list, splited_line, fd, get_next));
 	linee = change_the_line(splited_line, 0);
@@ -61,7 +64,7 @@ char	*write_to_file(char *line)
 // split the job and export data to pipex
 int	split_jobs(char *line, char *path, t_main_struct *main_data)
 {
-	char *res;
+	char	*res;
 
 	if (line[0] == '<' && line[1] == '<')
 	{
