@@ -20,6 +20,7 @@ SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
 		meat/change_dir/change_dir.c \
 		meat/history/history.c \
 		meat/signals/signals.c \
+		meat/export_and_unset/export_and_unset.c \
 		main.c
 
 OBJDIR = Obj/

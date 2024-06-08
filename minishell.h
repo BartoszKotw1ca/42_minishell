@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 14:14:56 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:28:10 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,13 @@ void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data);
 void	close_pipes(t_process *p, int i);
 char	*read_var_name(char *src);
 
-//mini_pipex.c
+// mini_pipex.c
 void	mini_pipex(t_data *data, t_main_struct *main_data);
+
+// export_and_unset.c
+void	check_inside_export(t_main_struct *main_data, int j);
+void	check_for_export(t_main_struct *main_data);
+void	initialize_export(t_main_struct *main_data);
+void	initialize_unset(t_main_struct *main_data);
 
 #endif

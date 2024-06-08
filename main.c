@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 13:43:23 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:29:24 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,12 @@ int	split_main_job(t_main_struct *main_data)
 		print_history(main_data->history);
 	else if (ft_strncmp(main_data->line, "cd", 2) == 0)
 		change_directory(main_data->line, main_data->path, main_data);
-	else if (ft_strncmp(main_data->line, "export", 6) == 0)
-	{
-		main_data->i = 0;
-		main_data->ted = ft_split(main_data->line, ' ');
-		export_env(main_data, main_data->ted[1]);
-		while (main_data->ted[main_data->i])
-			free(main_data->ted[main_data->i ++]);
-		free(main_data->ted);
-	}
 	else if (ft_strncmp(main_data->line, "env", 3) == 0)
 		print_env(main_data);
+	else if (ft_strncmp(main_data->line, "export", 6) == 0)
+		initialize_export(main_data);
+	else if (ft_strncmp(main_data->line, "unset", 5) == 0)
+		initialize_unset(main_data);
 	else
 		split_jobs(main_data->line, main_data->path, main_data);
 	return (0);
