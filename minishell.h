@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 15:47:58 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:14:56 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	set_env(t_main_struct *main_data, char **envp);
 char	*read_env(t_main_struct *main_data, char *key);
 void	print_env(t_main_struct *main_data);
 void	export_env(t_main_struct *main_data, char *key_val);
+void	unset_env(t_main_struct *main_data, char *key_val);
 
 // split_jobs.c
 char	*tmp_fun_write_to_file(int len_list,
