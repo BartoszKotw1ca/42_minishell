@@ -36,14 +36,14 @@ int	check_the_line(char *argv, t_data *data)
 	int	i;
 
 	i = 0;
-	while (argv[i])
+	while (argv[i] && argv[i] != '|')
 	{
 		if (argv[i] == '>' && argv[i + 1] && argv[i + 1] == '>')
 		{
 			data->mode = 1;
 			return (1);
 		}
-		else if (argv[i] == '>' && skip_spaces(&argv[i], i) != '\0')
+		else if (argv[i] == '>' && skip_spaces(&argv[i], i + 1) != '\0')
 		{
 			data->mode = 0;
 			return (2);

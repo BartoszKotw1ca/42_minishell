@@ -28,6 +28,14 @@
 # include <signal.h>
 # include <unistd.h>
 
+typedef struct s_com
+{
+	char	*commend;
+	char	*infile;
+	char	*outfile;
+	int		mode; // 0 if trunc, 1 if append
+}			t_com;
+
 typedef struct s_data
 {
 	char	*infile;
@@ -42,6 +50,7 @@ typedef struct s_data
 	int		infile_ok;
 	t_list	*envr;
 	char	**tmp;
+	t_com	*com;
 }			t_data;
 
 typedef struct s_process
