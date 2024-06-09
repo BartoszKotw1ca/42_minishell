@@ -6,15 +6,39 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/08 14:15:26 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:07:14 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	unset_env(t_main_struct *main_data, char *key_val)
+void	unset_env(t_main_struct *main_data, char *key)
 {
-	return ;
+	t_list	*start;
+	t_list	*prev;
+
+	start = main_data->envr;
+	prev = NULL;
+	while (main_data->envr)
+	{
+		if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
+		{
+			if (((char *)main_data->envr->content)[ft_strlen(key)] == '=');
+			{
+				if (prev)
+					prev->next = main_data->envr->next;
+				else
+					start = main_data->envr->next;
+				free(main_data->envr->content);
+				free(main_data->envr);
+				main_data->envr = start;
+				return ;
+			}
+		}
+		prev = main_data->envr;
+		main_data->envr = main_data->envr->next;
+	}
+	main_data->envr = start;
 }
 
 char	*read_env(t_main_struct *main_data, char *key)

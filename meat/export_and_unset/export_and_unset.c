@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_and_unset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:16:09 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 17:27:44 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:25:05 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	initialize_unset(t_main_struct *main_data)
 	main_data->ted = ft_split(main_data->line, ' ');
 	main_data->i = 1;
 	while (main_data->ted[main_data->i])
+	{
+		unset_env(main_data, main_data->ted[main_data->i]);
 		main_data->i ++;
-		// place to put unset_envp
+	}
 	main_data->i = 0;
 	while (main_data->ted[main_data->i])
 		free(main_data->ted[main_data->i ++]);
