@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 17:29:24 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:43:28 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	write_to_main_struct(int ac, char **av, char **envp,
 	(void) av;
 	main_data->envp = envp;
 	set_env(main_data, main_data->envp);
-	update_file("status", '0');
 	main_data->history = NULL;
 	main_data->path = getenv("PATH");
 }
