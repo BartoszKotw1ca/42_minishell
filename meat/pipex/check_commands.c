@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:17 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:01:31 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	check_files(t_process *p, t_data *data)
 	}
 }
 
-void	check_commands(t_process *p, t_data *data)
+void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 {
 	int		i;
 
@@ -68,14 +68,29 @@ void	check_commands(t_process *p, t_data *data)
 	{
 		while (p->args[i])
 			i++;
-		if (i > 2)
-			print_error(p->args[0], "to many arguments\n");
+		if (i != 2)
+			print_error(p->args[0], "invalid number of arguments\n");
 		else if (chdir(p->args[1]) != 0)
 			print_error(p->args[1], "no such directory\n");
 		free(p->path);
 		p->path = ft_strjoin("/usr/bin/", "true");
 		free(p->args[0]);
 		p->args[0] = ft_strjoin("true", "");
+		return ;
+	}
+	if (ft_strncmp("env", p->args[0], 3) == 0)
+	{
+		free(p->path);
+		p->path = ft_strjoin("/usr/bin/", "echo");
+		free(p->args[0]);
+		free(p->args);
+		p->args = malloc(3 * sizeof(char *));
+		p->args[0] = ft_strjoin("echo", "");
+		p->args[1] = get_env_string(main_data);
+		p->args[2] = NULL;
+		// printf("%s\n", p->args[1]);
+		// free(p->args[1]);
+		// p->args[1] = NULL;
 		return ;
 	}
 	i = 0;
