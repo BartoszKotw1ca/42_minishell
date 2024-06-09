@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:32 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:34:17 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	update_arg(t_data *d, int i, char *var_value, int j)
 		var_end = &dollar[j + 1];
 	else
 	{
-		while (ft_isalnum(dollar[j]) != 0)
+		while (ft_isalnum(dollar[j]) != 0 || dollar[j] == '_')
 			j++;
 		var_end = &dollar[j];
 	}

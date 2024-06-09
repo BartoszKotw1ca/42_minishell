@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 13:12:45 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:16:36 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*read_var_name(char *src)
 
 	i = 0;
 	end = NULL;
-	while (ft_isalnum(src[i]) != 0)
+	while (ft_isalnum(src[i]) != 0 || src[i] == '_')
 		i++;
 	end = &src[i];
 	i = 0;
