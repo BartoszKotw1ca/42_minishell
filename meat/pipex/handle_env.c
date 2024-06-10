@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/10 08:22:34 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:30:37 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@ char	*read_env(t_main_struct *main_data, char *key)
 {
 	t_list	*start;
 	char	*value;
+	int		key_len;
 
 	start = main_data->envr;
 	value = NULL;
+	key_len = ft_strlen(key);
+	key[key_len] = '='; 
 	while (main_data->envr)
 	{
-		if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
+		// if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
+		if (ft_strncmp(main_data->envr->content, key, key_len + 1) == 0)
 		{
 			value = ft_strchr(main_data->envr->content, '=');
 			if (value)

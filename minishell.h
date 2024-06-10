@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 17:28:10 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:37:22 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	print_history(t_list *lista);
 
 // check_commands.c
 char	*find_path(char *command, t_data *data, int i);
-void	check_commands(t_process *p, t_data *data);
+void	check_commands(t_process *p, t_data *data, t_main_struct *main_data);
 
 // mp_utils.c
 void	free_split(char **res);
@@ -165,6 +165,7 @@ void	check_infile(t_data *data);
 void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data);
 void	close_pipes(t_process *p, int i);
 char	*read_var_name(char *src);
+char	*get_env_string(t_main_struct *main_data);
 
 // mini_pipex.c
 void	mini_pipex(t_data *data, t_main_struct *main_data);

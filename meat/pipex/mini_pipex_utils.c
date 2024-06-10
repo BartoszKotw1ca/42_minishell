@@ -6,11 +6,49 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/08 13:12:45 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:18:13 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static int	env_size(t_main_struct *main_data)
+{
+	int		size;
+	t_list	*start;
+
+	start = main_data->envr;
+	size = 0;
+	while(main_data->envr)
+	{
+		size += ft_strlen(main_data->envr->content) + 1;
+		main_data->envr = main_data->envr->next;
+	}
+	main_data->envr = start;
+	return (size);
+}
+
+char	*get_env_string(t_main_struct *main_data)
+{
+	char	*env_string;
+	t_list	*start;
+	char	*env_string_start;
+
+	env_string = calloc(env_size(main_data) + 1, sizeof(char));
+	start = main_data->envr;
+	env_string_start = env_string;
+	while(main_data->envr)
+	{
+		ft_strlcpy(env_string, main_data->envr->content, ft_strlen(main_data->envr->content) + 1);
+		env_string += ft_strlen(main_data->envr->content);
+		*env_string  = '\n';
+		env_string ++;
+		main_data->envr = main_data->envr->next;
+		// printf("%s", env_string_start);
+	}
+	main_data->envr = start;
+	return (env_string_start);
+}
 
 void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 {
@@ -53,7 +91,7 @@ char	*read_var_name(char *src)
 
 	i = 0;
 	end = NULL;
-	while (ft_isalnum(src[i]) != 0)
+	while (ft_isalnum(src[i]) != 0 || src[i] == '_')
 		i++;
 	end = &src[i];
 	i = 0;

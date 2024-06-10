@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:32 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:11:37 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	update_arg(t_data *d, int i, char *var_value, int j)
 		var_end = &dollar[j + 1];
 	else
 	{
-		while (ft_isalnum(dollar[j]) != 0)
+		while (ft_isalnum(dollar[j]) != 0 || dollar[j] == '_')
 			j++;
 		var_end = &dollar[j];
 	}
@@ -75,10 +75,11 @@ static void	run_commands(t_data *data, t_process *p,
 		check_args(data, i, 0, main_data);
 		p->args = ft_split_except(data->commends[i], ' ', 39, 34);
 		p->path = find_path(p->args[0], data, 0);
+		check_commands(p, data, main_data);
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
-			check_commands(p, data);
+			// check_commands(p, data, main_data);
 			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
 			if (i != 0)
 				waitpid(p->pid[i - 1], &data->ex_stat, 0);

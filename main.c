@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
 /*   Updated: 2024/06/10 18:16:19 by bkotwica         ###   ########.fr       */
@@ -19,7 +19,6 @@ void	write_to_main_struct(int ac, char **av, char **envp,
 	(void) av;
 	main_data->envp = envp;
 	set_env(main_data, main_data->envp);
-	update_file("status", '0');
 	main_data->history = NULL;
 	main_data->path = getenv("PATH");
 }
@@ -35,8 +34,8 @@ int	split_main_job(t_main_struct *main_data)
 		print_history(main_data->history);
 	else if (ft_strncmp(main_data->line, "cd", 2) == 0)
 		change_directory(main_data->line, main_data->path, main_data);
-	else if (ft_strncmp(main_data->line, "env", 3) == 0)
-		print_env(main_data);
+	// else if (ft_strncmp(main_data->line, "env", 3) == 0)
+	// 	print_env(main_data);
 	else if (ft_strncmp(main_data->line, "export", 6) == 0)
 		initialize_export(main_data);
 	else if (ft_strncmp(main_data->line, "unset", 5) == 0)
