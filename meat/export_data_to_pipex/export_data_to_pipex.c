@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 18:16:38 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:29:19 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	check_infile(&data);
 	data_tmp = new_one(&data);
 	
-	// mini_pipex(&data, main_data); // should take the data_tmp
+	// mini_pipex(&data_tmp, main_data); // should take the data_tmp
 	int i = -1;
 	while (++i < data_tmp->num_of_com)
 		printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);

@@ -89,9 +89,6 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 		p->args[1] = ft_strjoin("-n", "");
 		p->args[2] = get_env_string(main_data);
 		p->args[3] = NULL;
-		// printf("%s\n", p->args[1]);
-		// free(p->args[1]);
-		// p->args[1] = NULL;
 		return ;
 	}
 	i = 0;
