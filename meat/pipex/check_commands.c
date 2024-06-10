@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/09 23:01:31 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:09:53 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 		p->path = ft_strjoin("/usr/bin/", "echo");
 		free(p->args[0]);
 		free(p->args);
-		p->args = malloc(3 * sizeof(char *));
+		p->args = malloc(4 * sizeof(char *));
 		p->args[0] = ft_strjoin("echo", "");
-		p->args[1] = get_env_string(main_data);
-		p->args[2] = NULL;
+		p->args[1] = ft_strjoin("-n", "");
+		p->args[2] = get_env_string(main_data);
+		p->args[3] = NULL;
 		// printf("%s\n", p->args[1]);
 		// free(p->args[1]);
 		// p->args[1] = NULL;
