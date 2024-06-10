@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:50 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:44:29 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 // that file contains the functions that should write data from line
 // to our t_data structure
+
+void	new_one(t_data *data);
 
 int	tmp_fun(t_data *data)
 {
@@ -34,20 +36,31 @@ int	tmp_fun(t_data *data)
 	return (1);
 }
 
-int    check_line1(char *argv) {
-	int    i;
+char skip_spaces_back(char *str, int index)
+{
+    while (index >= 0 && str[index] == ' ')
+        index--;
+    if (index >= 0)
+        return str[index];
+    else
+        return '\0';
+}
 
-	i = 0;
-	while (argv[i])
-	{
-		if (argv[i] == '>' && argv[i + 1] && argv[i + 1] == '>')
-			return (1);
-		else if (argv[i] == '>')
-			if (skip_spaces(&argv[i], i + 1) != '\0')
-				return (2);
-		i ++;
-	}
-	return (0);
+int    check_line1(char *argv)
+{
+    int    i;
+
+    i = strlen(argv) - 1;
+    while (i >= 0 && argv[i] != '|')
+    {
+        if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')
+            return (1);
+        else if (argv[i] == '>' && skip_spaces_back(argv, i - 1) != '\0')
+			return (2);
+        else
+            i--;
+    }
+    return (0);
 }
 
 void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
@@ -60,76 +73,105 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	if (check_the_line(argv, &data) == 1)
 	{
 		line = change_line(&data, argv, check_the_line(argv, &data));
-		free(argv);
-		argv = line;
+		// free(argv);
+		argv = ft_strdup(line);
+		free(line);
 	}
-	else
+	else if (check_the_line(argv, &data) == 0)
 		data.mode = -1;
 	data.tmp = ft_split(argv, ' ');
 	if (tmp_fun(&data) == 0)
 		return ;
 	data.paths = ft_split(path, ':');
 	check_infile(&data);
-
-	// printf("%s\n", data.infile);
-	// printf("%s\n", data.outfile);
-	printf("%d", check_line1(data.commends[1]));
-	printf("%s", data.commends[1]);
-	exit(0);
-	int j = 0;
-	printf("%d\n", data.mode);
-	data.com = malloc(sizeof(t_com) * data.num_of_com);
-	int i = 0;
-	data.com[i].infile = ft_strdup(data.infile);
-	data.com[i].outfile = ft_strdup(data.outfile);
-	while (data.commends[i]) {
-		char	**te = ft_split(data.commends[i], ' ');
-		// da.mode = -1;
-		write_to_infile(te, &data);
-		write_to_outfile(te, &data, 0, 0);
-		int	li = check_the_line(data.commends[i], &data);
-		if (li == 0)
-			data.com[i].mode = -1;
-		else if (li == 1)
-			data.com[i].mode = 1;
-		else
-			data.com[i].mode = 0;
-		data.com[i].commend = ft_strdup(data.commends[i]);
-		data.com[i].infile = ft_strdup(data.infile);
-		data.com[i].outfile = ft_strdup(data.outfile);
-		// data.com[i].mode = data.mode;
-		i ++;
-	}
-	// exit (0);
-	i = -1;
-	// char **te = ft_split(data.commends[i], ' ');
-	// write_to_infile(te, data.com[0]);
-	while (++i < data.num_of_com)
-		printf("%d : %s : %s : %s\n", data.com[i].mode, data.com[i].commend, data.com[i].infile, data.com[i].outfile);
-	exit(0);
-	// printf("%s %s", maininfile, mainoutfile);
-	// char **te = ft_split(data.commends[1], ' ');
-	// write_to_infile(te, &data);
-	// write_to_outfile(te, &data, 0, 0);
-	// printf("%s\n", data.infile);
-	// printf("%s\n", data.outfile);
-
-	// int	i = 0;
-	// data.com = malloc(sizeof(t_com) * data.num_of_com);
-	// data.com[0].commend = "tak";
-	// printf("%s", data.com[0].commend);
-	// data.com[1].commend = "nie";
-	// printf("\n%s", data.com[1].commend);
-	// free(data.com);
-
-	// while (data.commends[i]) {
-	// 	data.com.commend = ft_strdup(data.commends[i]);
-	// 	printf("%s\n", data.com.commend);
-	// 	exit(0);
-	// }
-
+	new_one(&data);
 	// mini_pipex(&data, main_data);
 	free_dataa(&data, data.tmp);
+	if (data.mode == 1)
+		free(argv);
 }
 
 // free(argv); the last command
+
+void	new_one(t_data *data)
+{
+	t_data *tmp = data;
+	char **tmp_com = data->commends;
+	int i = tmp->num_of_com;
+	tmp_com = malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	while (tmp->commends[++ i])
+		tmp_com[i] = ft_strdup(tmp->commends[i]);
+	tmp_com[i] = NULL;
+	tmp->com = malloc(sizeof(t_com) * tmp->num_of_com);
+	i = 0;
+	tmp->com[i].infile = tmp->infile;
+	tmp->com[tmp->num_of_com - 1].outfile = ft_strdup(tmp->outfile);
+	tmp->com[tmp->num_of_com - 1].mode = tmp->mode;
+	tmp->start = 0;
+	while (tmp_com[i]) {;
+		char	**te = ft_split(tmp_com[i], ' ');
+		int	p = 0;
+		while (te[p])
+			p ++;
+		tmp->end = p - 1;
+		if (i != 0)
+		{
+			free(tmp->infile);
+			write_to_infile(te, tmp);
+		}
+		int	li = check_line1(tmp_com[i]);
+		if (i != tmp->num_of_com - 1)
+		{
+			free(tmp->outfile);
+			if (li == 1)
+			{
+				char *t = ft_listjoin(0, tmp->end, te);
+				char *e = change_line(tmp, t, 1);
+				free(t);
+				int u = 0;
+				while (te[u])
+					free(te[u ++]);
+				free(te);
+				te = ft_split(e, ' ');
+				free(e);
+			}
+			write_to_outfile(te, tmp, 0, 0);
+		}
+		if (i != tmp->num_of_com - 1 && i != tmp->num_of_com)
+		{
+			if (li == 0)
+				tmp->com[i].mode = -1;
+			else if (li == 1)
+				tmp->com[i].mode = 1;
+			else
+				tmp->com[i].mode = 0;
+		}
+		int e = 0;
+		e = 0;
+		while (tmp->commends[e])
+			free(tmp->commends[e ++]);
+		free(tmp->commends);
+		process_data(te, tmp, 0);
+		tmp->com[i].commend = ft_strdup(tmp->commends[0]);
+		if (i != 0)
+			tmp->com[i].infile = tmp->infile;
+		if (i != tmp->num_of_com - 1)
+			tmp->com[i].outfile = tmp->outfile;
+		e = 0;
+		while (te[e])
+			free(te[e ++]);
+		free(te);
+		printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", tmp->com[i].commend, tmp->com[i].infile, tmp->com[i].outfile, tmp->com[i].mode);
+		i ++;
+	}
+	free(tmp->com[tmp->num_of_com - 1].outfile);
+	i = 0;
+	while (i < tmp->num_of_com)
+		free(tmp->com[i ++].commend);
+	i = 0;
+	while (tmp_com[i])
+		free(tmp_com[i ++]);
+	free(tmp_com);
+	free(tmp->com);
+}

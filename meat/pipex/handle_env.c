@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/09 12:07:14 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/10 08:22:34 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	unset_env(t_main_struct *main_data, char *key)
 	{
 		if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
 		{
-			if (((char *)main_data->envr->content)[ft_strlen(key)] == '=');
+			if (((char *)main_data->envr->content)[ft_strlen(key)] == '=')
 			{
 				if (prev)
 					prev->next = main_data->envr->next;
