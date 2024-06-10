@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 17:44:29 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:16:38 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // that file contains the functions that should write data from line
 // to our t_data structure
 
-void	new_one(t_data *data);
+t_data	*new_one(t_data *data);
 
 int	tmp_fun(t_data *data)
 {
@@ -67,6 +67,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 {
 	t_data	data;
 	char	*line;
+	t_data	*data_tmp;
 
 	if ((int)argv[0] == 0)
 		return ;
@@ -84,16 +85,28 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		return ;
 	data.paths = ft_split(path, ':');
 	check_infile(&data);
-	new_one(&data);
-	// mini_pipex(&data, main_data);
+	data_tmp = new_one(&data);
+	
+	// mini_pipex(&data, main_data); // should take the data_tmp
+	int i = -1;
+	while (++i < data_tmp->num_of_com)
+		printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
+	// first check that it will show you the names and how it looks like :)
+	// and there should not be any leaks
 	free_dataa(&data, data.tmp);
+	free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
+	i = 0;
+	while (i < data_tmp->num_of_com)
+		free(data_tmp->com[i ++].commend);
+	i = 0;
+	free(data_tmp->com);
 	if (data.mode == 1)
 		free(argv);
 }
 
 // free(argv); the last command
 
-void	new_one(t_data *data)
+t_data	*new_one(t_data *data)
 {
 	t_data *tmp = data;
 	char **tmp_com = data->commends;
@@ -162,16 +175,12 @@ void	new_one(t_data *data)
 		while (te[e])
 			free(te[e ++]);
 		free(te);
-		printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", tmp->com[i].commend, tmp->com[i].infile, tmp->com[i].outfile, tmp->com[i].mode);
+		// printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", tmp->com[i].commend, tmp->com[i].infile, tmp->com[i].outfile, tmp->com[i].mode);
 		i ++;
 	}
-	free(tmp->com[tmp->num_of_com - 1].outfile);
-	i = 0;
-	while (i < tmp->num_of_com)
-		free(tmp->com[i ++].commend);
 	i = 0;
 	while (tmp_com[i])
 		free(tmp_com[i ++]);
 	free(tmp_com);
-	free(tmp->com);
+	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 11:53:19 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:16:19 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		free(main_data.line);
 		rl_on_new_line();
-		break;
+		// break;
 	}
 	ft_lstclear(&main_data.history, del_node);
 	ft_lstclear(&main_data.envr, del_node);
