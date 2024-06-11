@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 15:40:21 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:06:04 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,79 @@ int	tmp_fun(t_data *data)
 
 char skip_spaces_back(char *str, int index)
 {
-    while (index >= 0 && str[index] == ' ')
-        index--;
-    if (index >= 0)
-        return str[index];
-    else
-        return '\0';
+	while (index >= 0 && str[index] == ' ')
+		index--;
+	if (index >= 0)
+		return str[index];
+	else
+		return '\0';
 }
 
 int    check_line1(char *argv)
 {
-    int    i;
+	int	i;
 
-    i = strlen(argv) - 1;
-    while (i >= 0 && argv[i] != '|')
-    {
-        if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')
-            return (1);
-        else if (argv[i] == '>' && skip_spaces_back(argv, i - 1) != '\0')
+	i = strlen(argv) - 1;
+	while (i >= 0 && argv[i] != '|')
+	{
+		if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')
+			return (1);
+		else if (argv[i] == '>' && skip_spaces_back(argv, i - 1) != '\0')
 			return (2);
-        else
-            i--;
-    }
-    return (0);
+		else
+			i--;
+	}
+	return (0);
+}
+
+void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < data_tmp->num_of_com)
+		free(data_tmp->com[i ++].commend);
+	i = 0;
+	if (data->mode == 1)
+		free(argv);
+	if (access("heredoc.txt", F_OK) == 0)
+		unlink("heredoc.txt");
+	i = -1;
+	while (++ i < data->num_of_com)
+		if (data->com[i].infile)
+			free(data->com[i].infile);
+	i = -1;
+	while (++ i < data->num_of_com)
+		if (data->com[i].outfile)
+			free(data->com[i].outfile);
+	free(data_tmp->com);
+}
+
+void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
+{
+	data->paths = ft_split(path, ':');
+	check_infile(data);
+	if (data->num_of_com == data->pipes_counter)
+	{
+		data_tmp = new_one(data);
+		if (data_tmp != NULL)
+			// mini_pipex(data_tmp, main_data); // should take the data_tmp
+		free_after_mixed(data_tmp, data, argv);
+	}
+	else
+		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
+	free_dataa(data, data->tmp);
+}
+
+void	count_pipes(t_data *data, char *argv)
+{
+	int		i;
+
+	i = -1;
+	data->pipes_counter = 1;
+	while(argv[++ i])
+		if (argv[i] == '|')
+			data->pipes_counter += 1;
 }
 
 void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
@@ -68,15 +118,10 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	t_data	data;
 	char	*line;
 	t_data	*data_tmp;
-	int		i;
 
 	if ((int)argv[0] == 0)
 		return ;
-	i = -1;
-	data.pipes_counter = 1;
-	while(argv[++ i])
-		if (argv[i] == '|')
-			data.pipes_counter += 1;
+	count_pipes(&data, argv);
 	if (check_the_line(argv, &data) == 1)
 	{
 		line = change_line(&data, argv, check_the_line(argv, &data));
@@ -89,54 +134,15 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	data.tmp = ft_split(argv, ' ');
 	if (tmp_fun(&data) == 0)
 		return ;
-	data.paths = ft_split(path, ':');
-	check_infile(&data);
-	printf("%s\n", data.commends[0]);
-	printf("%s\n", data.infile);
-	printf("%s\n", data.outfile);
-	printf("%d\n", data.num_of_com);
-	if (data.num_of_com == data.pipes_counter)
-	{
-		data_tmp = new_one(&data);
-		if (data_tmp == NULL)
-			return ;// we have to free everything
-		// mini_pipex(data_tmp, main_data); // should take the data_tmp
-		int i = -1;
-		while (++i < data_tmp->num_of_com)
-			printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
-		// first check that it will show you the names and how it looks like :)
-		// and there should not be any leaks
-		// free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
-		i = 0;
-		while (i < data_tmp->num_of_com)
-			free(data_tmp->com[i ++].commend);
-		i = 0;
-		if (data.mode == 1)
-			free(argv);
-		if (access("heredoc.txt", F_OK) == 0)
-			unlink("heredoc.txt");
-		i = -1;
-		while (++ i < data.num_of_com)
-			if (data.com[i].infile)
-				free(data.com[i].infile);
-		i = -1;
-		while (++ i < data.num_of_com)
-			if (data.com[i].outfile)
-				free(data.com[i].outfile);
-		free(data_tmp->com);
-	}
-	else
-		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
-	free_dataa(&data, data.tmp);
+	run_mini_pi(data_tmp, &data, path, argv);
 }
 
 // free(argv); the last command
 //===============================================================================================
 t_data	*new_one(t_data *data)
 {
-	t_data *tmp = data;
 	char **tmp_com = data->commends;
-	int i = tmp->num_of_com;
+	int i = data->num_of_com;
 	tmp_com = malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while (data->commends[++ i])
@@ -144,7 +150,6 @@ t_data	*new_one(t_data *data)
 	tmp_com[i] = NULL;
 	data->com = malloc(sizeof(t_com) * data->num_of_com);
 	i = 0;
-	// free(data->infile);
 	data->com[i].infile = ft_strdup(data->infile);
 	data->com[data->num_of_com - 1].outfile = ft_strdup(data->outfile);
 	data->com[data->num_of_com - 1].mode = data->mode;
@@ -170,12 +175,11 @@ t_data	*new_one(t_data *data)
 		while (te[p])
 			p ++;
 		data->end = p - 1;
-		printf("to jest ta licz%d\n", p);
 		if (i != 0)
 		{
 			free(data->infile);
 			printf("%s %s\n", te[0], te[1]);
-			write_to_infile(te, tmp);
+			write_to_infile(te, data);
 		}
 		// exit(0);
 		int	li = check_line1(tmp_com[i]);
@@ -185,7 +189,7 @@ t_data	*new_one(t_data *data)
 			if (li == 1)
 			{
 				char *t = ft_listjoin(0, data->end, te);
-				char *e = change_line(tmp, t, 1);
+				char *e = change_line(data, t, 1);
 				free(t);
 				int u = 0;
 				while (te[u])
@@ -194,7 +198,7 @@ t_data	*new_one(t_data *data)
 				te = ft_split(e, ' ');
 				free(e);
 			}
-			write_to_outfile(te, tmp, 0, 0);
+			write_to_outfile(te, data, 0, 0);
 		}
 		if (i != data->num_of_com - 1 && i != data->num_of_com)
 		{
@@ -210,7 +214,7 @@ t_data	*new_one(t_data *data)
 		while (data->commends[e])
 			free(data->commends[e ++]);
 		free(data->commends);
-		process_data(te, tmp, 0);
+		process_data(te, data, 0);
 		data->com[i].commend = ft_strdup(data->commends[0]);
 		if (i != 0)
 			data->com[i].infile = ft_strdup(data->infile);
@@ -220,12 +224,11 @@ t_data	*new_one(t_data *data)
 		while (te[e])
 			free(te[e ++]);
 		free(te);
-		// printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", data->com[i].commend, data->com[i].infile, data->com[i].outfile, data->com[i].mode);
 		i ++;
 	}
 	i = 0;
 	while (tmp_com[i])
 		free(tmp_com[i ++]);
 	free(tmp_com);
-	return (tmp);
+	return (data);
 }
