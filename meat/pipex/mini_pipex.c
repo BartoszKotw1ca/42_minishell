@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/11 16:35:16 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:19:08 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	run_commands(t_data *data, t_process *p,
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
-			close_n_dup(i - 1, p->pipes, data->num_of_com, data);
+			close_n_dup(i, p->pipes, data->num_of_com, data);
 			if (i != 0)
 				waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			execve(p->path, p->args, NULL);
