@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 15:24:43 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:40:21 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,14 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 			free(argv);
 		if (access("heredoc.txt", F_OK) == 0)
 			unlink("heredoc.txt");
-		free(data.com[0].infile);
+		i = -1;
+		while (++ i < data.num_of_com)
+			if (data.com[i].infile)
+				free(data.com[i].infile);
+		i = -1;
+		while (++ i < data.num_of_com)
+			if (data.com[i].outfile)
+				free(data.com[i].outfile);
 		free(data_tmp->com);
 	}
 	else
@@ -206,9 +213,9 @@ t_data	*new_one(t_data *data)
 		process_data(te, tmp, 0);
 		data->com[i].commend = ft_strdup(data->commends[0]);
 		if (i != 0)
-			data->com[i].infile = data->infile;
+			data->com[i].infile = ft_strdup(data->infile);
 		if (i != data->num_of_com - 1)
-			data->com[i].outfile = data->outfile;
+			data->com[i].outfile = ft_strdup(data->outfile);
 		e = 0;
 		while (te[e])
 			free(te[e ++]);
