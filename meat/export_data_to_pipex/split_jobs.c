@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 15:41:50 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:59:47 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*write_to_file(char *line)
 	while (1)
 		if (check_if_line_equal(fd, splited_line) == 1)
 			break ;
+	printf("to jest chba tu %d", len_list);
 	if (len_list == 2)
 		return (tmp_fun_write_to_file(len_list, splited_line, fd, get_next));
 	linee = change_the_line(splited_line, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 22:29:19 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:49:02 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,15 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	t_data	data;
 	char	*line;
 	t_data	*data_tmp;
+	int		i;
 
 	if ((int)argv[0] == 0)
 		return ;
+	i = -1;
+	data.pipes_counter = 1;
+	while(argv[++ i])
+		if (argv[i] == '|')
+			data.pipes_counter += 1;
 	if (check_the_line(argv, &data) == 1)
 	{
 		line = change_line(&data, argv, check_the_line(argv, &data));
@@ -85,23 +91,35 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		return ;
 	data.paths = ft_split(path, ':');
 	check_infile(&data);
-	data_tmp = new_one(&data);
-	
-	// mini_pipex(&data_tmp, main_data); // should take the data_tmp
-	int i = -1;
-	while (++i < data_tmp->num_of_com)
-		printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
-	// first check that it will show you the names and how it looks like :)
-	// and there should not be any leaks
+	printf("%s\n", data.commends[0]);
+	printf("%s\n", data.infile);
+	printf("%s\n", data.outfile);
+	printf("%d\n", data.num_of_com);
+	if (data.num_of_com == data.pipes_counter)
+	{
+		data_tmp = new_one(&data);
+		if (data_tmp == NULL)
+			return ;// we have to free everything
+		// mini_pipex(&data_tmp, main_data); // should take the data_tmp
+		int i = -1;
+		while (++i < data_tmp->num_of_com)
+			printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
+		// first check that it will show you the names and how it looks like :)
+		// and there should not be any leaks
+		free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
+		i = 0;
+		while (i < data_tmp->num_of_com)
+			free(data_tmp->com[i ++].commend);
+		i = 0;
+		free(data_tmp->com);
+		if (data.mode == 1)
+			free(argv);
+		if (access("heredoc.txt", F_OK) == 0)
+			unlink("heredoc.txt");
+	}
+	else
+		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
 	free_dataa(&data, data.tmp);
-	free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
-	i = 0;
-	while (i < data_tmp->num_of_com)
-		free(data_tmp->com[i ++].commend);
-	i = 0;
-	free(data_tmp->com);
-	if (data.mode == 1)
-		free(argv);
 }
 
 // free(argv); the last command
@@ -122,7 +140,25 @@ t_data	*new_one(t_data *data)
 	tmp->com[tmp->num_of_com - 1].outfile = ft_strdup(tmp->outfile);
 	tmp->com[tmp->num_of_com - 1].mode = tmp->mode;
 	tmp->start = 0;
-	while (tmp_com[i]) {;
+	while (tmp_com[i]) {
+		printf("com:s:%s\n", tmp_com[i]);
+		if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
+		{
+			printf("sdafsdfsdf");
+			if (check_if_ok(tmp_com[i], 3) == 1)
+				return NULL;
+			else
+			{
+				char *res = write_to_file(tmp_com[i]);
+				printf("-----------%s---------------", res);
+				if (res == NULL)
+					return NULL;
+				// free(tmp_com[i]);
+				// tmp_com[i] = res;
+				free(res);
+			}
+			printf("asdfasdfasdf");
+		}
 		char	**te = ft_split(tmp_com[i], ' ');
 		int	p = 0;
 		while (te[p])
