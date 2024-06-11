@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/09 23:11:37 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:47:53 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void	mini_pipex(t_data *data, t_main_struct *main_data)
 	int			main_pid;
 
 	i = 0;
+	// while (i < 1)
+		printf("infile: %s\n", data->com[0].infile);
+	exit(0);
 	p.pipes = malloc((data->num_of_com - 1) * 8);
 	p.pid = malloc(data->num_of_com * sizeof(int));
 	while (i < data->num_of_com - 1)

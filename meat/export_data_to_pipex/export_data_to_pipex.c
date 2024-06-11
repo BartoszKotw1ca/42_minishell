@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 11:49:02 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:07:34 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		data_tmp = new_one(&data);
 		if (data_tmp == NULL)
 			return ;// we have to free everything
-		// mini_pipex(&data_tmp, main_data); // should take the data_tmp
+		// mini_pipex(data_tmp, main_data); // should take the data_tmp
 		int i = -1;
 		while (++i < data_tmp->num_of_com)
 			printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 		// first check that it will show you the names and how it looks like :)
 		// and there should not be any leaks
-		free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
+		// free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
 		i = 0;
 		while (i < data_tmp->num_of_com)
 			free(data_tmp->com[i ++].commend);
@@ -116,6 +116,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 			free(argv);
 		if (access("heredoc.txt", F_OK) == 0)
 			unlink("heredoc.txt");
+		// free(data.com[0].infile);
 	}
 	else
 		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
@@ -136,39 +137,40 @@ t_data	*new_one(t_data *data)
 	tmp_com[i] = NULL;
 	tmp->com = malloc(sizeof(t_com) * tmp->num_of_com);
 	i = 0;
-	tmp->com[i].infile = tmp->infile;
+	// free(tmp->infile);
+	tmp->com[i].infile = ft_strdup(tmp->infile);
 	tmp->com[tmp->num_of_com - 1].outfile = ft_strdup(tmp->outfile);
 	tmp->com[tmp->num_of_com - 1].mode = tmp->mode;
 	tmp->start = 0;
 	while (tmp_com[i]) {
-		printf("com:s:%s\n", tmp_com[i]);
 		if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
 		{
-			printf("sdafsdfsdf");
 			if (check_if_ok(tmp_com[i], 3) == 1)
 				return NULL;
 			else
 			{
 				char *res = write_to_file(tmp_com[i]);
-				printf("-----------%s---------------", res);
 				if (res == NULL)
 					return NULL;
-				// free(tmp_com[i]);
-				// tmp_com[i] = res;
+				free(tmp_com[i]);
+				tmp_com[i] = ft_strdup(res);
 				free(res);
 			}
-			printf("asdfasdfasdf");
 		}
+		printf("com:s:%s\n", tmp_com[i]);
 		char	**te = ft_split(tmp_com[i], ' ');
 		int	p = 0;
 		while (te[p])
 			p ++;
 		tmp->end = p - 1;
+		printf("to jest ta licz%d\n", p);
 		if (i != 0)
 		{
 			free(tmp->infile);
+			printf("%s %s\n", te[0], te[1]);
 			write_to_infile(te, tmp);
 		}
+		// exit(0);
 		int	li = check_line1(tmp_com[i]);
 		if (i != tmp->num_of_com - 1)
 		{
