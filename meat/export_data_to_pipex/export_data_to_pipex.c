@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 18:06:04 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:38:43 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,98 +137,129 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	run_mini_pi(data_tmp, &data, path, argv);
 }
 
+void	free_splited_list(char **tmp)
+{
+	int		i;
+
+	i = 0;
+	while (tmp[i])
+		free(tmp[i ++]);
+	free(tmp);
+}
+//////////////////////////////////////////////////////////////////////////////
+void	write_new_data(t_data *data, int i, int li, char **te)
+{
+	if (i != data->num_of_com - 1 && i != data->num_of_com)
+	{
+		if (li == 0)
+			data->com[i].mode = -1;
+		else if (li == 1)
+			data->com[i].mode = 1;
+		else
+			data->com[i].mode = 0;
+	}
+	free_splited_list(data->commends);
+	process_data(te, data, 0);
+	data->com[i].commend = ft_strdup(data->commends[0]);
+	if (i != 0)
+		data->com[i].infile = ft_strdup(data->infile);
+	if (i != data->num_of_com - 1)
+		data->com[i].outfile = ft_strdup(data->outfile);
+	free_splited_list(te);
+}
+
+void	write_out(t_data *data, int i, int li, char **te)
+{
+	char	*e;
+	char	*t;
+
+	if (i != data->num_of_com - 1)
+	{
+		free(data->outfile);
+		if (li == 1)
+		{
+			t = ft_listjoin(0, data->end, te);
+			e = change_line(data, t, 1);
+			free(t);
+			free_splited_list(te);
+			te = ft_split(e, ' ');
+			free(e);
+		}
+		write_to_outfile(te, data, 0, 0);
+	}
+}
+
+int	check_for_red(char **tmp_com, int i)
+{
+	if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
+	{
+		if (check_if_ok(tmp_com[i], 3) == 1)
+			return (1);
+		else
+		{
+			char *res = write_to_file(tmp_com[i]);
+			if (res == NULL)
+				return (1);
+			free(tmp_com[i]);
+			tmp_com[i] = ft_strdup(res);
+			free(res);
+		}
+	}
+	return (0);
+}
+
+void	write_in(t_data *data, int i, char **te)
+{
+	int	p;
+
+	p = 0;
+	while (te[p])
+		p ++;
+	data->end = p - 1;
+	if (i != 0)
+	{
+		free(data->infile);
+		write_to_infile(te, data);
+	}
+}
+
+void	initialize_values(t_data *data)
+{
+	data->com = malloc(sizeof(t_com) * data->num_of_com);
+	data->com[0].infile = ft_strdup(data->infile);
+	data->com[data->num_of_com - 1].outfile = ft_strdup(data->outfile);
+	data->com[data->num_of_com - 1].mode = data->mode;
+	data->start = 0;
+}
+
 // free(argv); the last command
 //===============================================================================================
 t_data	*new_one(t_data *data)
 {
-	char **tmp_com = data->commends;
-	int i = data->num_of_com;
-	tmp_com = malloc(sizeof(char *) * (i + 1));
+	char	**tmp_com;
+	char	**te;
+	int		i;
+	int		li;
+
+	te = NULL;
+	tmp_com = NULL;
+	tmp_com = malloc(sizeof(char *) * (data->num_of_com + 1));
 	i = -1;
 	while (data->commends[++ i])
 		tmp_com[i] = ft_strdup(data->commends[i]);
 	tmp_com[i] = NULL;
-	data->com = malloc(sizeof(t_com) * data->num_of_com);
-	i = 0;
-	data->com[i].infile = ft_strdup(data->infile);
-	data->com[data->num_of_com - 1].outfile = ft_strdup(data->outfile);
-	data->com[data->num_of_com - 1].mode = data->mode;
-	data->start = 0;
-	while (tmp_com[i]) {
-		if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
-		{
-			if (check_if_ok(tmp_com[i], 3) == 1)
-				return NULL;
-			else
-			{
-				char *res = write_to_file(tmp_com[i]);
-				if (res == NULL)
-					return NULL;
-				free(tmp_com[i]);
-				tmp_com[i] = ft_strdup(res);
-				free(res);
-			}
-		}
-		printf("com:s:%s\n", tmp_com[i]);
-		char	**te = ft_split(tmp_com[i], ' ');
-		int	p = 0;
-		while (te[p])
-			p ++;
-		data->end = p - 1;
-		if (i != 0)
-		{
-			free(data->infile);
-			printf("%s %s\n", te[0], te[1]);
-			write_to_infile(te, data);
-		}
-		// exit(0);
-		int	li = check_line1(tmp_com[i]);
-		if (i != data->num_of_com - 1)
-		{
-			free(data->outfile);
-			if (li == 1)
-			{
-				char *t = ft_listjoin(0, data->end, te);
-				char *e = change_line(data, t, 1);
-				free(t);
-				int u = 0;
-				while (te[u])
-					free(te[u ++]);
-				free(te);
-				te = ft_split(e, ' ');
-				free(e);
-			}
-			write_to_outfile(te, data, 0, 0);
-		}
-		if (i != data->num_of_com - 1 && i != data->num_of_com)
-		{
-			if (li == 0)
-				data->com[i].mode = -1;
-			else if (li == 1)
-				data->com[i].mode = 1;
-			else
-				data->com[i].mode = 0;
-		}
-		int e = 0;
-		e = 0;
-		while (data->commends[e])
-			free(data->commends[e ++]);
-		free(data->commends);
-		process_data(te, data, 0);
-		data->com[i].commend = ft_strdup(data->commends[0]);
-		if (i != 0)
-			data->com[i].infile = ft_strdup(data->infile);
-		if (i != data->num_of_com - 1)
-			data->com[i].outfile = ft_strdup(data->outfile);
-		e = 0;
-		while (te[e])
-			free(te[e ++]);
-		free(te);
-		i ++;
+	initialize_values(data);
+	i = -1;
+	while (tmp_com[++ i])
+	{
+		if (check_for_red(tmp_com, i) != 0)
+			return NULL;
+		te = ft_split(tmp_com[i], ' ');
+		write_in(data, i, te);
+		li = check_line1(tmp_com[i]);
+		write_out(data, i, li, te);
+		write_new_data(data, i, li, te);
 	}
-	i = 0;
-	while (tmp_com[i])
-		free(tmp_com[i ++]);
-	free(tmp_com);
+	free_splited_list(tmp_com);
 	return (data);
 }
