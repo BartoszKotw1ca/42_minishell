@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 15:07:34 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:43 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		while (i < data_tmp->num_of_com)
 			free(data_tmp->com[i ++].commend);
 		i = 0;
-		free(data_tmp->com);
 		if (data.mode == 1)
 			free(argv);
 		if (access("heredoc.txt", F_OK) == 0)
 			unlink("heredoc.txt");
-		// free(data.com[0].infile);
+		free(data.com[0].infile);
+		free(data_tmp->com);
 	}
 	else
 		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
@@ -124,7 +124,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 }
 
 // free(argv); the last command
-
+//===============================================================================================
 t_data	*new_one(t_data *data)
 {
 	t_data *tmp = data;
@@ -132,16 +132,16 @@ t_data	*new_one(t_data *data)
 	int i = tmp->num_of_com;
 	tmp_com = malloc(sizeof(char *) * (i + 1));
 	i = -1;
-	while (tmp->commends[++ i])
-		tmp_com[i] = ft_strdup(tmp->commends[i]);
+	while (data->commends[++ i])
+		tmp_com[i] = ft_strdup(data->commends[i]);
 	tmp_com[i] = NULL;
-	tmp->com = malloc(sizeof(t_com) * tmp->num_of_com);
+	data->com = malloc(sizeof(t_com) * data->num_of_com);
 	i = 0;
-	// free(tmp->infile);
-	tmp->com[i].infile = ft_strdup(tmp->infile);
-	tmp->com[tmp->num_of_com - 1].outfile = ft_strdup(tmp->outfile);
-	tmp->com[tmp->num_of_com - 1].mode = tmp->mode;
-	tmp->start = 0;
+	// free(data->infile);
+	data->com[i].infile = ft_strdup(data->infile);
+	data->com[data->num_of_com - 1].outfile = ft_strdup(data->outfile);
+	data->com[data->num_of_com - 1].mode = data->mode;
+	data->start = 0;
 	while (tmp_com[i]) {
 		if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
 		{
@@ -162,22 +162,22 @@ t_data	*new_one(t_data *data)
 		int	p = 0;
 		while (te[p])
 			p ++;
-		tmp->end = p - 1;
+		data->end = p - 1;
 		printf("to jest ta licz%d\n", p);
 		if (i != 0)
 		{
-			free(tmp->infile);
+			free(data->infile);
 			printf("%s %s\n", te[0], te[1]);
 			write_to_infile(te, tmp);
 		}
 		// exit(0);
 		int	li = check_line1(tmp_com[i]);
-		if (i != tmp->num_of_com - 1)
+		if (i != data->num_of_com - 1)
 		{
-			free(tmp->outfile);
+			free(data->outfile);
 			if (li == 1)
 			{
-				char *t = ft_listjoin(0, tmp->end, te);
+				char *t = ft_listjoin(0, data->end, te);
 				char *e = change_line(tmp, t, 1);
 				free(t);
 				int u = 0;
@@ -189,31 +189,31 @@ t_data	*new_one(t_data *data)
 			}
 			write_to_outfile(te, tmp, 0, 0);
 		}
-		if (i != tmp->num_of_com - 1 && i != tmp->num_of_com)
+		if (i != data->num_of_com - 1 && i != data->num_of_com)
 		{
 			if (li == 0)
-				tmp->com[i].mode = -1;
+				data->com[i].mode = -1;
 			else if (li == 1)
-				tmp->com[i].mode = 1;
+				data->com[i].mode = 1;
 			else
-				tmp->com[i].mode = 0;
+				data->com[i].mode = 0;
 		}
 		int e = 0;
 		e = 0;
-		while (tmp->commends[e])
-			free(tmp->commends[e ++]);
-		free(tmp->commends);
+		while (data->commends[e])
+			free(data->commends[e ++]);
+		free(data->commends);
 		process_data(te, tmp, 0);
-		tmp->com[i].commend = ft_strdup(tmp->commends[0]);
+		data->com[i].commend = ft_strdup(data->commends[0]);
 		if (i != 0)
-			tmp->com[i].infile = tmp->infile;
-		if (i != tmp->num_of_com - 1)
-			tmp->com[i].outfile = tmp->outfile;
+			data->com[i].infile = data->infile;
+		if (i != data->num_of_com - 1)
+			data->com[i].outfile = data->outfile;
 		e = 0;
 		while (te[e])
 			free(te[e ++]);
 		free(te);
-		// printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", tmp->com[i].commend, tmp->com[i].infile, tmp->com[i].outfile, tmp->com[i].mode);
+		// printf("commend: %s, infile: %s, outfile: %s, mode: %d\n", data->com[i].commend, data->com[i].infile, data->com[i].outfile, data->com[i].mode);
 		i ++;
 	}
 	i = 0;
