@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/09 23:18:13 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:24:37 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,142 @@ char	*get_env_string(t_main_struct *main_data)
 	return (env_string_start);
 }
 
+// void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
+// {
+// 	int	ifd;
+// 	int	ofd;
+
+// 	if (i == -1 && data->com[i + 1].infile)
+// 	{
+// 		ifd = open(data->com[i + 1].infile, O_RDONLY);
+// 		dup2(ifd, 0);
+// 		close(ifd);
+// 	}
+// 	if (i + 2 != noc)
+// 	{
+// 		dup2(fd[i + 1][1], 1);
+// 		close(fd[i + 1][1]);
+// 	}
+// 	else if (data->com[i + 1].outfile)
+// 	{
+// 		ofd = open(data->com[i + 1].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 		dup2(ofd, 1);
+// 		close(ofd);
+// 	}
+// 	if (i > -1)
+// 	{
+// 		close(fd[i][1]);
+// 		dup2(fd[i][0], 0);
+// 		close(fd[i][0]);
+// 	}
+// }
+
 void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 {
 	int	ifd;
 	int	ofd;
-
-	if (i == -1 && data->infile && data->infile_ok == 0)
+	if (data->com[i + 1].outfile && data->com[i + 1].mode == 0)
 	{
-		ifd = open(data->infile, O_RDONLY);
-		dup2(ifd, 0);
-		close(ifd);
-	}
-	if (i + 2 != noc)
-		dup2(fd[i + 1][1], 1);
-	else if (data->outfile)
-	{
-		ofd = open(data->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		printf("chosen outfile 123\n");
+		ofd = open(data->com[i + 1].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		dup2(ofd, 1);
 		close(ofd);
 	}
-	if (i > -1)
+	else if (data->com[i + 1].outfile && data->com[i + 1].mode == 1)
 	{
-		close(fd[i][1]);
-		dup2(fd[i][0], 0);
-		close(fd[i][0]);
+		printf("chosen outfile 130\n");
+		ofd = open(data->com[i + 1].outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		dup2(ofd, 1);
+		close(ofd);
+	}
+	else
+	{
+		printf("chosen outfile 137\n");
+		dup2(fd[i + 1][1], 1);
+		close(fd[i + 1][1]);
+	}
+
+	if (i == -1 && data->com[i + 1].infile)
+	{
+		ifd = open(data->com[i + 1].infile, O_RDONLY);
+		dup2(ifd, 0);
+		close(ifd);
+		printf("chosen infile 93 %d\n", ifd);
+	}
+
+	if (i > -1 && data->com[i + 1].infile)
+	{
+		ifd = open(data->com[i + 1].infile, O_RDONLY);
+		dup2(ifd, 0);
+		close(ifd);
+		printf("chosen infile 101 %d\n", ifd);
+	}
+	else if(i > -1 && data->com[i].outfile)
+	{
+		ifd = open(data->com[i].outfile, O_RDONLY);
+		dup2(ifd, 0);
+		close(ifd);
+		printf("chosen infile 108 %d\n", ifd);
+	}
+	else
+	{
+		if (i > -1)
+		{
+			close(fd[i][1]);
+			dup2(fd[i][0], 0);
+			close(fd[i][0]);
+			printf("chosen infile 117 %d\n", fd[i][0]);
+		}
 	}
 }
+
+// static int	open_in(int i, int (*fd)[2], t_data *data)
+// {
+// 	int	ifd;
+
+// 	printf("pipe in is %d\n", fd[i][0]);
+// 	if (data->com[i + 1].infile)
+// 		ifd = open(data->com[i + 1].infile, O_RDONLY);
+// 	else if (i > -1)
+// 	{
+// 		if (data->com[i].outfile)
+// 			ifd = open(data->com[i].outfile, O_RDONLY);
+// 	}
+// 	else if (i == -1)
+// 		ifd = 0;
+// 	else
+// 		ifd = fd[i][0];
+// 	printf("infile is %d\n", fd[i][0]);
+// 	return (ifd);
+// }
+
+// static int	open_out(int i, int (*fd)[2], t_data *data)
+// {
+// 	int	ofd;
+
+// 	if (data->com[i + 1].outfile && data->com[i + 1].mode == 0)
+// 		ofd = open(data->com[i + 1].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	else if (data->com[i + 1].outfile && data->com[i + 1].mode == 1)
+// 		ofd = open(data->com[i + 1].outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 	else
+// 		ofd = fd[i + 1][1];
+// 	return (ofd);
+// }
+
+// void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
+// {
+// 	int	ifd;
+// 	int	ofd;
+
+// 	ifd = open_in(i, fd, data);
+// 	ofd = open_out(i, fd, data);
+// 	dup2(ifd, 0);
+// 	close(ifd);
+// 	dup2(ofd, 1);
+// 	close(ofd);
+// 	if (i > -1)
+// 		close(fd[i][1]);
+// }
 
 void	close_pipes(t_process *p, int i)
 {

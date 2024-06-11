@@ -1,0 +1,13 @@
+total 136
+-rw-r--r-- 1 jponieck 2023_warsaw  2821 Jun 11 15:46 Makefile
+drwxr-xr-x 3 jponieck 2023_warsaw  4096 Jun 11 15:48 Obj
+drwxr-xr-x 2 jponieck 2023_warsaw  4096 Jun 11 15:46 Subject
+drwxr-xr-x 2 jponieck 2023_warsaw  4096 Jun 11 15:46 TMP_TODO
+-rw-r--r-- 1 jponieck 2023_warsaw    34 Jun 11 16:35 infile
+-rw-r--r-- 1 jponieck 2023_warsaw  2772 Jun 11 15:46 main.c
+drwxr-xr-x 9 jponieck 2023_warsaw  4096 Jun 11 15:46 meat
+-rwxr-xr-x 1 jponieck 2023_warsaw 92792 Jun 11 18:08 minishell
+-rw-r--r-- 1 jponieck 2023_warsaw  5081 Jun 11 15:46 minishell.h
+drwxr-xr-x 5 jponieck 2023_warsaw  4096 Jun 11 15:48 mylibft
+-rw-r--r-- 1 jponieck 2023_warsaw     8 Jun 11 16:43 out
+-rw-r--r-- 1 jponieck 2023_warsaw     0 Jun 11 18:12 out1

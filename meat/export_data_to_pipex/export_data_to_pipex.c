@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 15:40:21 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:34:34 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,19 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		return ;
 	data.paths = ft_split(path, ':');
 	check_infile(&data);
-	printf("%s\n", data.commends[0]);
-	printf("%s\n", data.infile);
-	printf("%s\n", data.outfile);
-	printf("%d\n", data.num_of_com);
+	// printf("%s\n", data.commends[0]);
+	// printf("%s\n", data.infile);
+	// printf("%s\n", data.outfile);
+	// printf("%d\n", data.num_of_com);
 	if (data.num_of_com == data.pipes_counter)
 	{
 		data_tmp = new_one(&data);
 		if (data_tmp == NULL)
 			return ;// we have to free everything
-		// mini_pipex(data_tmp, main_data); // should take the data_tmp
+		mini_pipex(data_tmp, main_data); // should take the data_tmp
 		int i = -1;
-		while (++i < data_tmp->num_of_com)
-			printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
+		// while (++i < data_tmp->num_of_com)
+			// printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 		// first check that it will show you the names and how it looks like :)
 		// and there should not be any leaks
 		// free(data_tmp->com[data_tmp->num_of_com - 1].outfile);
@@ -164,17 +164,17 @@ t_data	*new_one(t_data *data)
 				free(res);
 			}
 		}
-		printf("com:s:%s\n", tmp_com[i]);
+		// printf("com:s:%s\n", tmp_com[i]);
 		char	**te = ft_split(tmp_com[i], ' ');
 		int	p = 0;
 		while (te[p])
 			p ++;
 		data->end = p - 1;
-		printf("to jest ta licz%d\n", p);
+		// printf("to jest ta licz%d\n", p);
 		if (i != 0)
 		{
 			free(data->infile);
-			printf("%s %s\n", te[0], te[1]);
+			// printf("%s %s\n", te[0], te[1]);
 			write_to_infile(te, tmp);
 		}
 		// exit(0);
