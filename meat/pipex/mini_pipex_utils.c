@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 23:08:11 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:00:47 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_env_string(t_main_struct *main_data)
 	return (env_string_start);
 }
 
-void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
+static void	handle_input(int i, int (*fd)[2], int noc, t_data *data)
 {
 	int	ifd;
 	int	ofd;
@@ -61,9 +61,8 @@ void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 		dup2(ifd, 0);
 		close(ifd);
 	}
-	if (i > 0 && !data->com[i].infile && !data->com[i - 1].outfile)
+	if (i > 0 && !data->com[i].infile)
 	{
-		printf("using pipe \n");
 		close(fd[i - 1][1]);
 		dup2(fd[i - 1][0], 0);
 		close(fd[i - 1][0]);
@@ -71,33 +70,38 @@ void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
 	else if (i > 0 && data->com[i].infile)
 	{
 		ifd = open(data->com[i].infile, O_RDONLY);
-		printf("chosen infile is %s\n", data->com[i].infile);
 		close(fd[i - 1][0]);
 		dup2(ifd, 0);
 		close(ifd);
 	}
-	else if (i > 0 && !data->com[i].infile && data->com[i - 1].outfile)
+}
+
+static void	handle_output(int i, int (*fd)[2], int noc, t_data *data)
+{
+	int	ifd;
+	int	ofd;
+
+	if (data->com[i].outfile)
 	{
-		ifd = open(data->com[i - 1].outfile, O_RDONLY);
-		printf("chosen outfile is %d\n", ifd);
-		dup2(ifd, 0);
-		close(ifd);
-	}
-	if (i + 1 != noc)
-	{
-		dup2(fd[i][1], 1);
-		close(fd[i][1]);
-	}
-	else if (data->com[i].outfile)
-	{
+		if (i + 1 != noc)
+			close(fd[i][1]);
 		ofd = open(data->com[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		dup2(ofd, 1);
 		close(ofd);
 	}
-	else
+	else if (i + 1 != noc)
 	{
-		dup2(1,1);
+		dup2(fd[i][1], 1);
+		close(fd[i][1]);
 	}
+	else
+		dup2(1,1);
+}
+
+void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
+{
+	handle_input(i, fd, noc, data);
+	handle_output(i, fd, noc, data);
 }
 
 // void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/11 23:19:08 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:37:02 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	mini_pipex(t_data *data, t_main_struct *main_data)
 	int			main_pid;
 
 	i = 0;
+	rewrite_commands(data, 0, 0);
 	p.pipes = malloc((data->num_of_com - 1) * 8);
 	p.pid = malloc(data->num_of_com * sizeof(int));
 	while (i < data->num_of_com - 1)

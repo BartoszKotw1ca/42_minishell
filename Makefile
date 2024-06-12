@@ -13,6 +13,7 @@ SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
 		meat/pipex/check_commands.c \
 		meat/pipex/handle_env.c \
 		meat/pipex/mini_pipex_utils.c \
+		meat/pipex/mini_pipex_utils_2.c \
 		meat/utils/ft_listjoin.c \
 		meat/utils/ft_split_except.c \
 		meat/utils/main_utils.c \
