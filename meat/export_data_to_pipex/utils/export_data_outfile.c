@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:58:43 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 09:44:37 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:35:34 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,26 @@ void	process_data(char **tmp, t_data *data, int j)
 
 char	*change_line(t_data *data, char *argv, int check)
 {
-    int		i;
-    char	*line;
-    int		j;
-    int     decremented = 0;
+	int		i;
+	char	*line;
+	int		j;
+	int		decremented;
 
-    j = ft_strlen(argv) - 2;
-    i = ft_strlen(argv);
-    line = malloc(sizeof(char) * (ft_strlen(argv)));
-    line[ft_strlen(argv) - 1] = '\0';
-    while (--i >= 0)
-    {
-        if (argv[i] == '>' && decremented == 0)
-        {
-            i--;
-            decremented = 1;
-        }
-        line[j--] = argv[i];
-    }
-    return (line);
+	decremented = 0;
+	j = ft_strlen(argv) - 2;
+	i = ft_strlen(argv);
+	line = malloc(sizeof(char) * (ft_strlen(argv)));
+	line[ft_strlen(argv) - 1] = '\0';
+	while (--i >= 0)
+	{
+		if (argv[i] == '>' && decremented == 0)
+		{
+			i--;
+			decremented = 1;
+		}
+		line[j--] = argv[i];
+	}
+	return (line);
 }
 
 void	in_the_middle(char	**tmp, t_data *data, int i, int j)

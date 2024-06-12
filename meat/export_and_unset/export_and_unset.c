@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_and_unset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:16:09 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/09 12:25:05 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/12 07:55:43 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	check_inside_export(t_main_struct *main_data, int j)
 		|| main_data->ted[main_data->i][j] == '='
 		|| main_data->ted[main_data->i][j] == '$'
 		|| main_data->ted[main_data->i][j] == '_'))
-			j ++;
+		j ++;
 	if (main_data->ted[main_data->i][j] == '\0')
 	{
 		j = 1;
 		while (main_data->ted[main_data->i][j]
 			&& main_data->ted[main_data->i][j] != '=')
-				j ++;
+			j ++;
 		if (main_data->ted[main_data->i][j] != '\0')
 			export_env(main_data, main_data->ted[main_data->i]);
 	}
 	else
 		printf("export: \'%s\': not a valid identifier\n",
-	main_data->ted[main_data->i]);
+			main_data->ted[main_data->i]);
 }
 
 void	check_for_export(t_main_struct *main_data)
@@ -44,8 +44,8 @@ void	check_for_export(t_main_struct *main_data)
 		j = 0;
 		if (ft_isalnum(main_data->ted[main_data->i][j]) == 0
 			|| main_data->ted[main_data->i][j] == '_')
-				printf("export: \'%s\': not a valid identifier\n",
-					main_data->ted[main_data->i]);
+			printf("export: \'%s\': not a valid identifier\n",
+				main_data->ted[main_data->i]);
 		else
 		{
 			j ++;

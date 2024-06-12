@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 09:42:12 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:53:10 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <unistd.h>
+#include <termios.h>
 
 typedef struct s_com
 {
@@ -134,6 +135,8 @@ char	**without_space(char *line, int i, int j, char **splited_line);
 // signals.c
 void	ctr_c_sig_handler(int sig);
 void	signal_prepare(t_main_struct *main_data);
+void	set_context_string(char *next_context_string);
+char	**get_context_string(void);
 
 // utils.c
 int		look_for_str(const char *big, const char *little, size_t len);

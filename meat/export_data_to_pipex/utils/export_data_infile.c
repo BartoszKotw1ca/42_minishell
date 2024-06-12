@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 10:16:15 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 07:59:28 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,37 @@ void	write_to_infile(char **tmp, t_data *data)
 	}
 }
 
-char skip_space(char *str, int index)
+char	skip_space(char *str, int index)
 {
-    while (index >= 0 && str[index] == ' ')
-        index--;
-    if (index >= 0)
-        return str[index];
-    else
-        return '\0';
+	while (index >= 0 && str[index] == ' ')
+		index--;
+	if (index >= 0)
+		return (str[index]);
+	else
+		return ('\0');
 }
 
-int    check_the_line(char *argv, t_data *data)
+int	check_the_line(char *argv, t_data *data)
 {
-    int    i;
+	int	i;
 
-    i = strlen(argv) - 1;
-    while (i >= 0 && argv[i] != '|')
-    {
-        if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')
+	i = strlen(argv) - 1;
+	while (i >= 0 && argv[i] != '|')
+	{
+		if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')
 		{
 			data->mode = 1;
-            return (1);
+			return (1);
 		}
-        else if (argv[i] == '>' && skip_space(argv, i - 1) != '\0')
-        {
+		else if (argv[i] == '>' && skip_space(argv, i - 1) != '\0')
+		{
 			data->mode = 0;
 			return (2);
 		}
-        else
-            i--;
-    }
-    return (0);
+		else
+			i--;
+	}
+	return (0);
 }
 
 void	check_infile(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 19:38:43 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:40:33 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int	tmp_fun(t_data *data)
 	return (1);
 }
 
-char skip_spaces_back(char *str, int index)
+char	skip_spaces_back(char *str, int index)
 {
 	while (index >= 0 && str[index] == ' ')
 		index--;
 	if (index >= 0)
-		return str[index];
+		return (str[index]);
 	else
-		return '\0';
+		return ('\0');
 }
 
-int    check_line1(char *argv)
+int	check_line1(char *argv)
 {
 	int	i;
 
@@ -86,11 +86,30 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 	free(data_tmp->com);
 }
 
+int	check_inside_red(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->commends[i])
+	{
+		if (ft_strchr(data->commends[i], '>') != NULL)
+			return (1);
+		i ++;
+	}
+	return (0);
+}
+
 void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 {
 	data->paths = ft_split(path, ':');
 	check_infile(data);
-	if (data->num_of_com == data->pipes_counter)
+	int i = 0;
+	while (data->commends[i])
+		printf("%s\n", data->commends[i ++]);
+	exit(0);
+	if (data->num_of_com == data->pipes_counter
+		&& check_inside_red(data) == 0)
 	{
 		data_tmp = new_one(data);
 		if (data_tmp != NULL)
@@ -98,7 +117,11 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 		free_after_mixed(data_tmp, data, argv);
 	}
 	else
+	{
+		if (argv)
+			free(argv);
 		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
+	}
 	free_dataa(data, data->tmp);
 }
 
@@ -108,7 +131,7 @@ void	count_pipes(t_data *data, char *argv)
 
 	i = -1;
 	data->pipes_counter = 1;
-	while(argv[++ i])
+	while (argv[++ i])
 		if (argv[i] == '|')
 			data->pipes_counter += 1;
 }
@@ -146,6 +169,7 @@ void	free_splited_list(char **tmp)
 		free(tmp[i ++]);
 	free(tmp);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 void	write_new_data(t_data *data, int i, int li, char **te)
 {
@@ -191,13 +215,15 @@ void	write_out(t_data *data, int i, int li, char **te)
 
 int	check_for_red(char **tmp_com, int i)
 {
+	char	*res;
+
 	if (tmp_com[i][1] == '<' && tmp_com[i][2] == '<')
 	{
 		if (check_if_ok(tmp_com[i], 3) == 1)
 			return (1);
 		else
 		{
-			char *res = write_to_file(tmp_com[i]);
+			res = write_to_file(tmp_com[i]);
 			if (res == NULL)
 				return (1);
 			free(tmp_com[i]);
@@ -233,7 +259,7 @@ void	initialize_values(t_data *data)
 }
 
 // free(argv); the last command
-//===============================================================================================
+//=====================
 t_data	*new_one(t_data *data)
 {
 	char	**tmp_com;
@@ -241,7 +267,6 @@ t_data	*new_one(t_data *data)
 	int		i;
 	int		li;
 
-	te = NULL;
 	tmp_com = NULL;
 	tmp_com = malloc(sizeof(char *) * (data->num_of_com + 1));
 	i = -1;
@@ -253,7 +278,7 @@ t_data	*new_one(t_data *data)
 	while (tmp_com[++ i])
 	{
 		if (check_for_red(tmp_com, i) != 0)
-			return NULL;
+			return (NULL);
 		te = ft_split(tmp_com[i], ' ');
 		write_in(data, i, te);
 		li = check_line1(tmp_com[i]);

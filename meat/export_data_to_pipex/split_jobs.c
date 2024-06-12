@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 19:10:31 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 08:00:57 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*tmp_fun_write_to_file(int len_list,
 	char **splited_line, int fd, char *get_next)
 {
-	// (void) len_list;
+	(void) len_list;
 	close(fd);
 	fd = open("heredoc.txt", O_RDONLY);
 	get_next = get_next_line(fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 18:16:19 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:42:41 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	main(int ac, char **av, char **envp)
 		if (split_main_job(&main_data) == 1)
 			break ;
 		free(main_data.line);
+		main_data.line = NULL;
 		rl_on_new_line();
+		set_context_string(main_data.line);
 		// break;
 	}
 	ft_lstclear(&main_data.history, del_node);
