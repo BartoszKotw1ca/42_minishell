@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 13:40:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:31:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,6 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 {
 	data->paths = ft_split(path, ':');
 	check_infile(data);
-	int i = 0;
-	while (data->commends[i])
-		printf("%s\n", data->commends[i ++]);
-	exit(0);
 	if (data->num_of_com == data->pipes_counter
 		&& check_inside_red(data) == 0)
 	{
@@ -118,8 +114,8 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 	}
 	else
 	{
-		if (argv)
-			free(argv);
+		// if (argv)
+		// 	free(argv);
 		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
 	}
 	free_dataa(data, data->tmp);
@@ -128,12 +124,26 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 void	count_pipes(t_data *data, char *argv)
 {
 	int		i;
+	int		doubl;
+	int		one;
 
 	i = -1;
+	doubl = 0;
+	one = 0;
 	data->pipes_counter = 1;
 	while (argv[++ i])
-		if (argv[i] == '|')
+	{
+		if (argv[i] == 39 && one == 0)
+			one = 1;
+		else if (argv[i] == 34 && doubl == 0)
+			doubl = 1;
+		else if (argv[i] == 39 && one == 1)
+			one = 0;
+		else if (argv[i] == 34 && doubl == 1)
+			doubl = 0;
+		else if (argv[i] == '|' && one == 0 && doubl == 0)
 			data->pipes_counter += 1;
+	}
 }
 
 void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)

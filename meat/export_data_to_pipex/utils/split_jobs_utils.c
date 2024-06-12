@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:38:18 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/11 11:57:33 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:44:26 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	check_if_line_equal(int fd, char **splited_line)
 	char	*tmp;
 
 	tmp = readline("heredoc>");
-	if (ft_strncmp(tmp, splited_line[1], ft_strlen(tmp)) == 0)
+	if ((ft_strncmp(tmp, splited_line[1], ft_strlen(tmp)) == 0)
+		&& ft_strlen(tmp) == ft_strlen(splited_line[1]))
 	{
 		free(tmp);
 		return (1);

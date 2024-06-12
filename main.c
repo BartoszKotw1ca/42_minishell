@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 11:42:41 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:39:08 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,36 @@ void	write_to_main_struct(int ac, char **av, char **envp,
 	main_data->path = getenv("PATH");
 }
 
+int	check_quotes(char *argv)
+{
+	int		i;
+	int		doubl;
+	int		one;
+
+	i = -1;
+	doubl = 0;
+	one = 0;
+	while (argv[++ i])
+	{
+		if (argv[i] == 39 && one == 0)
+			one = 1;
+		else if (argv[i] == 34 && doubl == 0)
+			doubl = 1;
+		else if (argv[i] == 39 && one == 1)
+			one = 0;
+		else if (argv[i] == 34 && doubl == 1)
+			doubl = 0;
+	}
+	if (doubl == 0 && one == 0)
+		return (0);
+	return (1);
+}
+
 int	split_main_job(t_main_struct *main_data)
 {
-	if (ft_strncmp(main_data->line, "exit", 4) == 0)
+	if (check_quotes(main_data->line) == 1)
+		printf("Invalid argument!\n");
+	else if (ft_strncmp(main_data->line, "exit", 4) == 0)
 	{
 		free(main_data->line);
 		return (1);
