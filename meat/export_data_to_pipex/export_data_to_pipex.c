@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 16:31:01 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:14:40 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	check_inside_red(t_data *data)
 	{
 		if (ft_strchr(data->commends[i], '>') != NULL)
 			return (1);
+		else if (ft_strchr(data->commends[i], '<') != NULL)
+			return (1);
 		i ++;
 	}
 	return (0);
@@ -104,6 +106,10 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 {
 	data->paths = ft_split(path, ':');
 	check_infile(data);
+	int	i = 0;
+	while (data->commends[i])
+		printf("com: %s\n", data->commends[i ++]);
+	// exit(0);
 	if (data->num_of_com == data->pipes_counter
 		&& check_inside_red(data) == 0)
 	{
