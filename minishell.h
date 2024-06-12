@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 11:53:10 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:06:12 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ char	**get_context_string(void);
 int		look_for_str(const char *big, const char *little, size_t len);
 int		search_for(char *line, char c);
 int		same(t_list *history, char *line);
+char	**split_ex(char *src, char c, char e, char f);
 
 // change_dir.c
 void	change_directory(char *line, char *path, t_main_struct *main_data);

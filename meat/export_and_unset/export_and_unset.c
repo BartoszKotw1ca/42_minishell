@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:16:09 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 07:55:43 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:21:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	check_for_export(t_main_struct *main_data)
 
 void	initialize_export(t_main_struct *main_data)
 {
+	// main_data->ted = split_ex(main_data->line, ' ', '\'', '\"');
 	main_data->ted = ft_split(main_data->line, ' ');
 	check_for_export(main_data);
 	main_data->i = 0;
