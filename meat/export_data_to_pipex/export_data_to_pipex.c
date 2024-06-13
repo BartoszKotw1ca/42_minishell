@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 09:06:14 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:53:28 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 		data_tmp = new_one(data);
 		if (check_inside_red(data_tmp) == 0 && data_tmp != NULL)
 			while (++ i < data_tmp->num_of_com)
-				printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
+				printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 			// mini_pipex(data_tmp, main_data); // should take the data_tmp
+		else
+			printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
 		free_after_mixed(data_tmp, data, argv);
 	}
 	else
