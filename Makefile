@@ -1,5 +1,5 @@
 FLAGS = -Wall -Wextra -Werror -g
-FLAGS = -g
+# FLAGS = -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
 SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
@@ -12,6 +12,7 @@ SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
 		meat/pipex/check_commands.c \
 		meat/pipex/handle_env.c \
 		meat/pipex/mini_pipex_utils.c \
+		meat/pipex/mini_pipex_utils_2.c \
 		meat/utils/ft_listjoin.c \
 		meat/utils/ft_split_except.c \
 		meat/utils/main_utils.c \
@@ -27,17 +28,16 @@ OBJDIR = Obj/
 OBJ := $(SRC:%.c=$(OBJDIR)%.o)
 
 all: $(NAME)
-	@echo "Compilation completed."
 
 $(NAME): mylibft/mylibft.a $(OBJ)
-	@cc $(FLAGS) -L/readline -I/readline  $^ -o $@ $(LIB) -lreadline
+	@cc $(FLAGS) $^ -o $@ $(LIB) -lreadline
 
 $(OBJDIR)%.o: %.c
 	@mkdir -p $(@D)
-	@cc $(FLAGS) -c -L/readline -I/readline -lreadline $< -o $@
+	@cc $(FLAGS) -c $< -o $@
 
 %.o: %.c
-	@cc $(FLAGS) -c -L/readline -I/readline -lreadline $< -o $@
+	@cc $(FLAGS) -c $< -o $@
 
 mylibft/mylibft.a:
 	@make -s -C mylibft

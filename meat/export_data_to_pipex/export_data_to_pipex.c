@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 10:53:28 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:48:53 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_data	*new_one(t_data *data);
 int	tmp_fun(t_data *data)
 {
 	if (!data->tmp)
-		data = data_for_null(data, data->tmp);
+		data = data_for_null(data);
 	else if (data->tmp[0][0] == '<' && data->tmp[1][0] == '<')
 	{
-		printf("%s", "parse error near \'<\'");
+		print_error("Bad command, cowboy!", "parse error near \'<\'\n");
 		return (0);
 	}
 	else
@@ -100,34 +100,35 @@ int	check_inside_red(t_data *data)
 	return (0);
 }
 
-void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
+void	run_mini_pi(t_data *data, char *path, char *argv, t_main_struct *main_data)
 {
+	t_data	*data_tmp;
+
 	data->paths = ft_split(path, ':');
 	check_infile(data);
-	int	i = 0;
-	while (data->commends[i])
-		printf("com: %s\n", data->commends[i ++]);
+	// int	i = 0;
+	// while (data->commends[i])
+	// 	printf("com: %s\n", data->commends[i ++]);
 	// exit(0);
 	if (data->num_of_com == data->pipes_counter)
 	{
-		int i = -1;
 		data_tmp = new_one(data);
 		if (check_inside_red(data_tmp) == 0 && data_tmp != NULL)
-			while (++ i < data_tmp->num_of_com)
-				printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
-			// mini_pipex(data_tmp, main_data); // should take the data_tmp
+			mini_pipex(data_tmp, main_data);
 		else
-			printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
+			print_error("Bad command, cowboy!", "Maybe next time!\n");
 		free_after_mixed(data_tmp, data, argv);
 	}
 	else
 	{
 		// if (argv)
 		// 	free(argv);
-		printf("%s", "Bad command, cowboy!\nMaybe next time!\n");
+		print_error("Bad command, cowboy!", "Maybe next time!\n");
 	}
 	free_dataa(data, data->tmp);
 }
+			// while (++ i < data_tmp->num_of_com)
+			// 	printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 
 void	count_pipes(t_data *data, char *argv)
 {
@@ -158,14 +159,13 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 {
 	t_data	data;
 	char	*line;
-	t_data	*data_tmp;
 
 	if ((int)argv[0] == 0)
 		return ;
 	count_pipes(&data, argv);
 	if (check_the_line(argv, &data) == 1)
 	{
-		line = change_line(&data, argv, check_the_line(argv, &data));
+		line = change_line(argv);
 		// free(argv);
 		argv = ft_strdup(line);
 		free(line);
@@ -175,7 +175,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	data.tmp = ft_split(argv, ' ');
 	if (tmp_fun(&data) == 0)
 		return ;
-	run_mini_pi(data_tmp, &data, path, argv);
+	run_mini_pi(&data, path, argv, main_data);
 }
 
 void	free_splited_list(char **tmp)
@@ -221,7 +221,7 @@ void	write_out(t_data *data, int i, int li, char **te)
 		if (li == 1)
 		{
 			t = ft_listjoin(0, data->end, te);
-			e = change_line(data, t, 1);
+			e = change_line(t);
 			free(t);
 			free_splited_list(te);
 			te = ft_split(e, ' ');

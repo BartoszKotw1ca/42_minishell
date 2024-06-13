@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:58:43 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 15:01:35 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:40:35 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	process_data(char **tmp, t_data *data, int j)
 	free(line);
 }
 
-char	*change_line(t_data *data, char *argv, int check)
+char	*change_line(char *argv)
 {
 	int		i;
 	char	*line;

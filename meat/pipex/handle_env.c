@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/09 15:30:37 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:42:11 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	export_env(t_main_struct *main_data, char *key_val)
 	t_list	*start;
 	int		val_index;
 	int		found;
-	char	*key;
 
 	found = 0;
 	start = main_data->envr;

@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:01:24 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 15:00:07 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:43:44 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void back_to_origin(char **splited, int i, int j)
 
 char **split_ex(char *src, char c, char e, char f)
 {
-    char *src_new;
     char **splited;
     t_split_data sd;
 

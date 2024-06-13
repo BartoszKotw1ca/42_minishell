@@ -54,7 +54,6 @@ void	back_to_original(char **splited, int i, int j)
 
 char	**ft_split_except(char *src, char c, char e, char f)
 {
-	char			*src_new;
 	char			**splited;
 	t_split_data	sd;
 

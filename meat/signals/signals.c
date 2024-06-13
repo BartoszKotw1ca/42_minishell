@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:52:36 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 11:59:46 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:43:59 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	set_context_string(char *next_context_string)
 
 void	ctr_c_sig_handler(int sig)
 {
-	char *context_string = *get_context_string();
 	if (sig == 2)
 	{
 		rl_on_new_line();

@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 17:37:19 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:43:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ char	*write_to(char *str, int len);
 void	count_commnads(t_data *data);
 void	free_dataa(t_data *data, char **tmp);
 char	skip_spaces(char *argv, int i);
-t_data	*data_for_null(t_data *data, char **tmp);
+t_data	*data_for_null(t_data *data);
 
 // export_data_outfile.c
 int		check_if_zero(int *i, t_data *data, int j, char **tmp);
 void	write_to_outfile(char **tmp, t_data *data, int i, int j);
 void	process_data(char **tmp, t_data *data, int j);
-char	*change_line(t_data *data, char *argv, int check);
+char	*change_line(char *argv);
 void	in_the_middle(char	**tmp, t_data *data, int i, int j);
 
 // export_data_infile.c
@@ -171,6 +171,11 @@ void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data);
 void	close_pipes(t_process *p, int i);
 char	*read_var_name(char *src);
 char	*get_env_string(t_main_struct *main_data);
+void	handle_input(int i, int (*fd)[2], t_data *data);
+void	handle_output(int i, int (*fd)[2], int noc, t_data *data);
+
+// mini_pipex_utils_2.c
+void	rewrite_commands(t_data *d, int i, int j);
 
 // mini_pipex.c
 void	mini_pipex(t_data *data, t_main_struct *main_data);

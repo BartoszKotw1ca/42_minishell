@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 10:44:45 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:42:45 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,53 @@ char	*get_env_string(t_main_struct *main_data)
 	return (env_string_start);
 }
 
-void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data)
+void	handle_input(int i, int (*fd)[2], t_data *data)
 {
 	int	ifd;
-	int	ofd;
 
-	if (i == -1 && data->infile && data->infile_ok == 0)
+	if (i == 0 && data->com[i].infile)
 	{
-		ifd = open(data->infile, O_RDONLY);
+		ifd = open(data->com[i].infile, O_RDONLY);
 		dup2(ifd, 0);
 		close(ifd);
 	}
-	if (i + 2 != noc)
-		dup2(fd[i + 1][1], 1);
-	else if (data->outfile)
+	if (i > 0 && !data->com[i].infile)
 	{
-		ofd = open(data->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		close(fd[i - 1][1]);
+		dup2(fd[i - 1][0], 0);
+		close(fd[i - 1][0]);
+	}
+	else if (i > 0 && data->com[i].infile)
+	{
+		ifd = open(data->com[i].infile, O_RDONLY);
+		close(fd[i - 1][0]);
+		dup2(ifd, 0);
+		close(ifd);
+	}
+}
+
+void	handle_output(int i, int (*fd)[2], int noc, t_data *data)
+{
+	int	ofd;
+
+	if (data->com[i].outfile)
+	{
+		if (i + 1 != noc)
+			close(fd[i][1]);
+		if (data->com[i].mode == 0)
+			ofd = open(data->com[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		else
+			ofd = open(data->com[i].outfile, O_CREAT | O_WRONLY | O_APPEND, 0777);
 		dup2(ofd, 1);
 		close(ofd);
 	}
-	if (i > -1)
+	else if (i + 1 != noc)
 	{
+		dup2(fd[i][1], 1);
 		close(fd[i][1]);
-		dup2(fd[i][0], 0);
-		close(fd[i][0]);
 	}
+	else
+		dup2(1,1);
 }
 
 void	close_pipes(t_process *p, int i)

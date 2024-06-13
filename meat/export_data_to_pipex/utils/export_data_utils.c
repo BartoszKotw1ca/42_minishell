@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:53:49 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/10 09:10:57 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:39:21 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	skip_spaces(char *argv, int i)
 	return (argv[i]);
 }
 
-t_data	*data_for_null(t_data *data, char **tmp)
+t_data	*data_for_null(t_data *data)
 {
 	data->infile = NULL;
 	data->outfile = NULL;
