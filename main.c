@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 16:39:08 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:51:51 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	check_line(t_main_struct *main_data)
 		return (1);
 	}
 	main_data->line = ft_strtrim(main_data->tmp, " ");
+	// main_data->line = main_data->tmp;
 	free(main_data->tmp);
 	if ((int)main_data->line[0] != 0
 		&& same(main_data->history, main_data->line) == 0)

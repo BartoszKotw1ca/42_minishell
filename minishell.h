@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 14:06:12 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:37:19 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/ioctl.h>
 # include <signal.h>
 # include <unistd.h>
-#include <termios.h>
+# include <termios.h>
 
 typedef struct s_com
 {

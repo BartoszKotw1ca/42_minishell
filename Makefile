@@ -1,8 +1,7 @@
-# FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g
 FLAGS = -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
-# SRC = main.c export_data_to_pipex.c ft_listjoin.c
 SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
 		meat/export_data_to_pipex/split_jobs.c \
 		meat/export_data_to_pipex/utils/split_jobs_utils.c \
