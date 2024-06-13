@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 16:02:16 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:32:26 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 	(void) argv;
 	// if (data->mode == 1)
 	// 	free(argv);
-	if (access("heredoc.txt", F_OK) == 0)
-		unlink("heredoc.txt");
 	i = -1;
 	while (++ i < data->num_of_com)
 		if (data->com[i].infile)
@@ -85,6 +83,15 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 		if (data->com[i].outfile)
 			free(data->com[i].outfile);
 	free(data_tmp->com);
+	i = -1;
+	while (data->her[++ i])
+	{
+		// printf("file: %s\n", data->her[i]);
+		// if (access(data->her[i], F_OK) == 0)
+			// unlink(data->her[i]);
+		free(data->her[i]);
+	}
+	free(data->her);
 }
 
 int	check_inside_red(t_data *data)
@@ -165,6 +172,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 		return ;
 	count_pipes(&data, argv);
 	if (check_the_line(argv, &data) == 1)
+
 	{
 		line = change_line(argv);
 		// free(argv);
@@ -232,7 +240,7 @@ void	write_out(t_data *data, int i, int li, char **te)
 	}
 }
 
-int	check_for_red(char **tmp_com, int i)
+int	check_for_red(t_data *data, char **tmp_com, int i, int j)
 {
 	char	*res;
 
@@ -242,7 +250,11 @@ int	check_for_red(char **tmp_com, int i)
 			return (1);
 		else
 		{
-			res = write_to_file(tmp_com[i]);
+			while (data->her[j])
+				j++;
+			data->her[j ++] = name_of_heredoc("heredoc0");
+			data->her[j] = NULL;
+			res = write_to_file(tmp_com[i], data->her[j - 1]);
 			if (res == NULL)
 				return (1);
 			free(tmp_com[i]);
@@ -275,6 +287,8 @@ void	initialize_values(t_data *data)
 	data->com[data->num_of_com - 1].outfile = ft_strdup(data->outfile);
 	data->com[data->num_of_com - 1].mode = data->mode;
 	data->start = 0;
+	data->her = malloc(sizeof(char *) * 9);
+	data->her[0] = NULL;
 }
 
 // free(argv); the last command
@@ -296,7 +310,7 @@ t_data	*new_one(t_data *data)
 	i = -1;
 	while (tmp_com[++ i])
 	{
-		if (check_for_red(tmp_com, i) != 0)
+		if (check_for_red(data, tmp_com, i, 0) != 0)
 			return (NULL);
 		te = ft_split(tmp_com[i], ' ');
 		write_in(data, i, te);

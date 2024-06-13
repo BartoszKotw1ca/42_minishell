@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 15:55:58 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:49:26 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	char	**tmp;
 	t_com	*com;
 	int		pipes_counter;
+	char	**her;
 }			t_data;
 
 typedef struct s_process
@@ -120,15 +121,15 @@ void	export_env(t_main_struct *main_data, char *key_val);
 void	unset_env(t_main_struct *main_data, char *key_val);
 
 // split_jobs.c
-char	*tmp_fun_write_to_file(int len_list,
-			char **splited_line, int fd, char *get_next);
-char	*write_to_file(char *line);
+char	*tmp_fun_write_to_file(char **splited_line,
+			char *tmp, int fd, char *get_next);
+char	*write_to_file(char *line, char *tmp);
 int		split_jobs(char *line, char *path, t_main_struct *main_data);
 
 // split_jobs_utils.c
 int		check_if_ok(char *line, int i);
 void	free_list(char **splited_line, int fd, int i, int check);
-char	*change_the_line(char **splited_line, int i);
+char	*change_the_line(char **splited_line, int i, char *tmp);
 int		check_if_line_equal(int fd, char **splited_line);
 char	**without_space(char *line, int i, int j, char **splited_line);
 
@@ -187,5 +188,6 @@ void	initialize_export(t_main_struct *main_data);
 void	initialize_unset(t_main_struct *main_data);
 
 void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv);
+char	*name_of_heredoc(char *here);
 
 #endif

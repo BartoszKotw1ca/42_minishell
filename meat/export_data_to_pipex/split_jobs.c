@@ -6,18 +6,17 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 08:00:57 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:20:24 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*tmp_fun_write_to_file(int len_list,
-	char **splited_line, int fd, char *get_next)
+char	*tmp_fun_write_to_file(char **splited_line,
+	char *tmp, int fd, char *get_next)
 {
-	(void) len_list;
 	close(fd);
-	fd = open("heredoc.txt", O_RDONLY);
+	fd = open(tmp, O_RDONLY);
 	get_next = get_next_line(fd);
 	while (get_next)
 	{
@@ -27,13 +26,29 @@ char	*tmp_fun_write_to_file(int len_list,
 	}
 	free(get_next);
 	close(fd);
-	unlink("heredoc.txt");
+	unlink(tmp);
 	free_list(splited_line, fd, 0, 0);
 	return (NULL);
 }
 
+// heredoc
+char	*name_of_heredoc(char *here)
+{
+	char	*heredoc;
+	int		i;
+
+	i = -1;
+	heredoc = malloc(sizeof(char) * 9);
+	while (here[++ i])
+		heredoc[i] = here[i];
+	heredoc[i] = '\0';
+	while (access(heredoc, F_OK) == 0)
+		heredoc[7] = heredoc[7] + 1;
+	return (heredoc);
+}
+
 // write to file the lines after << "something"
-char	*write_to_file(char *line)
+char	*write_to_file(char *line, char *tmp)
 {
 	char	**splited_line;
 	char	*linee;
@@ -50,13 +65,14 @@ char	*write_to_file(char *line)
 		splited_line = without_space(line, 0, 0, splited_line);
 	while (splited_line[len_list])
 		len_list ++;
-	fd = open("heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(tmp, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 		if (check_if_line_equal(fd, splited_line) == 1)
 			break ;
+	close(fd);
 	if (len_list == 2)
-		return (tmp_fun_write_to_file(len_list, splited_line, fd, get_next));
-	linee = change_the_line(splited_line, 0);
+		return (tmp_fun_write_to_file(splited_line, tmp, fd, get_next));
+	linee = change_the_line(splited_line, 0, tmp);
 	free_list(splited_line, fd, 0, 0);
 	return (linee);
 }
@@ -65,6 +81,7 @@ char	*write_to_file(char *line)
 int	split_jobs(char *line, char *path, t_main_struct *main_data)
 {
 	char	*res;
+	char	*tmp;
 
 	if (line[0] == '<' && line[1] == '<')
 	{
@@ -72,11 +89,13 @@ int	split_jobs(char *line, char *path, t_main_struct *main_data)
 			return (1);
 		else
 		{
-			res = write_to_file(line);
+			tmp = name_of_heredoc("heredoc0");
+			res = write_to_file(line, tmp);
 			if (res == NULL)
 				return (1);
 			export_data_to_pipex(res, path, main_data);
-			unlink("heredoc.txt");
+			unlink(tmp);
+			free(tmp);
 			free(res);
 		}
 	}

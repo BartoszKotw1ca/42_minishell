@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 15:09:19 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:33:05 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	main(int ac, char **av, char **envp)
 	t_main_struct	main_data;
 	int				c;
 
+	if (!envp[0])
+		return (printf("There is no env, little shit!"), 1);
 	signal_prepare(&main_data);
 	write_to_main_struct(ac, av, envp, &main_data);
 	while (1)
