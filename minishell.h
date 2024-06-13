@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 13:43:01 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:55:58 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,7 @@ void	check_inside_export(t_main_struct *main_data, int j);
 void	check_for_export(t_main_struct *main_data);
 void	initialize_export(t_main_struct *main_data);
 void	initialize_unset(t_main_struct *main_data);
+
+void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv);
 
 #endif

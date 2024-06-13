@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 14:57:23 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:09:19 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,6 @@ int	check_line(t_main_struct *main_data)
 		return (1);
 	}
 	main_data->line = ft_strtrim(main_data->tmp, " ");
-	if (main_data->line[0] == '\0' || ft_strlen(main_data->line) == 0)
-	{
-		free(main_data->line);
-		free(main_data->tmp);
-		printf("asdfasdf");
-		return (2);
-	}
 	free(main_data->tmp);
 	if ((int)main_data->line[0] != 0
 		&& same(main_data->history, main_data->line) == 0)
@@ -108,13 +101,12 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		c = check_line(&main_data);
-		if (c == 2)
-			continue ;
 		if (c == 1)
 			break ;
 		if (split_main_job(&main_data) == 1)
 			break ;
-		free(main_data.line);
+		if (main_data.line)
+			free(main_data.line);
 		main_data.line = NULL;
 		rl_on_new_line();
 		set_context_string(main_data.line);

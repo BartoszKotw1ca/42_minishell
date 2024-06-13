@@ -74,7 +74,7 @@ char	**ft_split_except(char *src, char c, char e, char f)
 // {
 // 	char	**result;
 
-// 	result = ft_split_except(av[1], ' ', 39);
+// 	result = ft_split_except(av[1], ' ', 34, 39);
 // 	int i = 0;
 // 	while (result[i])
 // 	{

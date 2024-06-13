@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 16:05:32 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/03/05 13:15:47 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:45:20 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,19 @@ static int	to_trim(const char *set, char c)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		if (s1[i] == set[0] || (set[1] && s1[i] == set[1]))
+			j++;
+		i++;
+	}
+	if (j == ft_strlen(s1))
+		return (ft_strdup(""));
 	i = 0;
 	j = ft_strlen(s1) - 1;
 	if (ft_strlen(s1) == 0)

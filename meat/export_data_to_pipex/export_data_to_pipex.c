@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 13:48:53 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:02:16 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 	while (i < data_tmp->num_of_com)
 		free(data_tmp->com[i ++].commend);
 	i = 0;
-	if (data->mode == 1)
-		free(argv);
+	(void) argv;
+	// if (data->mode == 1)
+	// 	free(argv);
 	if (access("heredoc.txt", F_OK) == 0)
 		unlink("heredoc.txt");
 	i = -1;

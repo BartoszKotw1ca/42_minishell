@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/13 14:39:13 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:01:18 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,17 @@ static void	run_commands(t_data *data, t_process *p,
 				waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			handle_input(i, p->pipes, data);
 			handle_output(i, p->pipes, data->num_of_com, data);
-			free(data->paths[0]);
-			execve(p->path, p->args, NULL);
+			ft_lstclear(&main_data->history, del_node);
+			ft_lstclear(&main_data->envr, del_node);
+			rl_clear_history();
+			free_after_mixed(data, data, main_data->line);
 			free_dataa(data, data->tmp);
+			free (p->pipes);
+			free (p->pid);
+			execve(p->path, p->args, NULL);
+			free_split(p->args);
+			free(p->path);
+			free(main_data->line);
 			exit (errno);
 		}
 		if (i > 0)
