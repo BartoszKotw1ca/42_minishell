@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 17:14:40 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 09:06:14 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,9 @@ int	check_inside_red(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->commends[i])
+	while (i < data->num_of_com)
 	{
-		if (ft_strchr(data->commends[i], '>') != NULL)
-			return (1);
-		else if (ft_strchr(data->commends[i], '<') != NULL)
+		if (data->com[i].commend == NULL)
 			return (1);
 		i ++;
 	}
@@ -110,11 +108,13 @@ void	run_mini_pi(t_data *data_tmp, t_data *data, char *path, char *argv)
 	while (data->commends[i])
 		printf("com: %s\n", data->commends[i ++]);
 	// exit(0);
-	if (data->num_of_com == data->pipes_counter
-		&& check_inside_red(data) == 0)
+	if (data->num_of_com == data->pipes_counter)
 	{
+		int i = -1;
 		data_tmp = new_one(data);
-		if (data_tmp != NULL)
+		if (check_inside_red(data_tmp) == 0 && data_tmp != NULL)
+			while (++ i < data_tmp->num_of_com)
+				printf("com: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 			// mini_pipex(data_tmp, main_data); // should take the data_tmp
 		free_after_mixed(data_tmp, data, argv);
 	}
