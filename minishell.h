@@ -167,6 +167,8 @@ void	close_n_dup(int i, int (*fd)[2], int noc, t_data *data);
 void	close_pipes(t_process *p, int i);
 char	*read_var_name(char *src);
 char	*get_env_string(t_main_struct *main_data);
+void	handle_input(int i, int (*fd)[2], int noc, t_data *data);
+void	handle_output(int i, int (*fd)[2], int noc, t_data *data);
 
 // mini_pipex_utils_2.c
 void	rewrite_commands(t_data *d, int i, int j);
