@@ -35,9 +35,7 @@ char	*ft_listjoin(int start, int end, char **lista)
 	char	*joined;
 	size_t	i;
 	size_t	len;
-	size_t	tmp;
 
-	tmp = start;
 	i = 0;
 	len = char_in_list(start, end, lista, 0);
 	joined = malloc(sizeof(char) * (len + 1));

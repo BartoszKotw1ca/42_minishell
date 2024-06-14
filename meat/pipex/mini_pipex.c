@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/13 16:01:18 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:53:50 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static void	run_commands(t_data *data, t_process *p,
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
-			if (i != 0)
-				waitpid(p->pid[i - 1], &data->ex_stat, 0);
+			// if (i != 0)
+			// 	waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			handle_input(i, p->pipes, data);
 			handle_output(i, p->pipes, data->num_of_com, data);
 			ft_lstclear(&main_data->history, del_node);
@@ -112,7 +112,7 @@ void	mini_pipex(t_data *data, t_main_struct *main_data)
 	int			i;
 
 	i = 0;
-	// rewrite_commands(data, 0, 0);
+	rewrite_commands(data, 0, 0);
 	p.pipes = malloc((data->num_of_com - 1) * 8);
 	p.pid = malloc(data->num_of_com * sizeof(int));
 	while (i < data->num_of_com - 1)

@@ -6,46 +6,35 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:02:41 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/12 22:51:05 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/14 22:12:58 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+static void	replace_cat(t_data *d, int i)
+{
+	free(d->com[i].commend);
+	d->com[i].commend = ft_strdup("true ");
+}
+
 void	rewrite_commands(t_data *d, int i, int j)
 {
-	t_com	*rewr;
-	t_com	*rewr_start;
+	char	*cat_friendly;
 
+	cat_friendly = "grep,awk,sed,cut,sort,uniq,head,tail,wc,tr,tee,xargs";
 	while(i < d->num_of_com)
 	{
-		if (d->com[i].infile && i != 0)
-			j ++;
+		if (strncmp(d->com[i].commend, "cat ", ft_strlen(d->com[i].commend)) == 0 && i + 1 != d->num_of_com)
+		{
+			while (d->com[i + 1].commend[j] != ' ')
+				j++;
+			d->com[i + 1].commend[j] = 0;
+			if (!ft_strnstr(cat_friendly, d->com[i + 1].commend, ft_strlen(cat_friendly)))
+				replace_cat(d, i);
+			else
+				d->com[i + 1].commend[j] = ' ';
+		}
 		i ++;
 	}
-	rewr = malloc(sizeof(t_com) * (d->num_of_com + j));
-	rewr_start = rewr;
-	i = 0;
-	while (i < d->num_of_com)
-	{
-
-		rewr->commend = ft_strdup(d->com[i].commend);
-		if (d->com[i].infile)
-			rewr->infile = ft_strdup(d->com[i].infile);
-		if (d->com[i].outfile)
-			rewr->outfile = ft_strdup(d->com[i].outfile);
-		rewr->mode = d->com[i].mode;
-		if (i > 0 && d->com[i].infile)
-		{
-			rewr ++;
-			rewr->commend = ft_strdup("cat");
-			rewr->infile = NULL;
-			rewr->outfile = NULL;
-			rewr->mode = 0;
-		}
-		i++;
-		rewr++;
-	}
-	d->com = rewr_start;
-	d->num_of_com += j;
 }
