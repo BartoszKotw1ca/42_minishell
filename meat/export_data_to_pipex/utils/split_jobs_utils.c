@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:38:18 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 16:44:26 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:29:01 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_list(char **splited_line, int fd, int i, int check)
 }
 
 // change the line to "< heredoc.txt" insted of << "something"
-char	*change_the_line(char **splited_line, int i)
+char	*change_the_line(char **splited_line, int i, char *tmp)
 {
 	char	*line;
 
@@ -54,7 +54,7 @@ char	*change_the_line(char **splited_line, int i)
 	splited_line[0][1] = '\0';
 	if (splited_line[1])
 		free(splited_line[1]);
-	splited_line[1] = ft_strdup("heredoc.txt");
+	splited_line[1] = ft_strdup(tmp);
 	if (splited_line[1] == 0)
 		return (NULL);
 	while (splited_line[i])
