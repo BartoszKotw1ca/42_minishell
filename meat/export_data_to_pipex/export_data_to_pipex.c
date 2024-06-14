@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 20:32:26 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:39:06 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	tmp_fun(t_data *data)
 		data = data_for_null(data);
 	else if (data->tmp[0][0] == '<' && data->tmp[1][0] == '<')
 	{
+		free_split(data->tmp);
 		print_error("Bad command, cowboy!", "parse error near \'<\'\n");
 		return (0);
 	}
@@ -86,9 +87,8 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 	i = -1;
 	while (data->her[++ i])
 	{
-		// printf("file: %s\n", data->her[i]);
-		// if (access(data->her[i], F_OK) == 0)
-			// unlink(data->her[i]);
+		if (access(data->her[i], F_OK) == 0)
+			unlink(data->her[i]);
 		free(data->her[i]);
 	}
 	free(data->her);
@@ -114,10 +114,6 @@ void	run_mini_pi(t_data *data, char *path, char *argv, t_main_struct *main_data)
 
 	data->paths = ft_split(path, ':');
 	check_infile(data);
-	// int	i = 0;
-	// while (data->commends[i])
-	// 	printf("com: %s\n", data->commends[i ++]);
-	// exit(0);
 	if (data->num_of_com == data->pipes_counter)
 	{
 		data_tmp = new_one(data);
@@ -128,15 +124,12 @@ void	run_mini_pi(t_data *data, char *path, char *argv, t_main_struct *main_data)
 		free_after_mixed(data_tmp, data, argv);
 	}
 	else
-	{
-		// if (argv)
-		// 	free(argv);
 		print_error("Bad command, cowboy!", "Maybe next time!\n");
-	}
 	free_dataa(data, data->tmp);
 }
-			// while (++ i < data_tmp->num_of_com)
-			// 	printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
+		// int i = -1;
+		// while (++ i < data_tmp->num_of_com)
+		// 	printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 
 void	count_pipes(t_data *data, char *argv)
 {
