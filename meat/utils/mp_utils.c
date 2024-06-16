@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mp_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 23:15:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:07 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/16 15:12:38 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ void	free_split(char **res)
 	i = 0;
 	while (res[i])
 	{
-		free(res[i]);
+		if (res[i])
+			free(res[i]);
 		i++;
 	}
-	free(res);
+	if (res)
+		free(res);
 }
 
 void	print_error(char *mes1, char *mes2)
