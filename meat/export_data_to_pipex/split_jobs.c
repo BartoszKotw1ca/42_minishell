@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_jobs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 19:26:44 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/14 10:37:28 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:19:30 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*write_to_file(char *line, char *tmp)
 }
 
 // split the job and export data to pipex
-int	split_jobs(char *line, char *path, t_main_struct *main_data)
+int	split_jobs(char *line, t_main_struct *main_data)
 {
 	char	*res;
 	char	*tmp;
@@ -93,13 +93,13 @@ int	split_jobs(char *line, char *path, t_main_struct *main_data)
 			res = write_to_file(line, tmp);
 			if (res == NULL)
 				return (1);
-			export_data_to_pipex(res, path, main_data);
+			export_data_to_pipex(res, main_data);
 			unlink(tmp);
 			free(tmp);
 			free(res);
 		}
 	}
 	else
-		export_data_to_pipex(line, path, main_data);
+		export_data_to_pipex(line, main_data);
 	return (0);
 }

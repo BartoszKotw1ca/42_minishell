@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_infile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 07:59:28 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/16 21:09:08 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	write_to_infile(char **tmp, t_data *data)
 {
+	if (tmp[0][0] == 0)
+		return ;
 	if (tmp[0][0] == '<' && tmp[0][1] == '\0')
 	{
 		data->infile = write_to(tmp[1], ft_strlen(tmp[1]));

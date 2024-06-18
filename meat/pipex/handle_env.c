@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/13 13:42:11 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:27:57 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*read_env(t_main_struct *main_data, char *key)
 	key[key_len] = '='; 
 	while (main_data->envr)
 	{
-		// if (ft_strnstr(main_data->envr->content, key, ft_strlen(key)))
 		if (ft_strncmp(main_data->envr->content, key, key_len + 1) == 0)
 		{
 			value = ft_strchr(main_data->envr->content, '=');

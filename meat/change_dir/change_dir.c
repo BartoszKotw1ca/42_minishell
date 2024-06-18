@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   change_dir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:25:06 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 15:18:21 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:22:12 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	change_directory(char *line, char *path, t_main_struct *main_data)
+void	change_directory(char *line, t_main_struct *main_data)
 {
 	char	**tmp;
 	int		i;
@@ -26,7 +26,7 @@ void	change_directory(char *line, char *path, t_main_struct *main_data)
 		res = chdir("..");
 	else if (search_for(line, '|') == 1)
 	{
-		split_jobs(line, path, main_data);
+		split_jobs(line, main_data);
 		return ;
 	}
 	else

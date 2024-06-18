@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/16 15:33:06 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:21:58 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_main_struct
 }				t_main_struct;
 
 // export_data_to_pipex.c
-void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data);
+void	export_data_to_pipex(char *argv, t_main_struct *main_data);
 
 // ft_listajoin.c
 char	*ft_listjoin(int start, int end, char **lista);
@@ -125,7 +125,7 @@ void	unset_env(t_main_struct *main_data, char *key_val);
 char	*tmp_fun_write_to_file(char **splited_line,
 			char *tmp, int fd, char *get_next);
 char	*write_to_file(char *line, char *tmp);
-int		split_jobs(char *line, char *path, t_main_struct *main_data);
+int		split_jobs(char *line, t_main_struct *main_data);
 
 // split_jobs_utils.c
 int		check_if_ok(char *line, int i);
@@ -147,7 +147,7 @@ int		same(t_list *history, char *line);
 char	**split_ex(char *src, char c, char e, char f);
 
 // change_dir.c
-void	change_directory(char *line, char *path, t_main_struct *main_data);
+void	change_directory(char *line, t_main_struct *main_data);
 
 // export_data_utils.c
 char	*write_to(char *str, int len);
@@ -178,6 +178,7 @@ void	handle_output(int i, int (*fd)[2], int noc, t_data *data);
 
 // mini_pipex_utils_2.c
 void	rewrite_commands(t_data *d, int i, int j);
+char	**get_path(t_main_struct *main_data);
 
 // mini_pipex.c
 void	mini_pipex(t_data *data, t_main_struct *main_data);

@@ -6,11 +6,24 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:02:41 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/14 22:12:58 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:35:33 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+char	**get_path(t_main_struct *main_data)
+{
+	char	*path;
+	char	key[5] = {'P', 'A', 'T', 'H', '\0'};
+
+	// key = {'P', 'A', 'T', 'H', '\0'};
+	path = read_env(main_data, key);
+	if (path)
+		return ft_split(path, ':');
+	else
+		return (ft_split("", ':'));
+}
 
 static void	replace_cat(t_data *d, int i)
 {

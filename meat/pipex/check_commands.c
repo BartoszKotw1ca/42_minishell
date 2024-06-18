@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/10 22:09:53 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:07:42 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 	{
 		print_error(p->args[0], "command not found\n");
 		free(p->path);
-		p->path = ft_strjoin("/usr/bin/", p->args[0]);
+		p->path = ft_strjoin("/usr/", p->args[0]);
 	}
 	check_files(p, data);
 }

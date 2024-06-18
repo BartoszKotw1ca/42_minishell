@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:21:32 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/07 15:17:04 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/17 22:42:00 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	update_file(char *name, int content)
 	int	fd;
 
 	fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	ft_putnbr_fd(content, fd);
+	ft_putnbr_fd(content / 256, fd);
 	close(fd);
 }
 

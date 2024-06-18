@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/14 10:39:06 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:21:21 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	check_inside_red(t_data *data)
 	return (0);
 }
 
-void	run_mini_pi(t_data *data, char *path, char *argv, t_main_struct *main_data)
+void	run_mini_pi(t_data *data, char *argv, t_main_struct *main_data)
 {
 	t_data	*data_tmp;
 
-	data->paths = ft_split(path, ':');
+	data->paths = get_path(main_data);
 	check_infile(data);
 	if (data->num_of_com == data->pipes_counter)
 	{
@@ -156,7 +156,7 @@ void	count_pipes(t_data *data, char *argv)
 	}
 }
 
-void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
+void	export_data_to_pipex(char *argv, t_main_struct *main_data)
 {
 	t_data	data;
 	char	*line;
@@ -177,7 +177,7 @@ void	export_data_to_pipex(char *argv, char *path, t_main_struct *main_data)
 	data.tmp = ft_split(argv, ' ');
 	if (tmp_fun(&data) == 0)
 		return ;
-	run_mini_pi(&data, path, argv, main_data);
+	run_mini_pi(&data, argv, main_data);
 }
 
 void	free_splited_list(char **tmp)
