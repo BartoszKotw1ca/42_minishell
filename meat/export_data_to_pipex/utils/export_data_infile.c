@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_infile.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:02:57 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/16 21:09:08 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:22:00 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_the_line(char *argv, t_data *data)
 {
 	int	i;
 
-	i = strlen(argv) - 1;
+	i = ft_strlen(argv) - 1;
 	while (i >= 0 && argv[i] != '|')
 	{
 		if (argv[i] == '>' && i - 1 >= 0 && argv[i - 1] == '>')

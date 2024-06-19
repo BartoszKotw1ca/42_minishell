@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 14:29:45 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:31:02 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	export_data_to_pipex(char *argv, t_main_struct *main_data)
 	}
 	else if (check_the_line(argv, &data) == 0)
 		data.mode = -1;
-	data.tmp = ft_split(argv, ' ');
+	data.tmp = split_ex(argv, ' ', 39, 34);
 	if (tmp_fun(&data) == 0)
 		return ;
 	run_mini_pi(&data, argv, main_data);
@@ -230,7 +230,7 @@ void	write_out(t_data *data, int i, int li, char **te)
 			e = change_line(t);
 			free(t);
 			free_splited_list(te);
-			te = ft_split(e, ' ');
+			te = split_ex(e, ' ', 39, 34);
 			free(e);
 		}
 		write_to_outfile(te, data, 0, 0);
@@ -309,7 +309,7 @@ t_data	*new_one(t_data *data)
 	{
 		if (check_for_red(data, tmp_com, i, 0) != 0)
 			return (NULL);
-		te = ft_split(tmp_com[i], ' ');
+		te = split_ex(tmp_com[i], ' ', 39, 34);
 		write_in(data, i, te);
 		li = check_line1(tmp_com[i]);
 		write_out(data, i, li, te);
