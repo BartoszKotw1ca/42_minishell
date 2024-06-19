@@ -1,12 +1,17 @@
-5. make $? work				
+Nie dziala:
 
-12. clean up struct t_data // it should be good
-9. change env command to echo	BK
+- echo "cos tam > outfile" ale dziala echo "cost tam >outfile ", leaky w
+ echo "cat lol.cdasfsdfsadf erwerweffdsf < fdsfas<<<<>>>>>>erwer"
+- naprawic spacje w echo "    tak          nie"
+- two times when cat and ctr + c
+- problem with:
+$> echo "cat lol.c | cat > lol.c"
+$> echo "cat lol.c | cat > lol.c "
+cat lol.c | cat > lol.c 
+-check setting values of env
+-it should work:
+$> export PATH=ls:le
+export: 'PATH=ls:le': not a valid identifier
 
-4. outfile mode				JP
-10. export... use execve with args and env array	JP
-11. unset...						JP
-14. nonexisting infile
-
-export_and_unset.c 58 70
-export_data_outfile.c 67
+-zamienic status file na global var
+- leaky echo $?

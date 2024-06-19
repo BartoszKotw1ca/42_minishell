@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 13:46:31 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:29:45 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,16 +160,17 @@ void	export_data_to_pipex(char *argv, t_main_struct *main_data)
 {
 	t_data	data;
 	char	*line;
+	int		tmp;
 
+	tmp = 0;
 	data = (t_data){0};
 	if ((int)argv[0] == 0)
 		return ;
 	count_pipes(&data, argv);
 	if (check_the_line(argv, &data) == 1)
-
 	{
+		tmp = 1;
 		line = change_line(argv);
-		// free(argv);
 		argv = ft_strdup(line);
 		free(line);
 	}
@@ -179,6 +180,8 @@ void	export_data_to_pipex(char *argv, t_main_struct *main_data)
 	if (tmp_fun(&data) == 0)
 		return ;
 	run_mini_pi(&data, argv, main_data);
+	if (tmp == 1)
+		free(argv);
 }
 
 void	free_splited_list(char **tmp)

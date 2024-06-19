@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_dir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:25:06 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/18 20:22:12 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:12:26 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	change_directory(char *line, t_main_struct *main_data)
 	tmp = ft_split_except(line, ' ', 39, 34);
 	if (ft_strncmp(line, "cd", ft_strlen(line)) == 0 && !tmp[1])
 		res = chdir(getenv("HOME"));
-	else if (look_for_str(line, "..", ft_strlen(line)) && !tmp[2])
+	else if (look_for_str(line, "..", ft_strlen(line))
+		&& ft_strlen(line) == 5 && !tmp[2])
 		res = chdir("..");
 	else if (search_for(line, '|') == 1)
 	{
