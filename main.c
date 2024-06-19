@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/18 20:22:27 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:09:11 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,17 +169,16 @@ void	run_main_program(t_main_struct *main_data, char **lines, int i, int c)
 	{
 		i = 0;
 		lines = break_readline(readline("$> "), 0, main_data);
+		if (!lines)
+			return ;
 		while (lines[i])
 		{
 			main_data->tmp = lines[i];
 			c = check_line(main_data);
 			if (c == 1)
-				break ;
+				return ;
 			if (split_main_job(main_data) == 1)
-			{
-				c = 1;
-				break ;
-			}
+				return ;
 			if (main_data->line)
 				free(main_data->line);
 			main_data->line = NULL;
@@ -188,8 +187,6 @@ void	run_main_program(t_main_struct *main_data, char **lines, int i, int c)
 			i++;
 		}
 		free(lines);
-		if (c == 1)
-			break;
 	}
 }
 

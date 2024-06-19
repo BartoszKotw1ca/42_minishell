@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:02:41 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/18 20:35:33 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:03:34 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	rewrite_commands(t_data *d, int i, int j)
 	{
 		if (strncmp(d->com[i].commend, "cat ", ft_strlen(d->com[i].commend)) == 0 && i + 1 != d->num_of_com)
 		{
-			while (d->com[i + 1].commend[j] != ' ')
+			while (d->com[i + 1].commend[j] && d->com[i + 1].commend[j] != ' ')
 				j++;
 			d->com[i + 1].commend[j] = 0;
 			if (!ft_strnstr(cat_friendly, d->com[i + 1].commend, ft_strlen(cat_friendly)))
