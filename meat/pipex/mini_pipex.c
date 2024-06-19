@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/19 13:16:52 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:55:56 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static void	free_memories(void *mem1, void *mem2)
+{
+	free(mem1);
+	if (((char *)mem2)[0] == -2)
+		free(mem2);
+}
 
 static void	update_arg(t_data *d, int i, char *var_value, int j)
 {
@@ -19,6 +26,8 @@ static void	update_arg(t_data *d, int i, char *var_value, int j)
 	char	*temp1;
 	char	*temp2;
 
+	if (var_value[0] == -2)
+		var_value++;
 	dollar = ft_strchr(d->com[i].commend, '$');
 	var_end = NULL;
 	if (dollar[j] == '?')
@@ -36,7 +45,7 @@ static void	update_arg(t_data *d, int i, char *var_value, int j)
 	temp2 = ft_strjoin(temp1, var_end);
 	free(d->com[i].commend);
 	d->com[i].commend = temp2;
-	free(temp1);
+	free_memories(temp1, var_value - 1);
 }
 
 static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
@@ -57,7 +66,7 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 		{
 			var_name = read_var_name(&d->com[i].commend[j] + 1);
 			if (var_name[0] == '?')
-				var_value = read_file("TMP_TODO/status.txt");
+				var_value = read_file("/TMP_TODO/status.txt", main_data);
 			else
 				var_value = read_env(main_data, var_name);
 			update_arg(d, i, var_value, 1);
@@ -104,7 +113,7 @@ static void	run_commands(t_data *data, t_process *p,
 		i++;
 	}
 	waitpid(p->pid[i - 1], &data->ex_stat, 0);
-	update_file("TMP_TODO/status.txt", data->ex_stat);
+	update_file("/TMP_TODO/status.txt", data->ex_stat, main_data);
 }
 
 void	mini_pipex(t_data *data, t_main_struct *main_data)

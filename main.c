@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 14:18:08 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:35:35 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,8 @@ int	main(int ac, char **av, char **envp)
 		return (printf("There is no env, little shit!"), 1);
 	signal_prepare(&main_data);
 	write_to_main_struct(ac, av, envp, &main_data);
-	update_file("TMP_TODO/status.txt", 0);
+	getcwd(main_data.main_path, 200);
+	update_file("/TMP_TODO/status.txt", 0, &main_data);
 	run_main_program(&main_data, 0, 0);
 	ft_lstclear(&main_data.history, del_node);
 	ft_lstclear(&main_data.envr, del_node);

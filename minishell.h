@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 12:23:19 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:35:18 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_main_struct
 	int					i;
 	char				**ted;
 	struct sigaction	sa;
+	char				main_path[200];
 }				t_main_struct;
 
 // export_data_to_pipex.c
@@ -109,8 +110,8 @@ void	free_split(char **res);
 void	print_error(char *mes1, char *mes2);
 
 // main_utils.c
-void	update_file(char *name, int content);
-char	*read_file(char *name);
+void	update_file(char *name, int content, t_main_struct *main_data);
+char	*read_file(char *name, t_main_struct *main_data);
 
 // ft_split_except.c
 char	**ft_split_except(char *s, char c, char e, char f);

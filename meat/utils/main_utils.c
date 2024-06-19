@@ -6,7 +6,7 @@
 /*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:21:32 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/17 22:42:00 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:47:11 by jponieck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,31 @@ int	same(t_list *history, char *line)
 	return (0);
 }
 
-void	update_file(char *name, int content)
+void	update_file(char *name, int content, t_main_struct *main_data)
 {
-	int	fd;
+	int		fd;
+	char	*path;
 
-	fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	path = ft_strjoin(main_data->main_path, name);
+	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	ft_putnbr_fd(content / 256, fd);
 	close(fd);
+	free(path);
 }
 
-char	*read_file(char *name)
+char	*read_file(char *name, t_main_struct *main_data)
 {
 	char	*res;
+	char	*path;
 	int		fd;
 
-	res = ft_calloc(4, sizeof(char));
-	fd = open(name, O_RDONLY);
-	read(fd, res, 4);
+	path = ft_strjoin(main_data->main_path, name);
+	res = ft_calloc(5, sizeof(char));
+	res[0] = -2;
+	fd = open(path, O_RDONLY);
+	read(fd, res + 1, 4);
 	close(fd);
+	free(path);
 	return (res);
 }
 
