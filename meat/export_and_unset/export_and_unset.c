@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:16:09 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/12 14:22:56 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:19:20 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	check_inside_export(t_main_struct *main_data, int j)
 {
 	while (main_data->ted[main_data->i][j]
+		&& main_data->ted[main_data->i][j] != '='
 		&& (ft_isalnum(main_data->ted[main_data->i][j]) == 1
 		|| main_data->ted[main_data->i][j] == '='
 		|| main_data->ted[main_data->i][j] == '$'
 		|| main_data->ted[main_data->i][j] == '_'))
 		j ++;
-	if (main_data->ted[main_data->i][j] == '\0')
+	if (main_data->ted[main_data->i][j] == '=')
 	{
 		j = 1;
 		while (main_data->ted[main_data->i][j]
