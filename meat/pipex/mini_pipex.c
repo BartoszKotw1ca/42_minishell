@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/14 18:53:50 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:16:52 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static void	run_commands(t_data *data, t_process *p,
 			free_dataa(data, data->tmp);
 			free (p->pipes);
 			free (p->pid);
+			free(main_data->lines);
 			execve(p->path, p->args, NULL);
 			free_split(p->args);
 			free(p->path);

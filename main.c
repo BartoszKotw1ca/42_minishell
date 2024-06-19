@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 11:09:11 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:17:04 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,17 +163,17 @@ char	**break_readline(char *src, int i, t_main_struct *main_data)
 	return (lines);
 }
 
-void	run_main_program(t_main_struct *main_data, char **lines, int i, int c)
+void	run_main_program(t_main_struct *main_data, int i, int c)
 {
 	while (1)
 	{
 		i = 0;
-		lines = break_readline(readline("$> "), 0, main_data);
-		if (!lines)
+		main_data->lines = break_readline(readline("$> "), 0, main_data);
+		if (!main_data->lines)
 			return ;
-		while (lines[i])
+		while (main_data->lines[i])
 		{
-			main_data->tmp = lines[i];
+			main_data->tmp = main_data->lines[i];
 			c = check_line(main_data);
 			if (c == 1)
 				return ;
@@ -186,22 +186,21 @@ void	run_main_program(t_main_struct *main_data, char **lines, int i, int c)
 			set_context_string(main_data->line);
 			i++;
 		}
-		free(lines);
+		free(main_data->lines);
 	}
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_main_struct	main_data;
-	char			**lines;
 
-	lines = NULL;
+	main_data.lines = NULL;
 	if (!envp[0])
 		return (printf("There is no env, little shit!"), 1);
 	signal_prepare(&main_data);
 	write_to_main_struct(ac, av, envp, &main_data);
 	update_file("TMP_TODO/status.txt", 0);
-	run_main_program(&main_data, lines, 0, 0);
+	run_main_program(&main_data, 0, 0);
 	ft_lstclear(&main_data.history, del_node);
 	ft_lstclear(&main_data.envr, del_node);
 	rl_clear_history();
