@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_data_to_pipex.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/18 20:21:21 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:46:31 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	export_data_to_pipex(char *argv, t_main_struct *main_data)
 	t_data	data;
 	char	*line;
 
+	data = (t_data){0};
 	if ((int)argv[0] == 0)
 		return ;
 	count_pipes(&data, argv);
