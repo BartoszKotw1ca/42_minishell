@@ -204,6 +204,7 @@ int	main(int ac, char **av, char **envp)
 	ft_lstclear(&main_data.history, del_node);
 	ft_lstclear(&main_data.envr, del_node);
 	rl_clear_history();
+	free(main_data.lines);
 	return (0);
 }
 // unlink("term"); it was just before return 0;
