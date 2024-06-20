@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:58:43 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 15:31:13 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:30:27 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,25 @@ char	*change_line(char *argv)
 	return (line);
 }
 
-void	in_the_middle(char	**tmp, t_data *data, int i, int j)
+char	*create_outfile(char **tmp, int i, int j, int tm)
 {
 	char	*temp;
-	int		tm;
-	int		inside_quotes = 0;
 
+	temp = malloc(sizeof(char) * (tm - j + 1));
+	temp[tm - j] = '\0';
+	tm = 0;
+	while (tmp[i][j])
+		temp[tm++] = tmp[i][j ++];
+	tmp[i][ft_strlen(tmp[i]) - ft_strlen(temp)] = '\0';
+	return (temp);
+}
+
+void	in_the_middle(char	**tmp, t_data *data, int i, int j)
+{
+	int		tm;
+	int		inside_quotes;
+
+	inside_quotes = 0;
 	tm = 0;
 	while (tmp[i][j])
 	{
@@ -111,13 +124,7 @@ void	in_the_middle(char	**tmp, t_data *data, int i, int j)
 		tm = j;
 		while (tmp[i][tm])
 			tm ++;
-		temp = malloc(sizeof(char) * (tm - j + 1));
-		temp[tm - j] = '\0';
-		tm = 0;
-		while (tmp[i][j])
-			temp[tm++] = tmp[i][j ++];
-		tmp[i][ft_strlen(tmp[i]) - ft_strlen(temp)] = '\0';
-		data->outfile = temp;
+		data->outfile = create_outfile(tmp, i, j, tm);
 	}
 	else
 		data->outfile = NULL;

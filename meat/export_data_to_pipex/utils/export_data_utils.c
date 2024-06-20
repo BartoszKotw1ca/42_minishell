@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:53:49 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 13:39:21 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 08:50:59 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ t_data	*data_for_null(t_data *data)
 	data->commends = NULL;
 	data->num_of_com = 0;
 	data->paths = NULL;
-	// (void) tmp;
 	return (data);
 }
