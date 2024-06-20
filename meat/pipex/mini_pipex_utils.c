@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/20 09:39:29 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:21:16 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,6 @@ void	handle_output(int i, int (*fd)[2], int noc, t_data *data)
 	}
 	else
 		dup2(1, 1);
-}
-
-void	close_pipes(t_process *p, int i)
-{
-	close(p->pipes[i - 1][0]);
-	close(p->pipes[i - 1][1]);
 }
 
 char	*read_var_name(char *src)

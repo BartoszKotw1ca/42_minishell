@@ -11,6 +11,7 @@ Nie dziala:
 🩸$> export PATH=ls:le
 🩸export: 'PATH=ls:le': not a valid identifier
 - two times when cat and ctr + c
+🩸-norminette
 
 🩸/🗯-check setting values of env
 🩸-zamienic status file na global var

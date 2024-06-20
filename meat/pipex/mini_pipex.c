@@ -6,18 +6,11 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/20 09:51:31 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:21:47 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-static void	free_memories(void *mem1, void *mem2)
-{
-	free(mem1);
-	if (((char *)mem2)[0] == -2)
-		free(mem2);
-}
 
 static void	update_arg(t_data *d, int i, char *var_value, int j)
 {

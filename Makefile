@@ -3,6 +3,9 @@ FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 LIB = ./mylibft/mylibft.a
 SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
+		meat/export_data_to_pipex/utils/export_data_double.c \
+		meat/export_data_to_pipex/utils/export_data_double1.c \
+		meat/export_data_to_pipex/utils/utils_for_everyone.c \
 		meat/export_data_to_pipex/split_jobs.c \
 		meat/export_data_to_pipex/utils/split_jobs_utils.c \
 		meat/export_data_to_pipex/utils/export_data_utils.c \
@@ -18,6 +21,7 @@ SRC =	meat/export_data_to_pipex/export_data_to_pipex.c \
 		meat/utils/main_utils.c \
 		meat/utils/mp_utils.c \
 		meat/utils/ft_split_except_test.c \
+		meat/utils/main_utils1.c \
 		meat/change_dir/change_dir.c \
 		meat/history/history.c \
 		meat/signals/signals.c \

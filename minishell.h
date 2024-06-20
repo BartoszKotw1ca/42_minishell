@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 21:35:18 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:22:41 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_main_struct
 
 // export_data_to_pipex.c
 void	export_data_to_pipex(char *argv, t_main_struct *main_data);
-
+void	write_new_data(t_data *data, int i, int li, char **te);
 // ft_listajoin.c
 char	*ft_listjoin(int start, int end, char **lista);
 
@@ -193,5 +193,31 @@ void	initialize_unset(t_main_struct *main_data);
 
 void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv);
 char	*name_of_heredoc(char *here);
+
+// main_utils1.c
+int		check_line(t_main_struct *main_data);
+char	*add_line_to_history(char *src, t_main_struct *main_data);
+void	prepare_source(char *src, int i, int init);
+void	finish_first_part(char **lines, int i, int j);
+int		check_quotes(char *argv);
+
+// export_data_double.c
+void	write_out(t_data *data, int i, int li, char **te);
+int		check_for_red(t_data *data, char **tmp_com, int i, int j);
+void	write_in(t_data *data, int i, char **te);
+void	initialize_values(t_data *data);
+t_data	*new_one(t_data *data);
+
+// export_data_double.c
+int		check_inside_red(t_data *data);
+void	count_pipes(t_data *data, char *argv);
+int		check_line1(char *argv);
+void	free_splited_list(char **tmp);
+char	skip_spaces_back(char *str, int index);
+
+// utils_for_everyone.c
+char	*create_outfile(char **tmp, int i, int j, int tm);
+void	close_pipes(t_process *p, int i);
+void	free_memories(void *mem1, void *mem2);
 
 #endif
