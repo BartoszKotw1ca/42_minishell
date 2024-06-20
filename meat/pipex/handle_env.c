@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:08:20 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/18 20:27:57 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:40:41 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*read_env(t_main_struct *main_data, char *key)
 	start = main_data->envr;
 	value = NULL;
 	key_len = ft_strlen(key);
-	key[key_len] = '='; 
+	key[key_len] = '=';
 	while (main_data->envr)
 	{
 		if (ft_strncmp(main_data->envr->content, key, key_len + 1) == 0)
@@ -89,9 +89,11 @@ void	export_env(t_main_struct *main_data, char *key_val)
 	val_index = ft_strchr(key_val, '=') - key_val;
 	while (main_data->envr)
 	{
-		if (ft_strncmp((char *)main_data->envr->content, key_val, val_index) == 0)
+		if (ft_strncmp((char *)main_data->envr->content,
+				key_val, val_index) == 0)
 		{
-			if (((char *)main_data->envr->content)[val_index] == '=' || ((char *)main_data->envr->content)[val_index] == 0)
+			if (((char *)main_data->envr->content)[val_index] == '='
+				|| ((char *)main_data->envr->content)[val_index] == 0)
 			{
 				free(main_data->envr->content);
 				main_data->envr->content = ft_strdup(key_val);

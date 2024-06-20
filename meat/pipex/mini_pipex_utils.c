@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 14:54:56 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 13:42:45 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:39:29 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	env_size(t_main_struct *main_data)
 
 	start = main_data->envr;
 	size = 0;
-	while(main_data->envr)
+	while (main_data->envr)
 	{
 		size += ft_strlen(main_data->envr->content) + 1;
 		main_data->envr = main_data->envr->next;
@@ -37,14 +37,14 @@ char	*get_env_string(t_main_struct *main_data)
 	env_string = calloc(env_size(main_data) + 1, sizeof(char));
 	start = main_data->envr;
 	env_string_start = env_string;
-	while(main_data->envr)
+	while (main_data->envr)
 	{
-		ft_strlcpy(env_string, main_data->envr->content, ft_strlen(main_data->envr->content) + 1);
+		ft_strlcpy(env_string, main_data->envr->content,
+			ft_strlen(main_data->envr->content) + 1);
 		env_string += ft_strlen(main_data->envr->content);
-		*env_string  = '\n';
+		*env_string = '\n';
 		env_string ++;
 		main_data->envr = main_data->envr->next;
-		// printf("%s", env_string_start);
 	}
 	main_data->envr = start;
 	return (env_string_start);
@@ -84,9 +84,11 @@ void	handle_output(int i, int (*fd)[2], int noc, t_data *data)
 		if (i + 1 != noc)
 			close(fd[i][1]);
 		if (data->com[i].mode == 0)
-			ofd = open(data->com[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+			ofd = open(data->com[i].outfile,
+					O_CREAT | O_WRONLY | O_TRUNC, 0777);
 		else
-			ofd = open(data->com[i].outfile, O_CREAT | O_WRONLY | O_APPEND, 0777);
+			ofd = open(data->com[i].outfile,
+					O_CREAT | O_WRONLY | O_APPEND, 0777);
 		dup2(ofd, 1);
 		close(ofd);
 	}
@@ -96,7 +98,7 @@ void	handle_output(int i, int (*fd)[2], int noc, t_data *data)
 		close(fd[i][1]);
 	}
 	else
-		dup2(1,1);
+		dup2(1, 1);
 }
 
 void	close_pipes(t_process *p, int i)

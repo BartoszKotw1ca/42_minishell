@@ -6,23 +6,11 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 12:52:36 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/13 13:43:59 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:33:33 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	**get_context_string(void)
-{
-	static char	*context_string = NULL;
-	return (&context_string);
-}
-
-void	set_context_string(char *next_context_string)
-{
-	char	**context_string_ptr = get_context_string();
-	*context_string_ptr = next_context_string;
-}
 
 void	ctr_c_sig_handler(int sig)
 {

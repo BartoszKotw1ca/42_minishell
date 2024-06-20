@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 21:35:35 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:39:42 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	split_main_job(t_main_struct *main_data)
 		print_history(main_data->history);
 	else if (ft_strncmp(main_data->line, "cd", 2) == 0)
 		change_directory(main_data->line, main_data);
-	// else if (ft_strncmp(main_data->line, "env", 3) == 0)
-	// 	print_env(main_data);
 	else if (ft_strncmp(main_data->line, "export", 6) == 0)
 		initialize_export(main_data);
 	else if (ft_strncmp(main_data->line, "unset", 5) == 0)
@@ -183,7 +181,6 @@ void	run_main_program(t_main_struct *main_data, int i, int c)
 				free(main_data->line);
 			main_data->line = NULL;
 			rl_on_new_line();
-			set_context_string(main_data->line);
 			i++;
 		}
 		free(main_data->lines);

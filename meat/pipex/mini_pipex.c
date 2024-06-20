@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/19 21:55:56 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:42:15 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 	while (d->com[i].commend[j])
 	{
 		if ((d->com[i].commend[j] == 39
-			|| d->com[i].commend[j] == 34) && in_quotes == 0)
+				|| d->com[i].commend[j] == 34) && in_quotes == 0)
 			in_quotes = d->com[i].commend[j];
 		else if (d->com[i].commend[j] == in_quotes)
 			in_quotes = 0;
@@ -88,8 +88,6 @@ static void	run_commands(t_data *data, t_process *p,
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
-			// if (i != 0)
-			// 	waitpid(p->pid[i - 1], &data->ex_stat, 0);
 			handle_input(i, p->pipes, data);
 			handle_output(i, p->pipes, data->num_of_com, data);
 			ft_lstclear(&main_data->history, del_node);

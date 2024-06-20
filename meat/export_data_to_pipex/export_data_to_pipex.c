@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:48:38 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/19 15:31:02 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:33:10 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ void	free_after_mixed(t_data *data_tmp, t_data *data, char *argv)
 		free(data_tmp->com[i ++].commend);
 	i = 0;
 	(void) argv;
-	// if (data->mode == 1)
-	// 	free(argv);
 	i = -1;
 	while (++ i < data->num_of_com)
 		if (data->com[i].infile)
@@ -127,9 +125,6 @@ void	run_mini_pi(t_data *data, char *argv, t_main_struct *main_data)
 		print_error("Bad command, cowboy!", "Maybe next time!\n");
 	free_dataa(data, data->tmp);
 }
-		// int i = -1;
-		// while (++ i < data_tmp->num_of_com)
-		// 	printf("commmm: %s, infile: %s, outfile: %s, mode: %d\n", data_tmp->com[i].commend, data_tmp->com[i].infile, data_tmp->com[i].outfile, data_tmp->com[i].mode);
 
 void	count_pipes(t_data *data, char *argv)
 {
