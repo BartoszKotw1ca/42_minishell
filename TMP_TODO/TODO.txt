@@ -1,17 +1,15 @@
 Nie dziala:
 
-- echo "cos tam > outfile" ale dziala echo "cost tam >outfile ", leaky w
- echo "cat lol.cdasfsdfsadf erwerweffdsf < fdsfas<<<<>>>>>>erwer"
-- naprawic spacje w echo "    tak          nie"
+🟩- naprawic spacje w echo "    tak          nie" 
 - two times when cat and ctr + c
-- problem with:
-$> echo "cat lol.c | cat > lol.c"
-$> echo "cat lol.c | cat > lol.c "
-cat lol.c | cat > lol.c 
--check setting values of env
--it should work:
-$> export PATH=ls:le
-export: 'PATH=ls:le': not a valid identifier
+🟩- problem with:
+🟩$> echo "cat lol.c | cat > lol.c"
+🟩$> echo "cat lol.c | cat > lol.c "
+🟩cat lol.c | cat > lol.c 
+🟩-it should work:
+🟩$> export PATH=ls:le
+🟩export: 'PATH=ls:le': not a valid identifier
 
+-check setting values of env
 -zamienic status file na global var
 - leaky echo $?
