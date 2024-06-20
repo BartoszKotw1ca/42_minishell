@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/20 09:42:15 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:51:31 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 	}
 }
 
+void	free_exec(t_data *data, t_main_struct *main_data, t_process *p)
+{
+	ft_lstclear(&main_data->history, del_node);
+	ft_lstclear(&main_data->envr, del_node);
+	rl_clear_history();
+	free_after_mixed(data, data, main_data->line);
+	free_dataa(data, data->tmp);
+	free (p->pipes);
+	free (p->pid);
+	free(main_data->lines);
+	execve(p->path, p->args, NULL);
+	free_split(p->args);
+	free(p->path);
+	free(main_data->line);
+	exit (errno);
+}
+
 static void	run_commands(t_data *data, t_process *p,
 	int i, t_main_struct *main_data)
 {
@@ -90,19 +107,7 @@ static void	run_commands(t_data *data, t_process *p,
 		{
 			handle_input(i, p->pipes, data);
 			handle_output(i, p->pipes, data->num_of_com, data);
-			ft_lstclear(&main_data->history, del_node);
-			ft_lstclear(&main_data->envr, del_node);
-			rl_clear_history();
-			free_after_mixed(data, data, main_data->line);
-			free_dataa(data, data->tmp);
-			free (p->pipes);
-			free (p->pid);
-			free(main_data->lines);
-			execve(p->path, p->args, NULL);
-			free_split(p->args);
-			free(p->path);
-			free(main_data->line);
-			exit (errno);
+			free_exec(data, main_data, p);
 		}
 		if (i > 0)
 			close_pipes(p, i);

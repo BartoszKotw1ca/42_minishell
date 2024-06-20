@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jponieck <jponieck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/18 21:07:42 by jponieck         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:58:04 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,8 @@ void	check_files(t_process *p, t_data *data)
 	}
 }
 
-void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
+int	check_commands_sec(int i, t_process *p)
 {
-	int		i;
-
-	i = 0;
 	if (ft_strncmp("cd", p->args[0], 2) == 0)
 	{
 		while (p->args[i])
@@ -76,8 +73,17 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 		p->path = ft_strjoin("/usr/bin/", "true");
 		free(p->args[0]);
 		p->args[0] = ft_strjoin("true", "");
-		return ;
+		return (0);
 	}
+	return (1);
+}
+
+void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
+{
+	int		i;
+
+	if (check_commands_sec(0, p))
+		return ;
 	if (ft_strncmp("env", p->args[0], 3) == 0)
 	{
 		free(p->path);

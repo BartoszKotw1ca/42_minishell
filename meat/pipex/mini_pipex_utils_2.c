@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:02:41 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/20 09:44:14 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:47:27 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 char	**get_path(t_main_struct *main_data)
 {
 	char	*path;
-	char	key[5] = {'P', 'A', 'T', 'H', '\0'};
+	char	key[5];
 
+	key[0] = 'P';
+	key[1] = 'A';
+	key[2] = 'T';
+	key[3] = 'H';
+	key[4] = '\0';
 	path = read_env(main_data, key);
 	if (path)
 		return (ft_split(path, ':'));
