@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/20 09:58:04 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/21 09:36:05 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 {
 	int		i;
 
-	if (check_commands_sec(0, p))
+	if (check_commands_sec(0, p) == 0)
 		return ;
 	if (ft_strncmp("env", p->args[0], 3) == 0)
 	{
