@@ -80,8 +80,6 @@ int	check_commands_sec(int i, t_process *p)
 
 void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 {
-	int		i;
-
 	if (check_commands_sec(0, p) == 0)
 		return ;
 	if (ft_strncmp("env", p->args[0], 3) == 0)
@@ -97,7 +95,6 @@ void	check_commands(t_process *p, t_data *data, t_main_struct *main_data)
 		p->args[3] = NULL;
 		return ;
 	}
-	i = 0;
 	if (ft_strncmp("no_prog", p->path, 7) == 0)
 	{
 		print_error(p->args[0], "command not found\n");
