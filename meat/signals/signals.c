@@ -12,6 +12,12 @@
 
 #include "../../minishell.h"
 
+void	do_nothing(int sig)
+{
+	if (sig == 2)
+		printf("\n");
+}
+
 void	ctr_c_sig_handler(int sig)
 {
 	if (sig == 2)

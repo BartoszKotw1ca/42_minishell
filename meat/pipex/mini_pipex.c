@@ -95,6 +95,8 @@ static void	run_commands(t_data *data, t_process *p,
 		p->args = ft_split_except(data->com[i].commend, ' ', 39, 34);
 		p->path = find_path(p->args[0], data, 0);
 		check_commands(p, data, main_data);
+		main_data->sa.sa_handler = do_nothing;
+		sigaction(SIGINT, &main_data->sa, NULL);
 		p->pid[i] = fork();
 		if (p->pid[i] == 0)
 		{
@@ -109,6 +111,8 @@ static void	run_commands(t_data *data, t_process *p,
 		i++;
 	}
 	waitpid(p->pid[i - 1], &data->ex_stat, 0);
+	main_data->sa.sa_handler = ctr_c_sig_handler;
+	sigaction(SIGINT, &main_data->sa, NULL);
 	update_file("/TMP_TODO/status.txt", data->ex_stat, main_data);
 }
 

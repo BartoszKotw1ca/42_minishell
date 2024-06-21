@@ -141,6 +141,7 @@ void	ctr_c_sig_handler(int sig);
 void	signal_prepare(t_main_struct *main_data);
 void	set_context_string(char *next_context_string);
 char	**get_context_string(void);
+void	do_nothing(int sig);
 
 // utils.c
 int		look_for_str(const char *big, const char *little, size_t len);
