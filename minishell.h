@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 09:50:39 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/20 10:22:41 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 09:17:15 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,8 @@ char	skip_spaces_back(char *str, int index);
 char	*create_outfile(char **tmp, int i, int j, int tm);
 void	close_pipes(t_process *p, int i);
 void	free_memories(void *mem1, void *mem2);
+
+// ft_skip_tabs.c
+char	*ft_skip_tabs(char *line);
 
 #endif

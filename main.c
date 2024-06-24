@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 08:44:28 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/20 10:01:49 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 09:24:00 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ char	**break_readline(char *src, int i, t_main_struct *main_data)
 
 	if (!src)
 		return (NULL);
+	src = ft_skip_tabs(src);
 	src = add_line_to_history(src, main_data);
 	prepare_source(src, 0, 0);
 	lines = ft_split(src, -5);
 	free(src);
-	while (lines[i])
+	while (lines[++ i])
 	{
 		if (i != 0)
 		{
@@ -69,7 +70,6 @@ char	**break_readline(char *src, int i, t_main_struct *main_data)
 			lines[i] = new_line;
 			finish_first_part(lines, i - 1, 0);
 		}
-		i++;
 	}
 	return (lines);
 }
@@ -79,7 +79,7 @@ void	run_main_program(t_main_struct *main_data, int i, int c)
 	while (1)
 	{
 		i = 0;
-		main_data->lines = break_readline(readline("$> "), 0, main_data);
+		main_data->lines = break_readline(readline("$> "), -1, main_data);
 		if (!main_data->lines)
 			return ;
 		while (main_data->lines[i])
