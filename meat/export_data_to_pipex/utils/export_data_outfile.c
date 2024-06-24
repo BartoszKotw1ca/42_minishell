@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:58:43 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/20 10:21:01 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:29:58 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	in_the_middle(char	**tmp, t_data *data, int i, int j)
 	tm = 0;
 	while (tmp[i][j])
 	{
-		if (tmp[i][j] == '\"')
+		if (tmp[i][j] == '\"' || tmp[i][j] == '\'')
 			inside_quotes = !inside_quotes;
 		if (tmp[i][j ++] == '>' && !inside_quotes)
 			break ;
