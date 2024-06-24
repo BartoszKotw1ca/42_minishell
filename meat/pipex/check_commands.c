@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 09:30:53 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/21 09:36:05 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:27:32 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	check_files(t_process *p, t_data *data)
 
 int	check_commands_sec(int i, t_process *p)
 {
+	if (!(p->args[0]))
+		return (0);
 	if (ft_strncmp("cd", p->args[0], 2) == 0)
 	{
 		while (p->args[i])
