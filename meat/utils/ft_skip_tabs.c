@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:06:23 by bkotwica          #+#    #+#             */
-/*   Updated: 2024/06/24 09:21:30 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:48:33 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_skip_tabs(char *line)
 	{
 		if (line[i] == '	')
 			continue ;
-		li[len ++] =  line[i];
+		li[len ++] = line[i];
 	}
 	free(line);
 	return (li);
