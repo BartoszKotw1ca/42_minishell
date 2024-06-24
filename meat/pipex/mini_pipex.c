@@ -6,7 +6,7 @@
 /*   By: bkotwica <bkotwica@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:00:18 by jponieck          #+#    #+#             */
-/*   Updated: 2024/06/20 10:21:47 by bkotwica         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:26:41 by bkotwica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 	int		in_quotes;
 
 	in_quotes = 0;
-	while (d->com[i].commend[j])
+	while (d->com[i].commend[++ j])
 	{
 		if ((d->com[i].commend[j] == 39
 				|| d->com[i].commend[j] == 34) && in_quotes == 0)
@@ -62,10 +62,11 @@ static void	check_args(t_data *d, int i, int j, t_main_struct *main_data)
 				var_value = read_file("/TMP_TODO/status.txt", main_data);
 			else
 				var_value = read_env(main_data, var_name);
+			if (!var_value)
+				var_value = ft_strdup("");
 			update_arg(d, i, var_value, 1);
 			free(var_name);
 		}
-		j++;
 	}
 }
 
@@ -91,7 +92,7 @@ static void	run_commands(t_data *data, t_process *p,
 {
 	while (i < data->num_of_com)
 	{
-		check_args(data, i, 0, main_data);
+		check_args(data, i, -1, main_data);
 		p->args = ft_split_except(data->com[i].commend, ' ', 39, 34);
 		p->path = find_path(p->args[0], data, 0);
 		check_commands(p, data, main_data);
